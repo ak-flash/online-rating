@@ -1,0 +1,108 @@
+<x-guest-layout>
+
+    <div class="h-screen w-full flex flex-col items-center">
+
+    @if (Route::has('login'))
+        <header class="w-full flex justify-between h-17 p-4 bg-gradient-to-r from-green-400 via-green-500 to-green-900">
+
+
+
+                <h1 class="flex font-bold text-3xl text-green-800 hover:bg-green-500 px-3 rounded-2xl">
+                    <x-jet-application-logo class="h-11 w-auto mr-2" />
+                    <a href="https://volgmed.ru" class="xs:invisible">ВолгГМУ</a>
+                </h1>
+
+            <div class="flex float-right">
+            @auth
+
+                    <a href="{{ route('profile.show') }}" class="flex hover:bg-green-600 rounded-lg px-3 mr-2" title="Профиль">
+                        <div class="text-right mr-3 text-white">
+                            {{ Auth::user()->name }}
+                            <div class="text-gray-400">
+                                {{ Auth::user()->email }}
+                            </div>
+                        </div>
+                        <img class="mr-3 h-12 w-12 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="user_avatar" />
+                    </a>
+                   <a href="{{ url('/dashboard') }}" class="mr-2 bg-red-700 hover:bg-red-800 shadow-xl px-5 py-2 text-white rounded pt-3">ЖУРНАЛ<i class="fa fa-sign-in-alt ml-2"></i></a>
+
+            @else
+
+                @isset($student->student_id)
+
+                    <a href="{{ route('student.dashboard') }}" class="mr-2 bg-red-700 hover:bg-red-800 shadow-xl px-5 py-2 text-white rounded float-right">
+                        <i class="fa fa-sign-in-alt mr-1"></i>
+                        {{ $student->last_name }} {{ $student->first_name }}
+                    </a>
+                @else
+
+                    <a href="{{ route('student.login') }}" class="mr-2 bg-green-500 hover:bg-green-800 shadow-xl sm:px-5 px-2 py-2 text-white rounded float-right xs:mt-2 md:mt-0 w-30">
+                        <i class="fa fa-graduation-cap mr-1"></i>
+                        Для студентов
+                    </a>
+
+                    <a href="{{ route('login') }}" class="mr-2 bg-red-700 hover:bg-red-800 shadow-xl sm:px-5 px-2 py-2 text-white rounded float-right">
+                        <i class="fa fa-head-side-mask mr-1"></i>
+                        Для сотрудников
+                    </a>
+                @endisset
+
+
+
+            @endauth
+            </div>
+        </header>
+    @endif
+
+<div class="w-full" style="background-image: url({{ asset('img/home-background.jpg') }}) ;background-size: 100%;background-repeat: no-repeat;">
+
+    <div class="text-5xl  p-3 text-center text-black">
+        Онлайн журнал оценок
+    </div>
+
+
+<div class="w-full flex flex-col items-center xs:bg-green-500">
+        <div class="grid gap-2 md:grid-cols-2 sm:grid-cols-1">
+
+
+            <div class="p-2 sm:p-10 text-center">
+                <div class="py-8 max-w-sm rounded overflow-hidden shadow-lg bg-gray-100 hover:bg-gray-300 transition duration-500">
+                    <div class="space-y-5">
+                        <i class="fa fa-head-side-mask" style="font-size:48px;"></i>
+                        <div class="px-6 py-4">
+                            <div class="space-y-5">
+                                <div class="font-bold text-xl mb-2">Без регистрации</div>
+                                <p class="text-base">
+                                    Вход по номеру личного дела (зачётной книжки)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-2 sm:p-10 text-center translate-x-2 mb-5">
+                <div class="py-8 max-w-sm rounded overflow-hidden shadow-lg transition duration-500 bg-gray-100 hover:bg-gray-300">
+                    <div class="space-y-5">
+                        <i class="fas fa-graduation-cap" style="font-size:48px;"></i>
+
+                        <div class="px-6 py-4">
+                            <div class="space-y-5">
+                                <div class="font-bold text-xl mb-2">Информация</div>
+                                <p class="text-gray-700 text-base">
+                                    Для студентов и преподавателей <b>кафедры иммунологии и и аллергологии</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </div>
+        <footer class="relative bottom-0 w-full text-center p-2 text-gray-400 bg-gradient-to-r from-green-800 via-green-600 to-green-500">
+            Klyausov A.S. @ {{ date('Y') }} v.0.5
+        </footer>
+    </div>
+</x-guest-layout>
