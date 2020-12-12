@@ -45,8 +45,30 @@ class StudyClass extends Model
     use HasFactory;
 
     public function faculty() {
-        return $this->belongsTo('App\Models\Faculty');
+        return $this->belongsTo(Faculty::class);
     }
 
+    public function team() {
+        return $this->belongsTo(Team::class)->orderBy('name', 'desc');
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsToMany(Student::class);
+    }
+
+
+
+    public static function getStudentDisciplines($faculty_id, $course_number, $group_number) {
+        return StudyClass::with('team')->with('user')
+            ->where('faculty_id', $faculty_id)
+            ->where('course_number', $course_number)
+            ->where('group_number', $group_number)
+            ;
+    }
 
 }

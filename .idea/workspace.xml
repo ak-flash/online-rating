@@ -4,7 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4411fc4e-892f-4324-bed6-6db17706d670" name="Default Changelist" comment="" />
+    <list default="true" id="4411fc4e-892f-4324-bed6-6db17706d670" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Livewire/StudentMarks.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/factories/StudentFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/factories/StudyClassFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_12_10_201926_create_student_study_class_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/pagination-links-view.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/livewire/student-marks.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/livewire/bootstrap.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/livewire/simple-bootstrap.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/livewire/simple-tailwind.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/vendor/livewire/tailwind.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/StudentDashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/StudentDashboard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/StudentJournal.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/StudentJournal.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Faculty.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Faculty.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Student.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Student.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/StudyClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/StudyClass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_30_023649_create_students_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_30_023649_create_students_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_07_003341_create_study_classes_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_07_003341_create_study_classes_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ru/pagination.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ru/pagination.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/student-dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/student-dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/student-journal.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/student-journal.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/student-settings.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/student-settings.blade.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,6 +40,9 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP">
     <include_path>
@@ -157,15 +187,19 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1kyzOqgLdGYJtAo08v1cQC1WdDk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/View/Components" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -178,6 +212,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\online-ratings\app\View\Components" />
+      <recent name="C:\laragon\www\online-ratings\resources\views\layouts" />
       <recent name="C:\laragon\www\online-ratings\resources\lang" />
       <recent name="C:\laragon\www\online-ratings\resources\views\student" />
       <recent name="C:\laragon\www\online-ratings\resources\lang\ru" />
@@ -191,11 +227,19 @@
       <command value="z" />
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="PHP Script.2020_12_10_201926_create_student_study_class_table.php">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
+    <configuration name="2020_12_10_201926_create_student_study_class_table.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/database/migrations/2020_12_10_201926_create_student_study_class_table.php">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHP Script.2020_12_10_201926_create_student_study_class_table.php" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -215,12 +259,39 @@
       <workItem from="1607113350620" duration="819000" />
       <workItem from="1607114695580" duration="55277000" />
       <workItem from="1607430649571" duration="601000" />
-      <workItem from="1607432228178" duration="12882000" />
+      <workItem from="1607432228178" duration="17614000" />
+      <workItem from="1607515239086" duration="41010000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/database/factories/StudentFactory.php</url>
+          <line>4</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

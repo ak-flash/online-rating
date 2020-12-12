@@ -1,6 +1,6 @@
 <div>
     <div class="h-screen w-full flex overflow-hidden">
-    <nav class=" w-64 px-12 flex flex-col bg-gray-200 dark:bg-gray-900  pt-4 pb-6">
+    <nav class="  w-64 px-12 flex flex-col bg-gray-200 dark:bg-gray-900  pt-4 pb-6">
         <!-- SideNavBar -->
 
         <div class="flex flex-row border-b items-center justify-between pb-2">
@@ -11,17 +11,8 @@
 
             <span class="relative ">
 				<a class="hover:text-green-500 dark-hover:text-green-300 text-gray-600 dark:text-gray-300" href="#">
-					<svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-						<path
-                            d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+					<svg  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
 						<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
 					</svg>
 				</a>
@@ -33,7 +24,7 @@
 
         <div class="mt-8">
             <!-- User info -->
-            <img class="h-12 w-12 rounded-full object-cover" src="{{ asset('img/avatar-placeholder.png') }}" alt="avatar" />
+            <img class="h-12 w-12 rounded-full object-cover" src="{{ asset('img/avatar-placeholder.png') }}" alt="student_avatar" />
 
             <h2 class="mt-4 text-2xl dark:text-gray-300 font-bold capitalize">
                 {{ $student->last_name }}
@@ -123,16 +114,14 @@
                 <!-- Top NavBar -->
 
                 <button class="py-2 block border-b-2 focus:outline-none font-medium capitalize focus:text-green-500 focus:border-green-500 dark-focus:text-green-200 dark-focus:border-green-200  transition duration-100 ease-in-out
-                        @if($showSettings)
-                            border-transparent
-                        @else
-                            border-green-500 text-green-500
-                        @endif
+{{ $showSettings ? 'border-transparent' : 'border-green-500 text-green-500' }}
                 " wire:click="nav('journal')">
-                    Оценки
+                    Дисциплины
                 </button>
 
-                <button class="ml-6 py-2 block border-b-2 focus:outline-none font-medium capitalize focus:text-green-500 focus:border-green-500 dark-focus:text-green-200 dark-focus:border-green-200 border-transparent transition duration-100 ease-in-out" wire:click="nav('settings')">
+                <button class="ml-6 py-2 block border-b-2 focus:outline-none font-medium capitalize focus:text-green-500 focus:border-green-500 dark-focus:text-green-200 dark-focus:border-green-200 border-transparent transition duration-100 ease-in-out
+{{ $showJournal||$showMarks ? 'border-transparent' : 'border-green-500 text-green-500' }}
+                    " wire:click="nav('settings')">
                     Настройки
                 </button>
 
@@ -141,8 +130,12 @@
         </nav>
 
 
+        @if($showMarks)
+            <livewire:student-marks :studyclass="$study_class"/>
+        @endif
+
         @if($showJournal)
-            <livewire:student-journal />
+            <livewire:student-journal :student="$student"/>
         @endif
 
         @if($showSettings)

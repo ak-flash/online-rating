@@ -17,6 +17,7 @@ class CreateStudyClassesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable();
             $table->foreignId('team_id')->nullable();
+            $table->string('title', 100);
             $table->foreignId('discipline_id')->nullable();
             $table->date('date');
             $table->time('time_start', 0);

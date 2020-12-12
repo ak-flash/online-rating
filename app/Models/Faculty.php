@@ -37,4 +37,8 @@ class Faculty extends Model
     public function show($faculty) {
         return Faculty::find($faculty);
     }
+
+    public function students() {
+        return $this->hasMany(Student::class);
+    }
 }

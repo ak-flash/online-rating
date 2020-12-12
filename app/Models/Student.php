@@ -48,6 +48,15 @@ class Student extends Model
         return $this->belongsTo(Faculty::class);
     }
 
+
+
+    public function study_class($kafedra_id)
+    {
+        return $this->belongsToMany(StudyClass::class)
+            ->where('team_id', $kafedra_id)
+            ->withPivot('mark1', 'mark2', 'notify', 'attendance', 'user_id', 'updated_at');
+    }
+
     public static function findStudent($document_id) {
         return Student::firstWhere('document_id', $document_id);
     }
@@ -55,6 +64,8 @@ class Student extends Model
     public static function findAuthStudent() {
         return Student::find(session('student_id'));
     }
+
+
 
     public function logout() {
 

@@ -3,12 +3,12 @@
     <div class="h-screen w-full flex flex-col items-center">
 
     @if (Route::has('login'))
-        <header class="w-full flex justify-between h-17 p-4 bg-gradient-to-r from-green-400 via-green-500 to-green-900">
+        <header class="w-full flex justify-between h-17 p-2 bg-gradient-to-r from-green-400 via-green-500 to-green-900">
 
 
 
-                <h1 class="flex font-bold text-3xl text-green-800 hover:bg-green-500 px-3 rounded-2xl">
-                    <x-jet-application-logo class="h-11 w-auto mr-2" />
+                <h1 class="flex font-bold text-3xl text-green-800 hover:bg-green-500 ml-3 p-2 rounded-2xl">
+                    <x-jet-application-logo class="h-11 w-auto mr-3" />
                     <a href="https://volgmed.ru" class="xs:invisible">ВолгГМУ</a>
                 </h1>
 
@@ -36,12 +36,12 @@
                     </a>
                 @else
 
-                    <a href="{{ route('student.login') }}" class="mr-2 bg-green-500 hover:bg-green-800 shadow-xl sm:px-5 px-2 py-2 text-white rounded float-right xs:mt-2 md:mt-0 w-30">
+                    <a href="{{ route('student.login') }}" class="m-2 bg-green-500 hover:bg-green-800 shadow-xl sm:px-5 p-2 text-white e rounded float-right w-30">
                         <i class="fa fa-graduation-cap mr-1"></i>
                         Для студентов
                     </a>
 
-                    <a href="{{ route('login') }}" class="mr-2 bg-red-700 hover:bg-red-800 shadow-xl sm:px-5 px-2 py-2 text-white rounded float-right">
+                    <a href="{{ route('login') }}" class="m-2 bg-red-700 hover:bg-red-800 shadow-xl sm:px-5 p-2 text-white rounded float-right">
                         <i class="fa fa-head-side-mask mr-1"></i>
                         Для сотрудников
                     </a>
@@ -69,8 +69,8 @@
                 <div class="py-8 max-w-sm rounded overflow-hidden shadow-lg bg-gray-100 hover:bg-gray-300 transition duration-500">
                     <div class="space-y-5">
                         <i class="fa fa-head-side-mask" style="font-size:48px;"></i>
-                        <div class="px-6 py-4">
-                            <div class="space-y-5">
+                        <div class="px-6 py-3">
+                            <div class="space-y-2">
                                 <div class="font-bold text-xl mb-2">Без регистрации</div>
                                 <p class="text-base">
                                     Вход по номеру личного дела (зачётной книжки)
@@ -86,11 +86,11 @@
                     <div class="space-y-5">
                         <i class="fas fa-graduation-cap" style="font-size:48px;"></i>
 
-                        <div class="px-6 py-4">
-                            <div class="space-y-5">
+                        <div class="px-6 py-3">
+                            <div class="space-y-2">
                                 <div class="font-bold text-xl mb-2">Информация</div>
                                 <p class="text-gray-700 text-base">
-                                    Для студентов и преподавателей <b>кафедры иммунологии и и аллергологии</b>
+                                    Для студентов и преподавателей <b>Волгоградского государственного медицинского университета</b>
                                 </p>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
         </div>
         </div>
     </div>
-        <footer class="relative bottom-0 w-full text-center p-2 text-gray-400 bg-gradient-to-r from-green-800 via-green-600 to-green-500">
+        <footer class="relative h-full bottom-0 w-full text-center p-2 text-gray-400 bg-gradient-to-r from-green-800 via-green-600 to-green-500">
             Klyausov A.S. @ {{ date('Y') }} v.0.5
         </footer>
     </div>
