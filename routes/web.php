@@ -39,9 +39,9 @@ Route::prefix('student')
         ->name('student.logout');
 });
 
-Route::get('/team/create', [TeamController::class, 'create'])
+/*Route::get('/team/create', [TeamController::class, 'create'])
     ->middleware('role:moderator')
-    ->name('teams.create');
+    ->name('teams.create');*/
 
 Route::get('/team/{team}', [TeamController::class, 'show'])
     ->name('teams.show');
