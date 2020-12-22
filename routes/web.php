@@ -43,11 +43,11 @@ Route::prefix('student')
     ->middleware('role:moderator')
     ->name('teams.create');*/
 
-Route::get('/team/{team}', [TeamController::class, 'show'])
-    ->name('teams.show');
+/*Route::get('/team/{team}', [TeamController::class, 'show'])
+    ->name('teams.show');*/
 
-Route::put('/current-kafedra', [CurrentTeamController::class, 'update'])
-    ->name('current-team.update');
+/*Route::put('/current-kafedra', [CurrentTeamController::class, 'update'])
+    ->name('current-team.update');*/
 
 
 Route::prefix('dashboard')
