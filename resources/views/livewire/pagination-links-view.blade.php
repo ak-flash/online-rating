@@ -31,12 +31,11 @@
 
 
 
-                    <div class="text-md mr-10">
+                    <div class="text-md mr-15">
                         Всего:
-                        <span class="text-green-500 dark:text-green-200">
+                        <span class="font-bold text-green-500 dark:text-green-200">
                                 {{ $paginator->total() }}
                         </span>
-                        кафедры
                     </div>
                 <div class="text-xs mr-10">
                     Показано с {{ $paginator->firstItem() }}

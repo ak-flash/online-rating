@@ -11,17 +11,48 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden sm:-my-px sm:ml-15 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="bg-green-500 text-white">
+                <div class="hidden sm:ml-15 sm:flex">
+                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="hover:bg-green-600 hover:text-white">
+                        {{ __('Личный кабинет') }}
+                    </x-jet-nav-link>
+                </div>
+
+
+
+                <div class="hidden sm:flex">
+                    <x-jet-nav-link href="{{ route('journals') }}" :active="request()->routeIs('journals')" class="hover:bg-green-600 hover:text-white">
                         {{ __('Журналы') }}
                     </x-jet-nav-link>
                 </div>
 
-                <div class="hidden sm:-my-px sm:ml-5 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="hover:bg-green-600 text-black hover:text-white">
-                        {{ __('Занятия') }}
+                @if(Auth::user()->isModerator())
+                <div class="hidden sm:flex">
+                    <x-jet-nav-link href="{{ route('disciplines') }}" :active="request()->routeIs('disciplines')" class="hover:bg-green-600 hover:text-white">
+                        {{ __('Дисциплины') }}
                     </x-jet-nav-link>
                 </div>
+                @endif
+
+                <div class="hidden sm:flex">
+                    <x-jet-nav-link href="{{ route('students') }}" :active="request()->routeIs('students')" class="hover:bg-green-600 hover:text-white">
+                        {{ __('Студенты') }}
+                    </x-jet-nav-link>
+                </div>
+
+
+                @if(Auth::user()->isAdmin())
+                    <div class="hidden sm:flex">
+                        <x-jet-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')" class="hover:bg-green-600 hover:text-white">
+                            {{ __('Пользователи') }}
+                        </x-jet-nav-link>
+                    </div>
+
+                    <div class="hidden sm:flex">
+                        <x-jet-nav-link href="{{ route('logs') }}" :active="request()->routeIs('logs')" class="hover:bg-green-600 hover:text-white">
+                            {{ __('Логи Laravel') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
             </div>
 
             <!-- Settings Dropdown -->
@@ -33,7 +64,7 @@
                                 <div class="text-right mr-3 pl-2 text-black">
                                     {{ Auth::user()->name }}
                                     <div class="text-gray-500">
-                                        {{ Auth::user()->email }}
+                                        {{ Auth::user()->email }} - {{ Auth::user()->getPosition() }}
                                     </div>
                                 </div>
 

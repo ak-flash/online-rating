@@ -16,7 +16,7 @@ class CheckStudentAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!session('student_id')) {
+        if (!session('student')) {
             return redirect(route('student.login'));
         }
 

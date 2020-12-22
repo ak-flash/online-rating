@@ -65,6 +65,79 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+    public const ROLES = [
+        1 => 'admin',
+        2 => 'moderator',
+        3 => 'teacher',
+        4 => 'laborant'
+    ];
+
+    public const ROLESRUS = [
+        1 => 'Администратор',
+        2 => 'Модератор',
+        3 => 'Преподаватель',
+        4 => 'Лаборант'
+    ];
+
+    public const POSITIONS = [
+        1 => 'ректор',
+        2 => 'проректор',
+        3 => 'декан',
+        4 => 'зам. декана',
+        5 => 'зав. кафедрой',
+        6 => 'доцент',
+        7 => 'ассистент',
+        8 => 'лаборант',
+        9 => '......',
+    ];
+
+    public static function getRoleID($role)
+    {
+        return array_search($role, self::ROLES);
+    }
+
+    /**
+     * get DayType of class
+     */
+    public function getRoleAttribute(): string
+    {
+        return self::ROLES[ $this->attributes['role'] ];
+    }
+
+    public function getRoleRus(): string
+    {
+        return self::ROLESRUS[ $this->attributes['role'] ];
+    }
+
+    function isAdmin(): bool
+    {
+        return $this->role == 'admin';
+    }
+
+    function isModerator(): bool
+    {
+        return $this->role == 'moderator' || $this->role == 'admin';
+    }
+
+    function isTeacher(): bool
+    {
+        return $this->role == 'teacher' || $this->role == 'moderator' || $this->role == 'admin';
+    }
+
+    public static function getPositionID($position)
+    {
+        return array_search($position, self::POSITIONS);
+    }
+
+    public function getPosition(): string
+    {
+        return self::POSITIONS[$this->attributes['position']];
+    }
+
+    public static function getPositionName($position): string
+    {
+        return self::POSITIONS[$position];
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -72,7 +145,7 @@ class User extends Authenticatable
      */
 
     protected $fillable = [
-        'name', 'email', 'password', 'position', 'current_team_id'
+        'name', 'email', 'password', 'position', 'role', 'current_team_id'
     ];
 
     /**
@@ -104,6 +177,14 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public static function search($search){
+        return empty($search) ? static::query()
+            : static::where('id', 'like', '%'.$search.'%')
+                ->orWhere('name', 'like', '%'.$search.'%')
+                ->orWhere('email', 'like', '%'.$search.'%');
+    }
+
 
 
 }

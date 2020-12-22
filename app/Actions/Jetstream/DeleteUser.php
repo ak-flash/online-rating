@@ -58,6 +58,7 @@ class DeleteUser implements DeletesUsers
 
         $user->forceFill([
             'current_team_id' => NULL,
+            'role' => NULL,
         ])->save();
     }
 }

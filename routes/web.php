@@ -17,6 +17,7 @@ use Laravel\Jetstream\Http\Controllers\Livewire\TeamController;
 */
 
 Route::get('/', function () {
+    //dd(session('student'));
     return view('home', ['student' => session('student')]);
 })->name('home');;
 
@@ -48,11 +49,40 @@ Route::get('/kafedra/{team}', [TeamController::class, 'show'])
 Route::put('/current-kafedra', [CurrentTeamController::class, 'update'])
     ->name('current-team.update');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
 
-Route::get('/logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->middleware('role:admin');
+Route::prefix('dashboard')
+    ->middleware(['auth:sanctum', 'verified'])
+    ->group(function () {
+
+        Route::get('/', function () {
+            return view('dashboard');
+        })->name('dashboard');
+
+        Route::get('/users', function () {
+            return view('dashboard');
+        })->middleware('role:admin')->name('users');
+
+        Route::get('/journals', \App\Http\Livewire\Journals::class)
+            ->name('journals');
+
+        Route::get('/disciplines', \App\Http\Livewire\Disciplines::class)
+            ->name('disciplines');
+
+        Route::get('/students', \App\Http\Livewire\Students::class)
+            ->name('students');
+
+        Route::get('/logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->middleware('role:admin')->name('logs');
+
+    });
+
+
+
+
+
+
+
+
+
 
 /*Route::fallback(function () {
     //

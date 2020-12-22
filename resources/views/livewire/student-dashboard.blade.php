@@ -1,6 +1,6 @@
 <div>
     <div class="h-screen w-full flex overflow-hidden">
-    <nav class="  w-64 px-12 flex flex-col bg-gray-200 dark:bg-gray-900  pt-4 pb-6">
+    <nav class="hidden md:flex w-64 px-12 flex-col bg-gray-200 dark:bg-gray-900  pt-4 pb-6">
         <!-- SideNavBar -->
 
         <div class="flex flex-row border-b items-center justify-between pb-2">
@@ -105,21 +105,35 @@
     <main class="flex-1 flex flex-col bg-gray-100 dark:bg-gray-700 transition
 		duration-500 ease-in-out overflow-y-auto">
 
-    <div class="mx-10 my-2">
+        <div id="mobile_menu" class="md:hidden bg-green-800 h-auto">
+
+            <div class="flex ">
+                <div class="ml-5 p-3 text-base text-white w-full ">
+                    {{ $student->first_name }} {{ $student->last_name }}
+                </div>
+
+
+                <a href="{{ route('student.logout') }}" class="bg-red-700 hover:bg-red-500 shadow px-2 m-3 float-right rounded-sm text-white">
+                Выйти
+                </a>
+            </div>
+        </div>
+
+    <div class="sm:mx-0 md:mx-10 my-2">
 
         <nav class="flex flex-row justify-between border-b
 				dark:border-gray-600 dark:text-gray-400 transition duration-500
-				ease-in-out">
+				ease-in-out ml-4 md:ml-0">
             <div class="flex">
                 <!-- Top NavBar -->
 
-                <button class="py-2 block border-b-2 focus:outline-none font-medium capitalize focus:text-green-500 focus:border-green-500 dark-focus:text-green-200 dark-focus:border-green-200  transition duration-100 ease-in-out
+                <button class="py-2 px-4 block border-b-2 focus:outline-none font-medium capitalize focus:text-green-500 focus:border-green-500 dark-focus:text-green-200 dark-focus:border-green-200  transition duration-100 ease-in-out
 {{ $showSettings ? 'border-transparent' : 'border-green-500 text-green-500' }}
                 " wire:click="nav('journal')">
-                    Дисциплины
+                    Занятия
                 </button>
 
-                <button class="ml-6 py-2 block border-b-2 focus:outline-none font-medium capitalize focus:text-green-500 focus:border-green-500 dark-focus:text-green-200 dark-focus:border-green-200 border-transparent transition duration-100 ease-in-out
+                <button class="py-2 px-4 block border-b-2 focus:outline-none font-medium capitalize focus:text-green-500 focus:border-green-500 dark-focus:text-green-200 dark-focus:border-green-200 border-transparent transition duration-100 ease-in-out
 {{ $showJournal||$showMarks ? 'border-transparent' : 'border-green-500 text-green-500' }}
                     " wire:click="nav('settings')">
                     Настройки
@@ -129,9 +143,10 @@
 
         </nav>
 
+        <x-app-spinner target="" />
 
         @if($showMarks)
-            <livewire:student-marks :studyclass="$study_class"/>
+            <livewire:student-marks :lesson="$lesson"/>
         @endif
 
         @if($showJournal)
@@ -141,6 +156,7 @@
         @if($showSettings)
             <livewire:student-settings />
         @endif
+
 
     </div>
     </main>

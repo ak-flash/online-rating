@@ -9,7 +9,10 @@
                 <img src="{{ asset('img/logo-m.png') }}" alt="" class="w-15 mr-2">
                 <h1 class="font-bold text-3xl text-green-900 inline">
                     <a href="https://volgmed.ru">ВолгГМУ</a>
-                </h1> Онлайн ЖУРНАЛ
+                </h1>
+                <a href="{{ route('home') }}">
+                    Онлайн ЖУРНАЛ
+                </a>
             </div>
 
         <x-jet-validation-errors class="mb-4" />

@@ -5,14 +5,14 @@
             <div class="pb-2 flex items-center justify-between text-gray-600
 				dark:text-gray-400 border-b dark:border-gray-600">
                 <!-- Header -->
-                <h2 class="text-3xl font-semibold dark:text-gray-400">
+                <h2 class="ml-4 md:ml-0 text-3xl pt-2 md:pt-0 font-semibold dark:text-gray-400">
                     Кафедры
                 </h2>
 
-                <div class="my-2 flex sm:flex-row flex-col">
+                <div class="my-2 hidden md:flex sm:flex-row flex-col">
                     <div class="flex flex-row mb-1 sm:mb-0">
                         <div class="relative">
-                            <select class="appearance-none h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" wire:model="showPerPage">
+                            <select class="appearance-none h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" wire:model="perPage">
                                 <option>5</option>
                                 <option>10</option>
                                 <option>20</option>
@@ -25,11 +25,10 @@
                             </div>
                         </div>
                         <div class="relative">
-                            <select
-                                class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                                <option>All</option>
-                                <option>Active</option>
-                                <option>Inactive</option>
+                            <select class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
+                                <option value="0">Все</option>
+                                <option value="1">Есть долги</option>
+                                <option value="2">Нет долгов</option>
                             </select>
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -46,7 +45,7 @@
                             </path>
                         </svg>
                     </span>
-                        <input placeholder="Search" class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                        <input placeholder="Поиск" class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" wire:model.debounce.500ms="search" />
                     </div>
                 </div>
 
@@ -75,46 +74,68 @@
                         <thead>
                         <tr>
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Кафедра
+                                №
                             </th>
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Кафедра
+                            </th>
+                            <th class="hidden md:table-cell px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Преподаватель
                             </th>
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600">
-                                Дата прошедшего <br>занятия
+                                Прошедшее<br>занятие
                             </th>
-                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 ">
-                                Дата изменений
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600">
+                                Рейтинг
+                            </th>
+                            <th class="hidden md:table-cell px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 ">
+                                Дата обновления
                             </th>
                         </tr>
                         </thead>
                         <tbody>
 
-                        @foreach ($disciplines as $discipline)
+                        @foreach($disciplines as $discipline)
 
                         <tr>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                <div class="flex items-center">
-                                  <button class="" wire:click="showMarks({{ $discipline->team->id }})">
-                                      {{ $discipline->team->name }}
+                                {{ (($disciplines->currentPage() * $perPage) - $perPage) + $loop->iteration }}
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <div class="flex items-center ">
+                                  <button class="text-left" wire:click="showMarks({{ $discipline->team->id }})">
+                                      {{ Str::ucfirst($discipline->team->name) }}
                                   </button>
                                 </div>
                             </td>
-                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ $discipline->user->name }}
-                                </p>
+                            <td class="hidden md:table-cell px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                               <div class="flex">
+                                    <img class="h-10 w-10 rounded-full object-cover mr-3" src="{{ $discipline->user->profile_photo_path ?
+                    '../storage/'.$discipline->user->profile_photo_path : '../img/avatar-placeholder.png' }}"/>
+                                    <div class="flex-col text-gray-900 whitespace-no-wrap">
+
+                                        {{ $discipline->user->name }}
+                                        <div class="text-xs">
+                                        {{ \App\Models\User::getPositionName($discipline->user->position) }}
+                                        </div>
+                                    </p>
+                               </div>
                             </td>
-                            <td class="px-5 py-5 border-b text-center border-gray-200 bg-white text-sm">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ $discipline->date_class }}
-                                </p>
+                            <td class="px-5 py-5 border-b text-center border-gray-200 bg-white text-sm font-semibold">
+                                    {{ \Carbon\Carbon::parse($discipline->date)->translatedFormat('d F Y') }}
+
+                                <div class="text-xs text-gray-500">
+                                    {{ $discipline->type }}
+                                </div>
                             </td>
-                            <td class="px-5 py-5 border-b text-center border-gray-200 bg-white text-sm">
+                            <td class="px-5 py-5 border-b text-center border-gray-200 bg-white text-sm font-semibold">
+                                {{ $discipline->rating }}
+                            </td>
+                            <td class="hidden md:table-cell px-5 py-5 border-b text-center border-gray-200 bg-white text-sm">
                                     <span class="relative  inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                         <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
                                         <span class="relative">
-                                            {{ $discipline->title }}
+                                            {{ $discipline->updated_at ? $discipline->updated_at->format('d/m/Y') : '-' }}
                                         </span>
                                     </span>
                             </td>
@@ -136,5 +157,6 @@
     </div>
 
         </div>
+
 
 </div>

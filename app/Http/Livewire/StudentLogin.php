@@ -56,7 +56,16 @@ class StudentLogin extends Component
             'group_number' => $this->student->group_number,
             'email' => $this->student->email,
         ];*/
-        session(['student_id' => $this->student->id]);
+        session(['student' => $this->student]);
+        /*session(['document_id' => $this->student->document_id]);
+        session(['last_name' => $this->student->last_name]);
+        session(['first_name' => $this->student->first_name]);
+        session(['middle_name' => $this->student->middle_name]);
+        session(['faculty_id' => $this->student->faculty_id]);
+        session(['course_number' => $this->student->course_number]);
+        session(['group_number' => $this->student->group_number]);
+        session(['email' => $this->student->email]);*/
+
 
         return $this->redirect(route('student.dashboard'));
     }

@@ -1,6 +1,12 @@
 <div>
     <x-guest-layout>
         <!-- component -->
+
+
+
+        <x-app-spinner target="find_profile" />
+
+
     <div class="h-screen w-screen" style="background-image: url({{ asset('img/home-background.jpg') }}); background-repeat: no-repeat;background-size: 100% 100%;
 ">
         <div class="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">

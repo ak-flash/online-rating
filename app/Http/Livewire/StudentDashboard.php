@@ -13,11 +13,11 @@ class StudentDashboard extends Component
     public $showSettings = 0;
     public $showMarks = 0;
     public $student;
-    public $study_class;
+    public $lesson;
 
     public function mount()
     {
-        $this->student = Student::findAuthStudent();
+        $this->student = session('student');
     }
 
     public function render()
@@ -47,8 +47,8 @@ class StudentDashboard extends Component
 
     public function showMarks($kafedra)
     {
-        $this->study_class['student_id'] = $this->student->id;
-        $this->study_class['team_id'] = $kafedra;
+        $this->lesson['student_id'] = $this->student->id;
+        $this->lesson['team_id'] = $kafedra;
         $this->nav('marks');
     }
 }

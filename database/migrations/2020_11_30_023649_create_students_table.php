@@ -19,11 +19,12 @@ class CreateStudentsTable extends Migration
             $table->string('last_name', 100);
             $table->string('first_name', 100);
             $table->string('middle_name', 100)->nullable();
-            $table->foreignId('faculty_id')->nullable();
+            $table->foreignId('faculty_id')->constrained();
             $table->integer('course_number')->nullable();
             $table->integer('group_number')->nullable();
             $table->string('email')->unique();
             $table->string('password')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

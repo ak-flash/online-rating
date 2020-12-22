@@ -28,8 +28,8 @@ class StudentFactory extends Factory
             'middle_name' => $this->faker->firstName,
             'email' => $this->faker->unique()->safeEmail,
             'faculty_id' => $this->faker->numberBetween(1, 5),
-            'course_id' => $this->faker->numberBetween(1, 6),
-            'group_id' => $this->faker->numberBetween(1, 5),
+            'course_number' => $this->faker->numberBetween(1, 6),
+            'group_number' => $this->faker->numberBetween(1, 5),
         ];
     }
 }

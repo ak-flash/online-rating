@@ -32,8 +32,20 @@ class AddTeamMember implements AddsTeamMembers
             ['role' => $role]
         );
 
+        $role_id = 4;
+
+        switch ($role){
+            case 'instructor':
+                $role_id = 3;
+                break;
+            case 'laborant':
+                $role_id = 4;
+                break;
+        }
+
         $newTeamMember->forceFill([
-            'current_team_id' => 1,
+            'current_team_id' => $team->id,
+            'role' => $role_id,
         ])->save();
 
         TeamMemberAdded::dispatch($team, $newTeamMember);

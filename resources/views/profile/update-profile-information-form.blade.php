@@ -71,9 +71,14 @@
             <x-jet-label for="position" value="{{ __('Position') }}" />
             <select id="position" class="mt-1 block w-25 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" wire:model.defer="state.position" />
                 <option value="">не выбрана</option>
-                <option value="доцент">Доцент</option>
-                <option value="ассистент">Ассистент</option>
-            </select>
+
+                @foreach(\App\Models\User::POSITIONS as $key => $value)
+                    @if($key>=6)
+                        <option value="{{ $key }}">{{ $value }}</option>
+                    @endif
+                @endforeach
+
+                </select>
 
             <x-jet-input-error for="position" class="mt-2" />
         </div>
