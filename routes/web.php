@@ -39,11 +39,11 @@ Route::prefix('student')
         ->name('student.logout');
 });
 
-Route::get('/kafedra/create', [TeamController::class, 'create'])
+Route::get('/team/create', [TeamController::class, 'create'])
     ->middleware('role:moderator')
     ->name('teams.create');
 
-Route::get('/kafedra/{team}', [TeamController::class, 'show'])
+Route::get('/team/{team}', [TeamController::class, 'show'])
     ->name('teams.show');
 
 Route::put('/current-kafedra', [CurrentTeamController::class, 'update'])
