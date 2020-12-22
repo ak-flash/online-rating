@@ -18,7 +18,7 @@ class CreateDisciplineStudentTable extends Migration
             $table->integer('student_id')->unsigned();
             $table->unique(['student_id', 'discipline_id']);
             $table->float('rating')->length(3)->default(0);
-            $table->string('notify',50)->default('');
+            $table->string('notify',150)->default('');
             $table->timestamps();
         });
     }

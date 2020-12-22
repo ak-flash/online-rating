@@ -22,7 +22,7 @@ class CreateStudentsTable extends Migration
             $table->foreignId('faculty_id')->constrained();
             $table->integer('course_number')->nullable();
             $table->integer('group_number')->nullable();
-            $table->string('email')->unique();
+            $table->string('email', 100)->unique();
             $table->string('password')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();

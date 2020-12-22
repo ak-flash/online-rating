@@ -19,7 +19,7 @@ class CreateStudentStudyClassTable extends Migration
             $table->unique(['lesson_id', 'student_id']);
             $table->integer('mark1')->length(3)->default(0);
             $table->integer('mark2')->length(3)->default(0);
-            $table->string('notify',50)->default('');
+            $table->string('notify',150)->default('');
             $table->boolean('attendance')->default(0);
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
