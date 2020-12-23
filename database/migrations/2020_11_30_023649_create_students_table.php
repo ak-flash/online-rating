@@ -15,7 +15,7 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('document_id')->unique();
+            $table->string('document_id', 50)->unique();
             $table->string('last_name', 100);
             $table->string('first_name', 100);
             $table->string('middle_name', 100)->nullable();
@@ -23,7 +23,7 @@ class CreateStudentsTable extends Migration
             $table->integer('course_number')->nullable();
             $table->integer('group_number')->nullable();
             $table->string('email', 100)->unique();
-            $table->string('password')->nullable();
+            $table->string('password', 191)->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
