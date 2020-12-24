@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Team;
-use App\Policies\TeamPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Team::class => TeamPolicy::class,
+        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -27,12 +25,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('create-kafedra', function ($user) {
-            $hasPermission = false;
-            if(($user->role === 'admin'||$user->role === 'moderator')&&is_null($user->current_team_id)) {
-                $hasPermission = true;
-            }
-            return $hasPermission;
-        });
+        //
     }
 }

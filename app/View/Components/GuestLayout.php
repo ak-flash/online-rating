@@ -6,13 +6,6 @@ use Illuminate\View\Component;
 
 class GuestLayout extends Component
 {
-    public $title;
-
-    public function __construct()
-    {
-        $this->title = config('app.name');
-    }
-
     /**
      * Get the view / contents that represents the component.
      *

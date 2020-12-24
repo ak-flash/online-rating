@@ -8,8 +8,8 @@
 
 
                 <h1 class="flex font-bold text-3xl text-green-900 hover:bg-green-500 ml-3 p-2 rounded-2xl">
-                    <x-jet-application-logo class="h-11 w-auto mr-3" />
-                    <a href="https://volgmed.ru" class="hidden md:flex">ВолгГМУ</a>
+                    <img src="{{ asset('img/logo-m.png') }}" alt="VolSMU logo" class="h-11 w-auto mr-3">
+                    <a href="https://volgmed.ru" class="hidden md:flex">ВолгГМУ</a>    
                 </h1>
 
             <div class="flex float-right">
@@ -36,7 +36,7 @@
                     </a>
                 @else
 
-                    <a href="{{ route('student.login') }}" class="m-2 bg-green-500 hover:bg-green-800 shadow-xl sm:px-5 p-2 text-white e rounded float-right w-30">
+                    <a href="{{ route('login') }}" class="m-2 bg-green-400 hover:bg-green-800 shadow-xl sm:px-5 p-2 text-black rounded float-right w-30">
                         <i class="fa fa-graduation-cap mr-1"></i>
                         Для студентов
                     </a>
@@ -56,7 +56,7 @@
 
 <div class="w-full" style="background-image: url({{ asset('img/home-background.jpg') }}) ;background-size: 100%;background-repeat: no-repeat;">
 
-    <div class="text-3xl md:text-5xl p-3 text-center text-black">
+    <div class="text-3xl md:text-5xl p-3 mt-6 text-center text-black">
         Онлайн журнал оценок
     </div>
 

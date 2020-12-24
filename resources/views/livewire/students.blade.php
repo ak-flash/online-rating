@@ -1,3 +1,3 @@
 <div>
-    {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
+    {{-- To attain knowledge, add things every day; To attain wisdom, subtract things every day --}}
 </div>
