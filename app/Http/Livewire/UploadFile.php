@@ -6,19 +6,19 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 
 
-class UploadPhoto extends Component
+class UploadFile extends Component
 {
     use WithFileUploads;
 
-    public $photo;
+    public $file;
 
-    public function save()
+    public function uploadPhoto()
     {   
 
         $this->validate([
-            'photo' => 'image|max:1024', 
+            'file' => 'image|max:1024', 
         ]);
         
-        $this->photo->store('photos');
+        $this->file->store('photos');
     }
 }

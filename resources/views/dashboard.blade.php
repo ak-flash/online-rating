@@ -13,9 +13,9 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
-                    <livewire:upload-photo/>
+                    <livewire:upload-file/>
                     
-                    {{-- <!-- component -->
+                    <!-- component -->
                     <div class="p-5 text-2xl"> Статистика за семестр
                     </div>
                     <style>
@@ -171,7 +171,7 @@
                             },
                             options: chartOptions
                         });
-                    </script> --}}
+                    </script>
 
 
                 </div>

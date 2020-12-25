@@ -1,14 +1,14 @@
 <div>
-    <form wire:submit.prevent="save">
-        <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4" x-on:livewire-upload-finish="$wire.save()"> 
-        <input type="file" class="hidden" wire:model="photo" x-ref="photo" @change="photoName = $refs.photo.files[0].name;
+    
+        <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4" x-on:livewire-upload-finish="$wire.uploadPhoto()"> 
+        <input type="file" class="hidden" wire:model="file" x-ref="photo" @change="photoName = $refs.photo.files[0].name;
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     photoPreview = e.target.result;
                 };
                 reader.readAsDataURL($refs.photo.files[0]);" >
     
-        @error('photo') <span class="error">{{ $message }}</span> @enderror
+        @error('file') <span class="error">{{ $message }}</span> @enderror
     
 
         <!-- New Profile Photo Preview -->
@@ -22,8 +22,7 @@
         {{ __('Select A New Photo') }}
     </button>
 
-    <button wire:click="save">Archive</button>
-    </form>
+    
     
         
     
