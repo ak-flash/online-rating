@@ -13,8 +13,9 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
-
-                    <!-- component -->
+                    <livewire:upload-photo/>
+                    
+                    {{-- <!-- component -->
                     <div class="p-5 text-2xl"> Статистика за семестр
                     </div>
                     <style>
@@ -170,12 +171,20 @@
                             },
                             options: chartOptions
                         });
-                    </script>
+                    </script> --}}
 
 
                 </div>
             </div>
     @endif
+
+
+    
+
+ 
+
+
+
 
     @if(request()->routeIs('users'))
         <livewire:users/>
