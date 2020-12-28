@@ -1,12 +1,12 @@
 <nav x-data="{ open: false }" class="bg-gray-300 border-b border-gray-100">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <img src="{{ asset('img/logo-m.png') }}" alt="VolSMU logo" class="block h-10 w-auto fill-current text-gray-600">
+                    <a href="{{ route('home') }}">
+                       <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
                     </a>
                 </div>
 
@@ -23,7 +23,7 @@
                     </x-nav-link>
                 </div>
 
-                @if(Auth::user()->isModerator())
+                @if(auth()->user()->isModerator())
                 <div class="hidden sm:flex">
                     <x-nav-link href="{{ route('disciplines') }}" :active="request()->routeIs('disciplines')" class="hover:bg-green-600 hover:text-white">
                         {{ __('Дисциплины') }}
@@ -38,47 +38,108 @@
                 </div>
 
 
-                @if(Auth::user()->isAdmin())
+                @if(auth()->user()->isAdmin())
+                    <div class="hidden sm:flex">
+                        <x-nav-link href="{{ route('departments') }}" :active="request()->routeIs('departments')" class="hover:bg-green-600 hover:text-white">
+                            {{ __('Кафедры') }}
+                        </x-nav-link>
+                    </div>
+
                     <div class="hidden sm:flex">
                         <x-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')" class="hover:bg-green-600 hover:text-white">
                             {{ __('Пользователи') }}
                         </x-nav-link>
                     </div>
 
-                    <div class="hidden sm:flex">
-                        <x-nav-link href="{{ route('logs') }}" :active="request()->routeIs('logs')" class="hover:bg-green-600 hover:text-white">
-                            {{ __('Логи Laravel') }}
-                        </x-nav-link>
-                    </div>
                 @endif
 
 
             </div>
 
+
+
+
+
+
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div>{{ Auth::user()->name }}</div>
-
-                            <div class="ml-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
+                        <button class="flex p-1 text-sm border-2 border-transparent rounded-md focus:outline-none focus:border-gray-300 hover:border-gray-300 hover:bg-gray-200 transition duration-150 ease-in-out">
+                            <div class="hidden lg:block text-right mr-3 pl-2 text-black">
+                                {{ auth()->user()->name }}
+                                <div class="text-gray-500">
+                                    {{ auth()->user()->getPosition() }}
+                                </div>
                             </div>
+
+                            <img class="h-10 w-10 rounded-full object-cover mr-3" src="{{ auth()->user()->profile_photo_url }}" />
                         </button>
                     </x-slot>
 
+                    <!-- Account Management -->
                     <x-slot name="content">
-                        <!-- Authentication -->
+
+                        @if(auth()->user()->isAdmin())
+                            <div class="block px-4 py-1 text-xs text-gray-400">
+                                {{ __('Администрирование') }}
+                            </div>
+
+                            <x-dropdown-link href="{{ route('logs') }}" class="pl-5">
+                                <i class="fa fa-head-side-mask mr-1"></i>
+                                {{ __('Управление') }}
+                            </x-dropdown-link>
+
+                            <div class="border-t border-gray-100"></div>
+                        @endif
+
+
+                        <div class="block px-4 py-1 text-xs text-gray-400">
+                            {{ __('Управление аккаунтом') }}
+                        </div>
+
+                        <x-dropdown-link href="{{ route('profile.show') }}" class="pl-5">
+                            <i class="fa fa-head-side-mask mr-1"></i> {{ __('Профиль') }}
+                        </x-dropdown-link>
+
+
+                        <div class="border-t border-gray-100"></div>
+
+                        <!-- Department Management -->
+
+                        <div class="flex px-4 py-2 text-sm text-gray-400">
+                            {{ __('Кафедра') }}
+
+                        @if(auth()->user()->department_id)
+                            <div class="pl-1 text-sm text-black">
+                                {{ auth()->user()->department->name }}
+                            </div>
+                        @else
+                            <div class="pl-1 text-sm text-red-500">
+                                отсутствует
+                            </div>
+                        @endif
+                        </div>
+                        <div class="border-t border-gray-100"></div>
+
+                        @if(auth()->user()->department_id)
+                            <!-- Department Settings -->
+                        <x-dropdown-link href="" class="pl-5">
+                            <i class="fa fa-head-side-mask mr-1"></i>
+                            {{ __('Настройки') }}
+                        </x-dropdown-link>
+                        <div class="border-t border-gray-100"></div>
+                        @endif
+
+
+                            <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Logout') }}
+                                <i class="fa fa-sign-in-alt mr-1"></i> {{ __('Выйти') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -115,8 +176,8 @@
                 </div>
 
                 <div class="ml-3">
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-base text-gray-800">{{ auth()->user()->name }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ auth()->user()->email }}</div>
                 </div>
             </div>
 

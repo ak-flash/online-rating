@@ -31,6 +31,10 @@ Route::prefix('dashboard')
             return view('dashboard');
         })->middleware('role:admin')->name('users');
 
+        Route::get('/departments', function () {
+            return view('dashboard');
+        })->middleware('role:admin')->name('departments');
+
         Route::get('/journals', \App\Http\Livewire\Journals::class)
             ->name('journals');
 
@@ -42,8 +46,27 @@ Route::prefix('dashboard')
 
         Route::get('/logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->middleware('role:admin')->name('logs');
 
+        Route::get('/profile', \App\Http\Livewire\UserProfile::class)
+            ->name('profile.show');
+
 });
 
+Route::prefix('student')
+    ->middleware('student')
+    ->group(function () {
 
+        Route::get('/login', \App\Http\Livewire\StudentLogin::class)
+            ->name('student.login')
+            ->withoutMiddleware('student');
+
+        Route::get('/dashboard', \App\Http\Livewire\StudentDashboard::class)
+            ->name('student.dashboard');
+
+        Route::get('/settings', \App\Http\Livewire\StudentDashboard::class)
+            ->name('student.settings');
+
+        Route::get('/logout', [\App\Models\Student::class, 'logout'])
+            ->name('student.logout');
+    });
 
 require __DIR__.'/auth.php';

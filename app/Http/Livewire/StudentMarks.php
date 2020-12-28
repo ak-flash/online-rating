@@ -8,6 +8,6 @@ class StudentMarks extends Component
 {
     public function render()
     {
-        return view('livewire.student-marks');
+        return view('livewire.student.student-marks');
     }
 }

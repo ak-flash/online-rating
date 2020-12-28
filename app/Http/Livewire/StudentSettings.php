@@ -8,6 +8,6 @@ class StudentSettings extends Component
 {
     public function render()
     {
-        return view('livewire.student-settings');
+        return view('livewire.student.student-settings');
     }
 }

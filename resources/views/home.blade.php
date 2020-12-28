@@ -8,8 +8,8 @@
 
 
                 <h1 class="flex font-bold text-3xl text-green-900 hover:bg-green-500 ml-3 p-2 rounded-2xl">
-                    <img src="{{ asset('img/logo-m.png') }}" alt="VolSMU logo" class="h-11 w-auto mr-3">
-                    <a href="https://volgmed.ru" class="hidden md:flex">ВолгГМУ</a>    
+                    <x-application-logo class="h-11 w-auto mr-3" />
+                    <a href="https://volgmed.ru" class="hidden md:flex">ВолгГМУ</a>
                 </h1>
 
             <div class="flex float-right">
@@ -17,9 +17,9 @@
 
                     <a href="{{ route('profile.show') }}" class="flex hover:bg-green-600 rounded-lg px-3 p-1" title="Профиль">
                         <div class="text-right mr-3 text-white">
-                            {{ Auth::user()->name }}
+                            {{ auth()->user()->name }}
                             <div class="text-gray-400">
-                                {{ Auth::user()->email }}
+                                {{ auth()->user()->email }}
                             </div>
                         </div>
                         <img class="mr-3 h-12 w-12 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="user_avatar" />
@@ -36,7 +36,7 @@
                     </a>
                 @else
 
-                    <a href="{{ route('login') }}" class="m-2 bg-green-400 hover:bg-green-800 shadow-xl sm:px-5 p-2 text-black rounded float-right w-30">
+                    <a href="{{ route('student.login') }}" class="m-2 bg-green-400 hover:bg-green-800 shadow-xl sm:px-5 p-2 text-black rounded float-right w-30">
                         <i class="fa fa-graduation-cap mr-1"></i>
                         Для студентов
                     </a>

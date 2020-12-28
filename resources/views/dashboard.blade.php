@@ -14,7 +14,7 @@
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
                     <livewire:upload-file/>
-                    
+
                     <!-- component -->
                     <div class="p-5 text-2xl"> Статистика за семестр
                     </div>
@@ -179,15 +179,13 @@
     @endif
 
 
-    
-
- 
-
-
-
 
     @if(request()->routeIs('users'))
         <livewire:users/>
+    @endif
+
+    @if(request()->routeIs('departments'))
+        <livewire:departments/>
     @endif
 
 

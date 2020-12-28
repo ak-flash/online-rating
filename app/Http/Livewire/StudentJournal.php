@@ -8,6 +8,6 @@ class StudentJournal extends Component
 {
     public function render()
     {
-        return view('livewire.student-journal');
+        return view('livewire.student.student-journal');
     }
 }
