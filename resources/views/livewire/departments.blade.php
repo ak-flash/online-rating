@@ -7,31 +7,21 @@
 
 
             <div class="float-left">
-                <button class="bg-green-700 hover:bg-green-500 ml-5 m-2 p-2 px-4 text-white text-sm font-semibold rounded" wire:click="$toggle('openModal')">
-                    <i class="fas fa-plus" style="font-size:12px;"></i> Добавить
-                </button>
+                <x-add-button wire:click="$toggle('openModal')">
+                    Добавить
+                </x-add-button>
             </div>
 
             <div class="m-2 md:flex sm:flex-row flex-col float-right">
-                <div class="flex flex-row mb-1 sm:mb-0">
 
-                    <select class="rounded-l block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight" wire:model="showPerPage">
+                <x-search />
+
+                <div class="flex flex-row mb-1 sm:mb-0">
+                    <select class="rounded-r block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight" wire:model="perPage">
                         <option>5</option>
                         <option>10</option>
                         <option>20</option>
                     </select>
-
-                </div>
-                {{--                 Search block               --}}
-                <div class="block relative" x-data="{search: null}">
-                    <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
-                        <span class="fa fa-search opacity-50"></span>
-                    </span>
-                    <input type="text" placeholder="Поиск" class="rounded-r block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700" wire:model.debounce.1s="search" x-ref="search" />
-
-                    <span class="h-full absolute inset-y-0 right-0 flex items-center pr-2">
-                        <span class="fa fa-times-circle opacity-10 hover:opacity-75 cursor-pointer" x-on:click="$refs.search.value = '';$wire.search = '';"></span>
-                    </span>
                 </div>
 
             </div>
@@ -96,7 +86,7 @@
 
 
                         <td class="p-3 border-b border-gray-200 bg-white text-center whitespace-nowrap">
-                            <button class="bg-green-700 hover:bg-green-500 ml-5 m-2 p-2 px-4 text-white text-sm font-semibold rounded" wire:click="edit({{ $department->id }})">
+                            <button class="bg-green-700 hover:bg-green-500 ml-5 m-2 p-2 px-4 text-white text-sm font-semibold rounded" wire:click="update({{ $department->id }})">
                                 <i class="fas fa-edit" style="font-size:12px;"></i>
                             </button>
                             <button class="bg-red-700 hover:bg-red-500 m-2 p-2 px-4

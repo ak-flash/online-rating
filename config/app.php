@@ -14,7 +14,9 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-
+    
+    
+    'study_year' => env('APP_STUDY_YEAR', 2020),
     /*
     |--------------------------------------------------------------------------
     | Application Environment

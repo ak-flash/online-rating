@@ -17,7 +17,7 @@ class CreateStudyClassesTable extends Migration
             $table->id();
             $table->foreignId('lesson_id')->constrained();
             $table->string('title', 100);
-            $table->integer('type')->length(1)->default(1);
+            $table->integer('type_id')->length(1)->default(1);
             $table->date('date');
             $table->time('time_start', 0);
             $table->time('time_end', 0);

@@ -16,13 +16,13 @@ class CreateLessonsTable extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('depatment_id')->constrained();
+            $table->foreignId('department_id')->constrained();
             $table->foreignId('discipline_id')->constrained();
             $table->time('time_start', 0);
             $table->time('time_end', 0);
-            $table->integer('day_type')->length(1)->default(3);
+            $table->integer('day_type_id')->length(1)->default(3);
             $table->foreignId('faculty_id')->constrained();
-            $table->date('year');
+            $table->year('year');
             $table->integer('semester')->nullable();
             $table->integer('course_number')->nullable();
             $table->integer('group_number')->nullable();

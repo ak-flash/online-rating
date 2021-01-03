@@ -13,7 +13,7 @@ class CreateDepatmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('depatments', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->index()->comment('Moderator Id');
             $table->string('name', 190);
@@ -30,6 +30,6 @@ class CreateDepatmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('depatments');
+        Schema::dropIfExists('departments');
     }
 }

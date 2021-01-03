@@ -12,18 +12,18 @@ class Users extends Component
     use WithPagination;
 
         public $search = '';
-        public $showPerPage = 5;
+        public $perPage = 5;
         public $findByRole = 0;
         public $findByPosition = 0;
         public $confirmingUserDeletion =0;
         public $openModal = false;
         public $user_id = 0;
-        public $name, $email, $role_id, $position;
+        public $name, $email, $role, $position;
 
         protected $rules = [
             'name' => 'required|string|min:6',
             'email' => 'required|email',
-            'role_id' => 'required',
+            'role' => 'required',
         ];
 
         public function render() {
@@ -32,10 +32,10 @@ class Users extends Component
                     return $q->wherePosition($this->findByPosition);
                 })
                 ->when($this->findByRole != 0, function ($q) {
-                    return $q->whereRole($this->findByRole);
+                    return $q->whereRoleId($this->findByRole);
                 })
                 ->with('department')
-                ->paginate($this->showPerPage);
+                ->paginate($this->perPage);
 
             //dd($users);
             return view('livewire.users', [ 'users' => $users ]);
@@ -47,13 +47,12 @@ class Users extends Component
             $this->resetValidation();
         }
 
-        public function edit($id) {
+        public function update(User $user) {
 
-            $user = User::findOrFail($id);
-            $this->user_id = $id;
+            $this->user_id = $user->id;
             $this->name = $user->name;
             $this->email = $user->email;
-            $this->role_id = $user->role_id;
+            $this->role = $user->role_id;
 
             $this->openModal = true;
         }
@@ -72,7 +71,7 @@ class Users extends Component
         User::updateOrCreate(['id' => $this->user_id], [
             'name' => $this->name,
             'email' => $this->email,
-            'role_id' => $this->role_id,
+            'role_id' => $this->role,
             'password' => '$2y$10$qI899bmWznnHEYiaR1WLjO7zrZs22EBC9WHFSpifrsK12o0jGrBNe',
         ]);
 
@@ -92,11 +91,11 @@ class Users extends Component
      */
 
     private function resetInputFields(){
-
+        $this->user_id = 0;
         $this->name = '';
         $this->email = '';
         $this->position = 0;
-        $this->role_id = 0;
+        $this->role = '';
 
     }
 }

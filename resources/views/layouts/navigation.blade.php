@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden sm:ml-5 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="hover:bg-green-600 hover:text-white">
-                        {{ __('Личный кабинет') }}
+                        {{ __('Кафедра') }}
                     </x-nav-link>
                 </div>
 

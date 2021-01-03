@@ -22,11 +22,14 @@ class LessonFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 40),
-            'department_id' => $this->faker->numberBetween(1, 7),
-            'title' => $this->faker->text(30),
-            'type' => $this->faker->numberBetween(1, 4),
-            'date' => $this->faker->date(),
+            'user_id' => $this->faker->numberBetween(1, 30),
+            'department_id' => $this->faker->numberBetween(10, 20),
+            'day_type_id' => 3,
+            'discipline_id' => $this->faker->numberBetween(1, 10),
+            'time_start' => $this->faker->time('H:i:s'),
+            'time_end' => $this->faker->time('H:i:s'),
+            'year' => $this->faker->year(),
+            'semester' => $this->faker->numberBetween(1, 12),
             'faculty_id' => $this->faker->numberBetween(1, 5),
             'course_number' => $this->faker->numberBetween(1, 6),
             'group_number' => $this->faker->numberBetween(1, 20),

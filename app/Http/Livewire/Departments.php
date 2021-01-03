@@ -11,7 +11,7 @@ class Departments extends Component
     use WithPagination;
 
     public $search = '';
-    public $showPerPage = 5;
+    public $perPage = 5;
     public $confirmingUserDeletion =0;
     public $openModal = false;
     public $name, $user_id;
@@ -23,7 +23,7 @@ class Departments extends Component
     {
         $departments = Department::search($this->search)
             ->with('user')
-            ->paginate($this->showPerPage);
+            ->paginate($this->perPage);
 
         //dd($users);
         return view('livewire.departments', [ 'departments' => $departments ]);
@@ -35,11 +35,11 @@ class Departments extends Component
         $this->resetValidation();
     }
 
-    public function edit($id) {
+    public function update(Department $department) {
 
-        $user = Department::findOrFail($id);
-        $this->user_id = $id;
-        $this->name = $user->name;
+
+        $this->user_id = $department->user_id;
+        $this->name = $department->name;
 
         $this->openModal = true;
     }

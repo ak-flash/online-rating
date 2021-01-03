@@ -145,19 +145,16 @@ class User extends Authenticatable
         return self::ROLESRUS[ $this->attributes['role_id'] ];
     }
 
-    function isAdmin(): bool
+    /**
+     * set Role to class
+     * @param $value
+     */
+    public function setRoleAttribute($value)
     {
-        return $this->role == 'admin';
-    }
-
-    function isModerator(): bool
-    {
-        return $this->role == 'moderator' || $this->role == 'admin';
-    }
-
-    function isTeacher(): bool
-    {
-        return $this->role == 'teacher' || $this->role == 'moderator' || $this->role == 'admin';
+        $roleID = self::getRoleID($value);
+        if ($roleID) {
+            $this->attributes['role_id'] = $roleID;
+        }
     }
 
     public static function getPositionID($position)
@@ -174,6 +171,23 @@ class User extends Authenticatable
     {
         return self::POSITIONS[$position];
     }
+
+    function isAdmin(): bool
+    {
+        return $this->role == 'admin';
+    }
+
+    function isModerator(): bool
+    {
+        return $this->role == 'moderator' || $this->role == 'admin';
+    }
+
+    function isTeacher(): bool
+    {
+        return $this->role == 'teacher' || $this->role == 'moderator' || $this->role == 'admin';
+    }
+
+
 
     public  function department() {
         return $this->belongsTo(Department::class);

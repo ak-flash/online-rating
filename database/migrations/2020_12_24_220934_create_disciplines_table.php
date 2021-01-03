@@ -16,9 +16,11 @@ class CreateDisciplinesTable extends Migration
         Schema::create('disciplines', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->foreignId('depatment_id')->constrained();
+            $table->string('short_name', 20)->nullable();
+            $table->foreignId('department_id')->constrained();
             $table->foreignId('faculty_id')->constrained();
             $table->integer('semester')->length(2)->default(1);
+            $table->integer('last_class_id')->length(2)->default(1);
             $table->timestamps();
         });
     }

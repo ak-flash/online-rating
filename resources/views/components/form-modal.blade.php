@@ -14,7 +14,7 @@
     <div class="px-6 py-4 bg-gray-100 text-right">
         {{ $footer }}
 
-        <x-danger-button class="ml-2" @click="$wire.closeModal()">
+        <x-danger-button class="ml-2" x-on:click="show = false">
             {{ __('Закрыть') }}
         </x-danger-button>
     </div>
