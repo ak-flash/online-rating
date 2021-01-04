@@ -155,8 +155,8 @@ class Lesson extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function student() {
-        return $this->belongsToMany(Student::class);
+    public function study_classes() {
+        return $this->hasMany(StudyClass::class);
     }
 
 

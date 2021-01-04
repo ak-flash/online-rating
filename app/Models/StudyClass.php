@@ -33,4 +33,8 @@ class StudyClass extends Model
     {
         return self::TYPES[ $this->attributes['type_id'] ];
     }
+
+    public function student() {
+        return $this->belongsToMany(Student::class);
+    }
 }

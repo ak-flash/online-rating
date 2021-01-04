@@ -24,7 +24,7 @@
 
             <span class="mt-8">
                 <!-- User info -->
-                <img class="h-50 w-40 rounded-lg object-cover mx-auto" src="{{ $student->profile_photo_url }}" alt="student_avatar" />
+                <img class="h-15 w-15 rounded-lg object-cover mx-auto" src="{{ $student->profile_photo_url }}" alt="student_avatar" />
 
                 <h2 class="m-4 text-3xl dark:text-gray-300 capitalize">
                     {{ $student->name }}
@@ -63,15 +63,15 @@
                 </span>
             </span>
 
-        {{--  <x-jet-nav-link href="{{ route('student.dashboard') }}" :active="request()->routeIs('student.dashboard')" class="p-3 pl-5 text-black cursor-pointer mt-10">
+         {{-- <x-nav-link href="{{ route('student.dashboard') }}" :active="request()->routeIs('student.dashboard')" class="p-3 pl-5 text-black cursor-pointer mt-10">
             <i class="fas fa-school mr-3" style="font-size:25px;"></i>
             Журналы
-        </x-jet-nav-link>
+        </x-nav-link>
 
-        <x-jet-nav-link href="{{ route('student.logout') }}" :active="request()->routeIs('student.logout')" class="p-3 pl-5 text-black cursor-pointer mt-4">
+        <x-nav-link href="{{ route('student.logout') }}" :active="request()->routeIs('student.logout')" class="p-3 pl-5 text-black cursor-pointer mt-4">
             <i class="fas fa-graduation-cap mr-3" style="font-size:25px;"></i>
             Настройки
-        </x-jet-nav-link> --}}
+        </x-nav-link> --}}
 
         {{--<ul class="mt-4 text-gray-600">
                 <!-- Links -->
@@ -110,7 +110,7 @@
 
                 <div class="flex ">
                     <div class="ml-5 p-3 text-base text-white w-full ">
-                        {{ $student->first_name }} {{ $student->last_name }}
+                        {{ $student->name }}
                     </div>
 
 

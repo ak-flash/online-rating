@@ -88,7 +88,7 @@
                     </x-button>
                 @endisset
 
-                <x-danger-button class="ml-2" wire:click="$toggle('showConfirmation')" wire:loading.attr="disabled">
+                <x-danger-button class="ml-2" x-on:click="show=false" wire:loading.attr="disabled">
                     {{ __('Закрыть') }}
                 </x-danger-button>
 

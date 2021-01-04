@@ -10,16 +10,7 @@
             <div class="m-2 hidden md:flex sm:flex-row flex-col float-right">
                 <div class="flex flex-row mb-1 sm:mb-0">
 
-                    <select class="rounded-l text-gray-500 py-2 px-4 pr-8 leading-tight" wire:model="year">
-                        <option value="2020">2020-2021</option>
-                        <option value="2019">2019-2020</option>
-                        <option value="2018">2018-2019</option>
-                    </select>
-
-                    <select class="text-gray-500 py-2 px-4 pr-8 leading-tight" wire:model="semester">
-                        <option value="autumn">Осенний</option>
-                        <option value="spring">Весенний</option>
-                    </select>
+                    <x-select-semester />
 
                         <select class="text-gray-500 py-2 px-4 pr-8 leading-tight" wire:model="showPersonalGroups">
                             <option value="1">Мои группы</option>

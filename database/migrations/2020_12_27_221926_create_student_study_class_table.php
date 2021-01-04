@@ -14,8 +14,8 @@ class CreateStudentStudyClassTable extends Migration
     public function up()
     {
         Schema::create('student_study_class', function (Blueprint $table) {
-            $table->integer('study_class_id')->unsigned();
-            $table->integer('student_id')->unsigned();
+            $table->foreignId('study_class_id')->constrained();
+            $table->foreignId('student_id')->constrained();
             $table->unique(['study_class_id', 'student_id']);
             $table->integer('mark1')->length(3)->default(0);
             $table->integer('mark2')->length(3)->default(0);
