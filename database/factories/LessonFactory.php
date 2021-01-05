@@ -28,7 +28,7 @@ class LessonFactory extends Factory
             'discipline_id' => $this->faker->numberBetween(1, 10),
             'time_start' => $this->faker->time('H:i:s'),
             'time_end' => $this->faker->time('H:i:s'),
-            'year' => $this->faker->year(),
+            'year' => $this->faker->numberBetween(2018, 2020),
             'semester' => $this->faker->numberBetween(1, 12),
             'faculty_id' => $this->faker->numberBetween(1, 5),
             'course_number' => $this->faker->numberBetween(1, 6),

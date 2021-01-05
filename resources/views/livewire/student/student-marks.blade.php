@@ -165,27 +165,10 @@
                                           </div>
 
 
-                            @if($lesson->pivot->mark1==2)
-                                <div class="rounded-md bg-red-600 text-2xl m-1 ml-5 px-3 py-2">
-                                    {{ $lesson->pivot->mark1 }}
-                                </div>
-                            @elseif($lesson->pivot->mark1>=3)
-                                <div class="rounded-md text-green-700
-                                            bg-white text-2xl m-1 ml-5 px-3 py-2">
-                                    {{ $lesson->pivot->mark1 }}
-                                </div>
-                            @endif
+                            {!! App\Models\StudyClass::set_mark_color($lesson->pivot->mark1) !!}
+                            
 
-                            @if($lesson->pivot->mark2==2)
-                                <div class="rounded-md bg-red-600 text-2xl m-1 md:ml-3 px-3 py-2">
-                                    {{ $lesson->pivot->mark2 }}
-                                </div>
-                            @elseif($lesson->pivot->mark2>=3)
-                                <div class="rounded-md text-green-700
-                    bg-white text-2xl m-1 md:ml-3 px-3 py-2">
-                                    {{ $lesson->pivot->mark2 }}
-                                </div>
-                            @endif
+                            {!! App\Models\StudyClass::set_mark_color($lesson->pivot->mark2) !!}
 
                                      </div>
                                     <h3 class="m-2 pl-3 text-white text-md">

@@ -36,7 +36,7 @@
                     </a>
                 @else
 
-                    <a href="{{ route('student.login') }}" class="m-2 bg-green-400 hover:bg-green-800 shadow-xl sm:px-5 p-2 text-black rounded float-right w-30">
+                    <a href="{{ route('student.login') }}" class="m-2 bg-blue-600 hover:bg-blue-800 shadow-xl sm:px-5 p-2  text-white rounded float-right w-30">
                         <i class="fa fa-graduation-cap mr-1"></i>
                         Для студентов
                     </a>

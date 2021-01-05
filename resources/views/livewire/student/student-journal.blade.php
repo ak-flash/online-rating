@@ -63,17 +63,15 @@
                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                         Кафедра
                     </th>
-                    <th class="hidden md:table-cell px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Преподаватель
-                    </th>
+                    
                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600">
                         Прошедшее<br>занятие
                     </th>
                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600">
-                        Рейтинг
+                        Оценки
                     </th>
-                    <th class="hidden md:table-cell px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 ">
-                        Дата обновления
+                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                        Преподаватель
                     </th>
                 </tr>
                 </thead>
@@ -82,11 +80,11 @@
             @if($disciplines->isNotEmpty())
                 @foreach($disciplines as $discipline)
 
-                <tr>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                <tr class="border-b border-gray-200 bg-white hover:bg-gray-100">
+                    <td class="text-center">
                         {{ (($disciplines->currentPage() * $perPage) - $perPage) + $loop->iteration }}
                     </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <td class="py-4">
                         <div class="flex items-center ">
                           <button class="text-left text-black font-bold" wire:click="showMarks({{ $discipline->discipline->id }})">
                               {{ Str::ucfirst($discipline->department->name) }}
@@ -96,39 +94,44 @@
                           </button>
                         </div>
                     </td>
-                    <td class="hidden md:table-cell px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                       <div class="flex">
-                            <img class="h-10 w-10 rounded-full object-cover mr-3" src="{{ $discipline->user->profile_photo_path ?
-            '../storage/'.$discipline->user->profile_photo_path : '../img/avatar-placeholder.png' }}"/>
-                            <div class="flex-col text-gray-900 whitespace-no-wrap">
-
-                                {{ $discipline->user->name }}
-                                <div class="text-xs">
-                                {{ $discipline->user->getPosition() }}
-                                </div>
-                            </p>
-                       </div>
-                    </td>
-                    <td class="px-5 py-5 border-b text-center border-gray-200 bg-white text-sm font-semibold">
-                        @if (!is_null($discipline->date)) 
-                            {{ \Carbon\Carbon::parse($discipline->date)->translatedFormat('d F Y') }}
+                    
+                    <td class="font-semibold">
+                        
+                        @if($discipline->study_classes->isNotEmpty())
+                                
+                            {{ \Carbon\Carbon::parse($discipline->study_classes[0]->date)->translatedFormat('d F Y') }}
+                            <div class="text-xs text-gray-600 font-thin">
+                                {{ $discipline->study_classes[0]->type }}
+                            </div> 
+                            
                         @endif
+                      
+                    </td>
+                    <td class="px-5 text-center font-semibold">
+                        @if($discipline->study_classes->isNotEmpty()&&$discipline->study_classes[0]->updated_at!=NULL)
+                            
+                            <div class="flex">
+                                {!! App\Models\StudyClass::set_mark_color($discipline->study_classes[0]->mark1) !!}
 
-                        <div class="text-xs text-gray-500">
-                            {{ $discipline->study_classes->title }}
+                                {!! App\Models\StudyClass::set_mark_color($discipline->study_classes[0]->mark2) !!}
+                            </div>
+                            <div class="rounded-lg bg-green-50 text-green-900 text-xs text-center p-1">
+                                {{ $discipline->study_classes[0]->updated_at->format('d/m/Y') }}
+                            </div>
+                        @endif
+                    </td>
+                    <td class="">
+                        <div class="flex">
+                             <img class="h-10 w-10 rounded-full object-cover mr-3" src="{{ $discipline->user->profile_photo_path ?
+             '../storage/'.$discipline->user->profile_photo_path : '../img/avatar-placeholder.png' }}"/>
+                             <div class="flex-col text-gray-900 whitespace-no-wrap text-sm">
+                                 {{ $discipline->user->name }}
+                                 <div class="text-xs">
+                                 {{ $discipline->user->getPosition() }}
+                                 </div>
+                             </p>
                         </div>
-                    </td>
-                    <td class="px-5 py-5 border-b text-center border-gray-200 bg-white text-sm font-semibold">
-                        {{ $discipline->rating }}
-                    </td>
-                    <td class="hidden md:table-cell px-5 py-5 border-b text-center border-gray-200 bg-white text-sm">
-                            <span class="relative  inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                <span class="relative">
-                                    {{ $discipline->updated_at ? $discipline->updated_at->format('d/m/Y') : '-' }}
-                                </span>
-                            </span>
-                    </td>
+                     </td>
                 </tr>
 
                 @endforeach

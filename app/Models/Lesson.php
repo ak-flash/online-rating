@@ -5,45 +5,59 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Yajra\Auditable\AuditableWithDeletesTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\Lesson
  *
  * @property int $id
- * @property int|null $user_id
- * @property int|null $team_id
- * @property int|null $discipline_id
- * @property string $date
+ * @property int $user_id
+ * @property int $department_id
+ * @property int $discipline_id
  * @property string $time_start
  * @property string $time_end
- * @property int|null $faculty_id
+ * @property int $day_type_id
+ * @property int $faculty_id
+ * @property string $year
+ * @property int|null $semester
  * @property int|null $course_number
  * @property int|null $group_number
  * @property string|null $room
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Faculty|null $faculty
+ * @property-read \App\Models\Department $department
+ * @property-read \App\Models\Discipline $discipline
+ * @property-read \App\Models\Faculty $faculty
+ * @property string $day_type
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudyClass[] $study_classes
+ * @property-read int|null $study_classes_count
+ * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson query()
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereCourseNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDayTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDepartmentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDisciplineId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereFacultyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereGroupNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereRoom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereSemester($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereTimeEnd($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereTimeStart($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereYear($value)
  * @mixin \Eloquent
  */
 class Lesson extends Model
 {
     use HasFactory;
+    use AuditableWithDeletesTrait, SoftDeletes;
+
 
     protected $dates = ['created_at', 'updated_at'];
 
