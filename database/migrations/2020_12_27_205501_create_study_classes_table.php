@@ -16,7 +16,7 @@ class CreateStudyClassesTable extends Migration
         Schema::create('study_classes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('lesson_id')->constrained();
-            $table->string('title', 100);
+            $table->foreignId('topic_id')->constrained();
             $table->integer('type_id')->length(1)->default(1);
             $table->date('date');
             $table->time('time_start', 0);

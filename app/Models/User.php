@@ -6,8 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
-
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * App\Models\User
@@ -17,23 +18,24 @@ use Illuminate\Support\Facades\Storage;
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
- * @property string|null $two_factor_secret
- * @property string|null $two_factor_recovery_codes
  * @property string|null $remember_token
+ * @property string|null $profile_photo_path
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $two_factor_secret
+ * @property string|null $two_factor_recovery_codes
  * @property string|null $phone_number
- * @property int $position_id
- * @property int $role_id
- * @property int $active
+ * @property string $position
+ * @property bool $active
  * @property int|null $department_id
- * @property string|null $profile_photo_path
  * @property string|null $date_of_birth
  * @property-read \App\Models\Department|null $department
  * @property-read string $profile_photo_url
  * @property string $role
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
+ * @property-read int|null $tokens_count
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
@@ -47,10 +49,10 @@ use Illuminate\Support\Facades\Storage;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User wherePositionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePosition($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereProfilePhotoPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRoleId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorRecoveryCodes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
@@ -58,7 +60,11 @@ use Illuminate\Support\Facades\Storage;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use HasProfilePhoto;
+    use Notifiable;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -69,8 +75,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'position_id',
-        'role_id',
+        'position',
+        'role',
         'department_id',
     ];
 
@@ -82,6 +88,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**
@@ -93,6 +101,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
     protected $appends = [
         'profile_photo_url',
     ];
@@ -104,7 +117,7 @@ class User extends Authenticatable
         4 => 'laborant',
     ];
 
-    public const ROLESRUS = [
+    public const ROLENAMES = [
         1 => 'Администратор',
         2 => 'Модератор',
         3 => 'Преподаватель',
@@ -138,40 +151,38 @@ class User extends Authenticatable
      */
     public function getRoleAttribute(): string
     {
-        return self::ROLES[ $this->attributes['role_id'] ];
+        return self::ROLES[ $this->attributes['role'] ];
     }
 
-    public function getRoleRus(): string
+    public function getRoleName(): string
     {
-        return self::ROLESRUS[ $this->attributes['role_id'] ];
+        return self::ROLENAMES[ $this->attributes['role'] ];
     }
 
     /**
-     * set Role to class
-     * @param $value
+     * @return false|int|string
+     * @var mixed
      */
-    public function setRoleAttribute($value)
-    {
-        $roleID = self::getRoleID($value);
-        if ($roleID) {
-            $this->attributes['role_id'] = $roleID;
-        }
-    }
 
     public static function getPositionID($position)
     {
         return array_search($position, self::POSITIONS);
     }
 
-    public function getPosition(): string
+    public function getPositionAttribute(): string
     {
-        return self::POSITIONS[$this->attributes['position_id']];
+        return self::POSITIONS[ $this->attributes['position'] ];
     }
 
-    public static function getPositionName($position): string
+/*
+    public function setPositionAttribute($value)
     {
-        return self::POSITIONS[$position];
+        $positionID = self::getPositionID($value);
+        if ($positionID) {
+            $this->attributes['position'] = $positionID;
+        }
     }
+*/
 
     function isAdmin(): bool
     {
@@ -198,41 +209,7 @@ class User extends Authenticatable
     public static function search($search){
         return empty($search) ? static::query()
             : static::where('id', 'like', '%'.$search.'%')
-                ->orWhere('name', 'like', '%'.$search.'%')
-                ->orWhere('email', 'like', '%'.$search.'%');
+                ->orWhere('name', 'ilike', '%'.$search.'%')
+                ->orWhere('email', 'ilike', '%'.$search.'%');
     }
-
-    /**
-     * Get the URL to the user's profile photo.
-     *
-     * @return string
-     */
-    public function getProfilePhotoUrlAttribute()
-    {
-        return $this->profile_photo_path
-            ? Storage::disk($this->profilePhotoDisk())->url($this->profile_photo_path)
-            : $this->defaultProfilePhotoUrl();
-    }
-
-    /**
-     * Get the default profile photo URL if no profile photo has been uploaded.
-     *
-     * @return string
-     */
-    protected function defaultProfilePhotoUrl()
-    {
-        $user_name = explode(' ', $this->name);
-        return 'https://ui-avatars.com/api/?name='.urlencode($user_name[1].' '.$user_name[0]).'&color=bedebf&background=43a047';
-    }
-
-    /**
-     * Get the disk that profile photos should be stored on.
-     *
-     * @return string
-     */
-    protected function profilePhotoDisk()
-    {
-        return isset($_ENV['VAPOR_ARTIFACT_NAME']) ? 's3' : 'public';
-    }
-
 }

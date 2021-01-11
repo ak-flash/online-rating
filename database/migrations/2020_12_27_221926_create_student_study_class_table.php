@@ -22,6 +22,7 @@ class CreateStudentStudyClassTable extends Migration
             $table->string('notify',150)->nullable();
             $table->boolean('attendance')->default(0);
             $table->foreignId('user_id')->constrained();
+            $table->text('permission_file_path')->nullable();
             $table->timestamps();
         });
     }

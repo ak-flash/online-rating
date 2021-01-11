@@ -14,8 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    
-    
+
+
     'study_year' => env('APP_STUDY_YEAR', 2020),
     /*
     |--------------------------------------------------------------------------
@@ -177,6 +177,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
+        App\Providers\JetstreamServiceProvider::class,
 
     ],
 
@@ -229,7 +231,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'User' => App\Models\User::class,
+        'Lesson' => App\Models\Lesson::class,
+        'StudyClass' => App\Models\StudyClass::class,
     ],
 
 ];

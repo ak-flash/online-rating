@@ -20,6 +20,30 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Topic whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Topic whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $discipline_id
+ * @property int $t_number
+ * @property string $title
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property int|null $deleted_by
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\User|null $creator
+ * @property-read \App\Models\User|null $deleter
+ * @property-read string $created_by_name
+ * @property-read string $deleted_by_name
+ * @property-read string $updated_by_name
+ * @property-read \App\Models\User|null $updater
+ * @method static \Illuminate\Database\Query\Builder|Topic onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic owned()
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereDisciplineId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereTNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|Topic withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Topic withoutTrashed()
  */
 class Topic extends Model
 {

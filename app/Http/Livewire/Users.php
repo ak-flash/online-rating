@@ -23,7 +23,7 @@ class Users extends Component
         protected $rules = [
             'name' => 'required|string|min:6',
             'email' => 'required|email',
-            'role' => 'required',
+            'role' => 'required|integer',
         ];
 
         public function render() {
@@ -32,8 +32,9 @@ class Users extends Component
                     return $q->wherePosition($this->findByPosition);
                 })
                 ->when($this->findByRole != 0, function ($q) {
-                    return $q->whereRoleId($this->findByRole);
+                    return $q->whereRole($this->findByRole);
                 })
+                ->orderBy('id')
                 ->with('department')
                 ->paginate($this->perPage);
 
@@ -49,10 +50,16 @@ class Users extends Component
 
         public function update(User $user) {
 
-            $this->user_id = $user->id;
-            $this->name = $user->name;
-            $this->email = $user->email;
-            $this->role = $user->role_id;
+            if($user->id) {
+                $this->user_id = $user->id;
+                $this->name = $user->name;
+                $this->email = $user->email;
+                $this->role = $user->getRoleId($user->role);
+                $this->position = $user->getPositionId($user->position);
+            } else {
+                $this->resetInputFields();
+                $this->resetValidation();
+            }
 
             $this->openModal = true;
         }
@@ -71,7 +78,8 @@ class Users extends Component
         User::updateOrCreate(['id' => $this->user_id], [
             'name' => $this->name,
             'email' => $this->email,
-            'role_id' => $this->role,
+            'role' => $this->role,
+            'position' => $this->position,
             'password' => '$2y$10$qI899bmWznnHEYiaR1WLjO7zrZs22EBC9WHFSpifrsK12o0jGrBNe',
         ]);
 
@@ -95,7 +103,7 @@ class Users extends Component
         $this->name = '';
         $this->email = '';
         $this->position = 0;
-        $this->role = '';
+        $this->role = 0;
 
     }
 }

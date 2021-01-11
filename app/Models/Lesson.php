@@ -52,6 +52,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereYear($value)
  * @mixin \Eloquent
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property int|null $deleted_by
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\User|null $creator
+ * @property-read \App\Models\User|null $deleter
+ * @property-read string $created_by_name
+ * @property-read string $deleted_by_name
+ * @property-read string $updated_by_name
+ * @property-read \App\Models\User|null $updater
+ * @method static \Illuminate\Database\Query\Builder|Lesson onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson owned()
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|Lesson withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Lesson withoutTrashed()
  */
 class Lesson extends Model
 {

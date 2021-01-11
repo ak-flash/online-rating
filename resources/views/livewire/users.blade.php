@@ -2,13 +2,13 @@
 
     <x-app-spinner target="search" />
 
-    <div class="py-4 max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-4 max-w-7xl mx-auto sm:px-6 lg:px-12">
         <div class="bg-white overflow-auto shadow-xl sm:rounded-lg">
 
 
             <div class="float-left">
-                <x-add-button wire:click="$toggle('openModal')">
-                    <i class="fas fa-plus" style="font-size:12px;"></i> Добавить
+                <x-add-button wire:click="update()">
+                    Добавить
                 </x-add-button>
             </div>
 
@@ -17,14 +17,14 @@
 
                         <select class="rounded-l block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight border-gray-300" wire:model="findByRole">
                             <option value="0">Все роли</option>
-                            @foreach(\App\Models\User::ROLES as $key => $value)
+                            @foreach(User::ROLES as $key => $value)
                                 <option value="{{ $key }}">{{ $value }}</option>
                             @endforeach
                         </select>
 
                         <select class="block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight border-gray-300" wire:model="findByPosition">
                             <option value="0">Все должности</option>
-                            @foreach(\App\Models\User::POSITIONS as $key => $value)
+                            @foreach(User::POSITIONS as $key => $value)
                                 <option value="{{ $key }}">{{ $value }}</option>
                             @endforeach
                         </select>
@@ -86,13 +86,13 @@
                                 {{ $user->name }}
                             </div>
                             <div class="flex text-sm text-gray-500">
-                                {{ $user->getPosition() }}
-                                
+                                {{ $user->position }}
+
                             </div>
                         </td>
                         <td class="p-3 text-gray-900 text-xs text-center">
                             <div class="w-full rounded-lg p-1 {{ ($user->role=='admin') ? 'text-red-900 bg-red-100': '' }} {{ ($user->role=='moderator') ? 'text-green-900 bg-green-100': '' }}">
-                                {{ $user->getRoleRus() }}
+                                {{ $user->getRoleName() }}
                             </div>
                             {{ $user->department->name ?? 'не указана' }}
                         </td>
@@ -143,31 +143,42 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="flex flex-col items-center">
 
-            <div class="flex items-center">
+
+            <div class="flex items-center m-3">
                 <x-label class="mr-3 text-lg">Ф.И.О.</x-label>
-                <x-input type="text" class="input w-full border mt-2 flex-1" wire:model.lazy="name" />
-                <x-input-error for="name" class="block mt-2" />
+                <x-input type="text" class="" wire:model.lazy="name" />
+                <x-input-error for="name" class="mt-2" />
             </div>
 
-            <div class="flex items-center">
+            <div class="flex items-center m-3">
                 <x-label class="mr-3 text-lg">E-mail</x-label>
-                <x-input type="text" class="input w-full border mt-2 flex-1" wire:model.lazy="email" />
+                <x-input type="text" class="" wire:model.lazy="email" />
                 <x-input-error for="email" class="mt-2" />
             </div>
 
-            <div class="flex items-center">
-                <x-label class="mr-3 text-lg">Роль</x-label>
-                <select class="input w-full border mt-2 flex-1" wire:model="role">
+            <div class="flex items-center m-3">
+                <x-label class="mr-6 text-lg">Роль</x-label>
+                <x-select class="" wire:model="role">
                     <option value="0">Выберите...</option>
-                    @foreach(\App\Models\User::ROLES as $key => $value)
+                    @foreach(User::ROLES as $key => $value)
                         <option value="{{ $key }}">{{ $value }}</option>
                     @endforeach
-                </select>
+                </x-select>
+                <x-input-error for="role" class="mt-2" />
             </div>
 
-        </div>
+            <div class="flex items-center m-3">
+                <x-label class="mr-3 text-lg">Должность</x-label>
+                <x-select class="0" wire:model="position">
+                    <option value="">Выберите...</option>
+                    @foreach(User::POSITIONS as $key => $value)
+                        <option value="{{ $key }}">{{ $value }}</option>
+                    @endforeach
+                </x-select>
+                <x-input-error for="position" class="mt-2" />
+            </div>
+
     </x-slot>
 
     <x-slot name="footer">
@@ -182,5 +193,7 @@
 
     </x-slot>
 </x-form-modal>
+
+
 
 </div>

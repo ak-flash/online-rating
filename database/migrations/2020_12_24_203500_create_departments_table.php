@@ -15,10 +15,10 @@ class CreateDepartmentsTable extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->comment('Moderator')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->comment('Moderator');
             $table->string('name', 190);
-            $table->string('phone', 15)->nullable();
-            $table->text('adress')->nullable();
+            $table->string('phone')->nullable();
+            $table->text('address')->nullable();
             $table->timestamps();
         });
     }

@@ -38,6 +38,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $topic_id
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property int|null $deleted_by
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\User|null $creator
+ * @property-read \App\Models\User|null $deleter
+ * @property-read string $created_by_name
+ * @property-read string $deleted_by_name
+ * @property-read string $updated_by_name
+ * @property-read \App\Models\User|null $updater
+ * @method static \Illuminate\Database\Query\Builder|StudyClass onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|StudyClass owned()
+ * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTopicId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|StudyClass withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|StudyClass withoutTrashed()
  */
 class StudyClass extends Model
 {

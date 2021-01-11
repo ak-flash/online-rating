@@ -22,7 +22,7 @@ class Departments extends Component
     public function render()
     {
         $departments = Department::search($this->search)
-            ->with('user')
+            ->with('user')->orderBy('name')
             ->paginate($this->perPage);
 
         //dd($users);

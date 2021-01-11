@@ -39,6 +39,8 @@ use Illuminate\Support\Facades\Storage;
  * @method static \Illuminate\Database\Eloquent\Builder|Student whereProfilePhotoPath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Student whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $last_name
+ * @method static \Illuminate\Database\Eloquent\Builder|Student whereLastName($value)
  */
 class Student extends Model
 {

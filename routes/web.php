@@ -46,8 +46,8 @@ Route::prefix('dashboard')
 
         Route::get('/logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->middleware('role:admin')->name('logs');
 
-        Route::get('/profile', \App\Http\Livewire\UserProfile::class)
-            ->name('profile.show');
+        // Route::get('/profile', \App\Http\Livewire\UserProfile::class)
+        //     ->name('profile.show');
 
 });
 

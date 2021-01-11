@@ -24,6 +24,7 @@ class StudentFactory extends Factory
         return [
             'document_id' => $this->faker->randomNumber(9, true),
             'name' => $this->faker->name,
+            'last_name' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'faculty_id' => $this->faker->numberBetween(1, 5),
             'course_number' => $this->faker->numberBetween(1, 6),

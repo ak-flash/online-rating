@@ -15,6 +15,12 @@ class CreateTopicsTable extends Migration
     {
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('discipline_id')->constrained();
+            $table->integer('t_number')->length(2);
+            $table->string('title');
+            $table->unique(['t_number', 'discipline_id']);
+            $table->auditableWithDeletes();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
