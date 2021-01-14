@@ -50,10 +50,19 @@ class Student extends Model
         return $this->belongsTo(Faculty::class);
     }
 
+    public function study_classes() {
+        return $this->hasMany(StudyClass::class);
+    }
+
     public function lesson($discipline_id)
     {
+        return $this->belongsToMany(StudyClass::class);
+    }
+
+    public function les_son($discipline_id)
+    {
         return $this->belongsToMany(StudyClass::class)
-            ->where('discipline_id', $discipline_id)
+            ->where('lesson_id', $discipline_id)
             ->withPivot('mark1', 'mark2', 'notify', 'attendance', 'user_id', 'updated_at');
     }
 

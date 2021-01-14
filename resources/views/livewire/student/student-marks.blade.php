@@ -17,7 +17,7 @@
                    {{ $rating }}
                    <div class="mx-2 text-sm">
                        ( {{ $rating ?
-                        \App\Models\Lesson::RATING_TABLE[strval($rating)]
+                        \App\Models\Journal::RATING_TABLE[strval($rating)]
                         : 0 }} )
                    </div>
                </div>
@@ -166,7 +166,7 @@
 
 
                             {!! App\Models\StudyClass::set_mark_color($lesson->pivot->mark1) !!}
-                            
+
 
                             {!! App\Models\StudyClass::set_mark_color($lesson->pivot->mark2) !!}
 

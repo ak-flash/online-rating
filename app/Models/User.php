@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Yajra\Auditable\AuditableWithDeletesTrait;
 
 /**
  * App\Models\User
@@ -16,6 +18,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int $id
  * @property string $name
  * @property string $email
+ * @property string $phone
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
@@ -30,6 +33,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int|null $department_id
  * @property string|null $date_of_birth
  * @property-read \App\Models\Department|null $department
+ * @property-read \App\Models\Journal|null $lessons
  * @property-read string $profile_photo_url
  * @property string $role
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
@@ -65,6 +69,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use AuditableWithDeletesTrait, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -77,6 +82,7 @@ class User extends Authenticatable
         'password',
         'position',
         'role',
+        'phone',
         'department_id',
     ];
 
@@ -159,6 +165,16 @@ class User extends Authenticatable
         return self::ROLENAMES[ $this->attributes['role'] ];
     }
 
+    public static function listRoles($admin): array
+    {
+        $roles = self::ROLES;
+
+        if(!$admin) {
+            unset($roles[1]);
+        }
+        return $roles;
+    }
+
     /**
      * @return false|int|string
      * @var mixed
@@ -173,6 +189,7 @@ class User extends Authenticatable
     {
         return self::POSITIONS[ $this->attributes['position'] ];
     }
+
 
 /*
     public function setPositionAttribute($value)
@@ -189,6 +206,11 @@ class User extends Authenticatable
         return $this->role == 'admin';
     }
 
+    function isNotAdmin(): bool
+    {
+        return $this->role !== 'admin';
+    }
+
     function isModerator(): bool
     {
         return $this->role == 'moderator' || $this->role == 'admin';
@@ -199,14 +221,29 @@ class User extends Authenticatable
         return $this->role == 'teacher' || $this->role == 'moderator' || $this->role == 'admin';
     }
 
-
-
-    public  function department() {
-        return $this->belongsTo(Department::class);
+    function isWorker(): bool
+    {
+        return $this->role !== 'admin';
     }
 
 
-    public static function search($search){
+    public  function department ()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public  function moderator_department ()
+    {
+        return $this->hasOne(Department::class);
+    }
+
+    public  function lessons ()
+    {
+        return $this->hasMany(Journal::class);
+    }
+
+    public static function search ($search)
+    {
         return empty($search) ? static::query()
             : static::where('id', 'like', '%'.$search.'%')
                 ->orWhere('name', 'ilike', '%'.$search.'%')

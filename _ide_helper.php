@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 8.20.1.
+ * Generated for Laravel 8.21.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -14534,10 +14534,138 @@
         class Str {
          
     }
+            /**
+     * 
+     *
+     */ 
+        class Collection {
+                    /**
+         * 
+         *
+         * @see \Barryvdh\Debugbar\ServiceProvider::register()
+         * @static 
+         */ 
+        public static function debug()
+        {
+                        return \Illuminate\Support\Collection::debug();
+        }
+         
+    }
      
 }
 
-        namespace Barryvdh\Debugbar { 
+        namespace App\Models { 
+            /**
+     * App\Models\User
+     *
+     * @property int $id
+     * @property string $name
+     * @property string $email
+     * @property string $phone
+     * @property \Illuminate\Support\Carbon|null $email_verified_at
+     * @property string $password
+     * @property string|null $remember_token
+     * @property string|null $profile_photo_path
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property string|null $two_factor_secret
+     * @property string|null $two_factor_recovery_codes
+     * @property string|null $phone_number
+     * @property string $position
+     * @property bool $active
+     * @property int|null $department_id
+     * @property string|null $date_of_birth
+     * @property-read \App\Models\Department|null $department
+     * @property-read \App\Models\Journal|null $lessons
+     * @property-read string $profile_photo_url
+     * @property string $role
+     * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+     * @property-read int|null $notifications_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
+     * @property-read int|null $tokens_count
+     * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|User query()
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereActive($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereDateOfBirth($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereDepartmentId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneNumber($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User wherePosition($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereProfilePhotoPath($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorRecoveryCodes($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+     * @mixin \Eloquent
+     */ 
+        class User {
+         
+    }
+            /**
+     * App\Models\StudyClass
+     *
+     * @property int $id
+     * @property int $lesson_id
+     * @property string $title
+     * @property int $type_id
+     * @property string $date
+     * @property string $time_start
+     * @property string $time_end
+     * @property string|null $room
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read string $type
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $student
+     * @property-read int|null $student_count
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass query()
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereLessonId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereRoom($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTimeEnd($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTimeStart($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTitle($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTypeId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereUpdatedAt($value)
+     * @mixin \Eloquent
+     * @property int $topic_id
+     * @property int|null $created_by
+     * @property int|null $updated_by
+     * @property int|null $deleted_by
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property-read \App\Models\User|null $creator
+     * @property-read \App\Models\User|null $deleter
+     * @property-read string $created_by_name
+     * @property-read string $deleted_by_name
+     * @property-read string $updated_by_name
+     * @property-read \App\Models\User|null $updater
+     * @method static \Illuminate\Database\Query\Builder|StudyClass onlyTrashed()
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass owned()
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereCreatedBy($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereDeletedBy($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTopicId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereUpdatedBy($value)
+     * @method static \Illuminate\Database\Query\Builder|StudyClass withTrashed()
+     * @method static \Illuminate\Database\Query\Builder|StudyClass withoutTrashed()
+     */ 
+        class StudyClass {
+         
+    }
+     
+}
+
+    namespace Barryvdh\Debugbar { 
             /**
      * 
      *
@@ -19390,6 +19518,8 @@ namespace  {
             class URL extends \Illuminate\Support\Facades\URL {}
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
+            class User extends \App\Models\User {}
+            class StudyClass extends \App\Models\StudyClass {}
             class Debugbar extends \Barryvdh\Debugbar\Facade {}
             class Flare extends \Facade\Ignition\Facades\Flare {}
             class Agent extends \Jenssegers\Agent\Facades\Agent {}

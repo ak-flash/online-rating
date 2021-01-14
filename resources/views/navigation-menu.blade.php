@@ -16,44 +16,42 @@
                 <!-- Navigation Links -->
                 <div class="hidden sm:ml-5 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" class="hover:bg-green-600 hover:text-white">
-                        {{ __('Кафедра') }}
+                        {{ __('Главная') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden sm:flex">
                     <x-nav-link href="{{ route('journals') }}" :active="request()->routeIs('journals')" class="hover:bg-green-600 hover:text-white">
-                        {{ __('Журналы') }}
+                        {{ __('Journals') }}
                     </x-nav-link>
                 </div>
 
-                @if(auth()->user()->isModerator())
+
                     <div class="hidden sm:flex">
                         <x-nav-link href="{{ route('disciplines') }}" :active="request()->routeIs('disciplines')" class="hover:bg-green-600 hover:text-white">
-                            {{ __('Дисциплины') }}
+                            {{ __('Disciplines') }}
                         </x-nav-link>
                     </div>
-                @endif
+
 
                 <div class="hidden sm:flex">
                     <x-nav-link href="{{ route('students') }}" :active="request()->routeIs('students')" class="hover:bg-green-600 hover:text-white">
-                        {{ __('Студенты') }}
+                        {{ __('Students') }}
                     </x-nav-link>
                 </div>
 
+                <div class="hidden sm:flex">
+                    <x-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')" class="hover:bg-green-600 hover:text-white">
+                        {{ __('Workers') }}
+                    </x-nav-link>
+                </div>
 
                 @if(auth()->user()->isAdmin())
                     <div class="hidden sm:flex">
-                        <x-nav-link href="{{ route('departments') }}" :active="request()->routeIs('departments')" class="hover:bg-green-600 hover:text-white">
-                            {{ __('Кафедры') }}
+                        <x-nav-link href="{{ route('departments') }}" :active="request()->routeIs('departments')" class="hover:bg-red-500 bg-red-50 hover:text-white">
+                            {{ __('Departments') }}
                         </x-nav-link>
                     </div>
-
-                    <div class="hidden sm:flex">
-                        <x-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')" class="hover:bg-green-600 hover:text-white">
-                            {{ __('Пользователи') }}
-                        </x-nav-link>
-                    </div>
-
                 @endif
 
 
@@ -65,11 +63,15 @@
                 <div class="ml-3 relative">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="flex p-1 text-sm border-2 border-transparent rounded-md focus:outline-none focus:border-gray-300 hover:border-gray-300 hover:bg-gray-200 transition duration-150 ease-in-out">
+                            <button class="flex p-1 text-sm border-2 border-transparent rounded-md focus:outline-none focus:border-gray-300 hover:border-green-600 hover:bg-gray-100 transition duration-150 ease-in-out">
                                 <div class="hidden lg:block text-right mr-3 pl-2 text-black">
                                     {{ auth()->user()->name }}
+
                                     <div class="text-gray-500">
-                                        {{ auth()->user()->position }}
+                                        @if(auth()->user()->isModerator())
+                                            <i class="fas fa-check-square text-{{ auth()->user()->isAdmin() ? 'red' : 'green' }}-700 text-xs"></i>
+                                        @endif
+                                            {{ auth()->user()->position }}
                                     </div>
                                 </div>
 
@@ -111,12 +113,14 @@
 
                             <!-- Department Management -->
 
-                            <div class="flex px-4 py-2 text-sm text-gray-400">
+                            <div class="px-4 py-2 text-sm text-gray-400 hover:bg-gray-200">
                                 {{ __('Кафедра') }}
 
                                 @if(auth()->user()->department_id)
-                                    <div class="pl-1 text-sm text-black">
-                                        {{ auth()->user()->department->name }}
+                                    <div class="pl-1 text-sm text-black cursor-pointer">
+                                        <a href="{{ route('department.settings', auth()->user()->department_id) }}">
+                                            {{ auth()->user()->department->name }}
+                                        </a>
                                     </div>
                                 @else
                                     <div class="pl-1 text-sm text-red-500">
@@ -125,15 +129,6 @@
                                 @endif
                             </div>
                             <div class="border-t border-gray-100"></div>
-
-                            @if(auth()->user()->department_id)
-                            <!-- Department Settings -->
-                                <x-dropdown-link href="" class="pl-5">
-                                    <i class="fa fa-head-side-mask mr-1"></i>
-                                    {{ __('Настройки') }}
-                                </x-dropdown-link>
-                                <div class="border-t border-gray-100"></div>
-                            @endif
 
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
@@ -183,15 +178,15 @@
                 <x-responsive-nav-link href="{{ route('students') }}" :active="request()->routeIs('students')">
                     {{ __('Students') }}
                 </x-responsive-nav-link>
+
+                <x-responsive-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')">
+                    {{ __('Workers') }}
+                </x-responsive-nav-link>
             @endif
 
             @if(auth()->user()->isAdmin())
                 <x-responsive-nav-link href="{{ route('departments') }}" :active="request()->routeIs('departments')">
                     {{ __('Departments') }}
-                </x-responsive-nav-link>
-
-                <x-responsive-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')">
-                    {{ __('Users') }}
                 </x-responsive-nav-link>
             @endif
 
@@ -202,13 +197,13 @@
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="flex-shrink-0 mr-3">
-                        <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                        <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" />
                     </div>
                 @endif
 
                 <div>
                     <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->role }}</div>
                 </div>
             </div>
 

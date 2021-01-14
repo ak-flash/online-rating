@@ -2,7 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Discipline;
+use App\Models\Journal;
 use App\Models\StudyClass;
+use App\Models\Topic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class StudyClassFactory extends Factory
@@ -21,9 +24,16 @@ class StudyClassFactory extends Factory
      */
     public function definition()
     {
+        $lesson_id = Journal::inRandomOrder()->value('id');
+        $topic_id = Topic::inRandomOrder()->value('id');
+
         return [
-            'title' => $this->faker->text(30),
-            'type' => $this->faker->numberBetween(1, 4),
+            'lesson_id' => $lesson_id,
+            'topic_id' => $topic_id,
+            'date' => $this->faker->date(),
+            'type_id' => $this->faker->numberBetween(1, 4),
+            'time_start' => $this->faker->time('H:i:s'),
+            'time_end' => $this->faker->time('H:i:s'),
         ];
     }
 }

@@ -9,20 +9,20 @@
             Кафедры
         </h2>
 
-        <div class="my-2 mr-5 md:mt-4 md:mr-0 md:flex">     
-            
+        <div class="my-2 mr-5 md:mt-4 md:mr-0 md:flex">
+
                 <x-select-semester />
-            
-   
-            <div class="flex"> 
+
+
+            <div class="flex">
                 <div class="relative">
                     <select class="block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight border-gray-300">
                         <option value="0">Все</option>
                         <option value="1">Есть долги</option>
                         <option value="2">Нет долгов</option>
-                    </select>     
+                    </select>
                 </div>
-                
+
                 <x-search />
 
                 <select class="hidden md:block rounded-r  bg-white text-gray-700 py-2 px-4 pr-8 leading-tight border-gray-300" wire:model="perPage">
@@ -57,77 +57,79 @@
             <table class="min-w-full leading-normal">
                 <thead>
                 <tr>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                         №
                     </th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                         Кафедра
                     </th>
-                    
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600">
-                        Прошедшее<br>занятие
+
+                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600">
+                        Прошедшее занятие
                     </th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600">
+                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600">
                         Оценки
                     </th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
                         Преподаватель
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-            
-            @if($disciplines->isNotEmpty())
-                @foreach($disciplines as $discipline)
+
+            @if($lessons->isNotEmpty())
+                @foreach($lessons as $lesson)
 
                 <tr class="border-b border-gray-200 bg-white hover:bg-gray-100">
                     <td class="text-center">
-                        {{ (($disciplines->currentPage() * $perPage) - $perPage) + $loop->iteration }}
+                        {{ (($lessons->currentPage() * $perPage) - $perPage) + $loop->iteration }}
                     </td>
                     <td class="py-4">
                         <div class="flex items-center ">
-                          <button class="text-left text-black font-bold" wire:click="showMarks({{ $discipline->discipline->id }})">
-                              {{ Str::ucfirst($discipline->department->name) }}
+                          <button class="text-left text-black font-bold" wire:click="showMarks({{ $lesson->discipline->id }})">
+                              {{ Str::ucfirst($lesson->department->name) }}
                             <div class="text-xs text-gray-500 font-normal">
-                                {{ $discipline->discipline->name }}
+                                {{ $lesson->discipline->name }}
                             </div>
                           </button>
                         </div>
                     </td>
-                    
-                    <td class="font-semibold">
-                        
-                        @if($discipline->study_classes->isNotEmpty())
-                                
-                            {{ \Carbon\Carbon::parse($discipline->study_classes[0]->date)->translatedFormat('d F Y') }}
+
+                    <td class="font-semibold text-center">
+
+                        @if($lesson->study_classes->isNotEmpty())
+
+                            {{ \Carbon\Carbon::parse($lesson->study_classes[0]->date)->translatedFormat('d F Y') }}
                             <div class="text-xs text-gray-600 font-thin">
-                                {{ $discipline->study_classes[0]->type }}
-                            </div> 
-                            
+                                {{ $lesson->study_classes[0]->type }}
+                            </div>
+
                         @endif
-                      
+
                     </td>
                     <td class="px-5 text-center font-semibold">
-                        @if($discipline->study_classes->isNotEmpty()&&$discipline->study_classes[0]->updated_at!=NULL)
-                            
-                            <div class="flex">
-                                {!! App\Models\StudyClass::set_mark_color($discipline->study_classes[0]->mark1) !!}
+                        @if($lesson->study_classes->isNotEmpty()&&$lesson->study_classes[0]->updated_at!=NULL)
 
-                                {!! App\Models\StudyClass::set_mark_color($discipline->study_classes[0]->mark2) !!}
+                            <div class="flex justify-center">
+                                {!! App\Models\StudyClass::set_mark_color($lesson->study_classes[0]->mark1) !!}
+
+                                {!! App\Models\StudyClass::set_mark_color($lesson->study_classes[0]->mark2) !!}
+
+
                             </div>
                             <div class="rounded-lg bg-green-50 text-green-900 text-xs text-center p-1">
-                                {{ $discipline->study_classes[0]->updated_at->format('d/m/Y') }}
+                                {{ $lesson->study_classes[0]->updated_at->format('d/m/Y') }}
                             </div>
                         @endif
                     </td>
-                    <td class="">
+                    <td class="pl-4">
                         <div class="flex">
-                             <img class="h-10 w-10 rounded-full object-cover mr-3" src="{{ $discipline->user->profile_photo_path ?
-             '../storage/'.$discipline->user->profile_photo_path : '../img/avatar-placeholder.png' }}"/>
+                             <img class="h-10 w-10 rounded-full object-cover mr-3" src="{{ $lesson->user->profile_photo_path ?
+             '../storage/'.$lesson->user->profile_photo_path : '../img/avatar-placeholder.png' }}"/>
                              <div class="flex-col text-gray-900 whitespace-no-wrap text-sm">
-                                 {{ $discipline->user->name }}
-                                 <div class="text-xs">
-                                 {{ $discipline->user->getPosition() }}
+                                 {{ $lesson->user->name }}
+                                 <div class="text-xs text-gray-500">
+                                 {{ $lesson->user->position }}
                                  </div>
                              </p>
                         </div>
@@ -147,15 +149,12 @@
             </table>
             <div class="px-5 py-2 bg-white border-t flex xs:flex-row items-center xs:justify-between">
 
-                    {{ $disciplines->links('livewire.pagination-links-view') }}
+                    {{ $lessons->links('livewire.pagination-links-view') }}
 
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-</div>
-
 
 </div>

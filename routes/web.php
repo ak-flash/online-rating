@@ -27,13 +27,7 @@ Route::prefix('dashboard')
             return view('dashboard');
         })->name('dashboard');
 
-        Route::get('/users', function () {
-            return view('dashboard');
-        })->middleware('role:admin')->name('users');
-
-        Route::get('/departments', function () {
-            return view('dashboard');
-        })->middleware('role:admin')->name('departments');
+        Route::get('/department/{id}', \App\Http\Livewire\DepartmentSettings::class)->name('department.settings');
 
         Route::get('/journals', \App\Http\Livewire\Journals::class)
             ->name('journals');
@@ -41,13 +35,19 @@ Route::prefix('dashboard')
         Route::get('/disciplines', \App\Http\Livewire\Disciplines::class)
             ->name('disciplines');
 
+        Route::get('/discipline/{id}', \App\Http\Livewire\Disciplines::class)
+            ->name('topics');
+
         Route::get('/students', \App\Http\Livewire\Students::class)
             ->name('students');
 
-        Route::get('/logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->middleware('role:admin')->name('logs');
+        Route::get('/users', \App\Http\Livewire\Users::class)->name('users');
 
-        // Route::get('/profile', \App\Http\Livewire\UserProfile::class)
-        //     ->name('profile.show');
+        Route::middleware('role:admin')->group(function () {
+            Route::get('/departments', \App\Http\Livewire\Departments::class)->name('departments');
+
+            Route::get('/logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
+        });
 
 });
 

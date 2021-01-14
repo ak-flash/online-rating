@@ -12,6 +12,19 @@
     </div>
 
     <div class="ml-4 md:ml-0 mt-2">
-        ыфыв
+
+        <div class="flex w-auto">
+            <div class="p-2">
+                {{ __('Password') }}
+            </div>
+            <div class="p-2">
+                <x-input class="h-8"></x-input>
+            </div>
+        </div>
+
+        <x-button class="mt-3">
+            {{ __('Save') }}
+        </x-button>
+
     </div>
 </div>

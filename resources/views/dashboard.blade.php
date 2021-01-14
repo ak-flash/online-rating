@@ -5,8 +5,14 @@
         <header class="bg-white shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{-- Кафедра {{ Auth::user()->currentTeam->name }} --}}
-                    Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                     Кафедра {{ auth()->user()->department->name }}
+
+                    @if(auth()->user()->isAdmin())
+                        <div class="float-right text-sm">
+                        Сервер: Laravel v{{ Illuminate\Foundation\Application::VERSION }}
+                            (PHP v{{ PHP_VERSION }})
+                        </div>
+                    @endif
                 </h2>
             </div>
         </header>
@@ -176,17 +182,6 @@
                 </div>
             </div>
     @endif
-
-
-
-    @if(request()->routeIs('users'))
-        <livewire:users/>
-    @endif
-
-    @if(request()->routeIs('departments'))
-        <livewire:departments/>
-    @endif
-
 
     </div>
 </x-app-layout>

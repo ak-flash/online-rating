@@ -4,10 +4,11 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="3">
+          <list size="4">
             <item index="0" class="java.lang.String" itemvalue="x-on:click" />
             <item index="1" class="java.lang.String" itemvalue="x-ref" />
             <item index="2" class="java.lang.String" itemvalue="x-data" />
+            <item index="3" class="java.lang.String" itemvalue="wire:click" />
           </list>
         </value>
       </option>
@@ -16,7 +17,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="11">
+          <list size="18">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -28,6 +29,13 @@
             <item index="8" class="java.lang.String" itemvalue="x-action-message" />
             <item index="9" class="java.lang.String" itemvalue="x-nav-link" />
             <item index="10" class="java.lang.String" itemvalue="x-form-modal" />
+            <item index="11" class="java.lang.String" itemvalue="x-input-error" />
+            <item index="12" class="java.lang.String" itemvalue="x-select" />
+            <item index="13" class="java.lang.String" itemvalue="x-label" />
+            <item index="14" class="java.lang.String" itemvalue="x-input" />
+            <item index="15" class="java.lang.String" itemvalue="x-confirmation-modal" />
+            <item index="16" class="java.lang.String" itemvalue="x-secondary-button" />
+            <item index="17" class="java.lang.String" itemvalue="x-danger-button" />
           </list>
         </value>
       </option>

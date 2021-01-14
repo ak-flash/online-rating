@@ -51,11 +51,57 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Discipline whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|Discipline withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Discipline withoutTrashed()
+ * @property-read \App\Models\Department $department
+ * @property-read \App\Models\Faculty $faculty
+ * @property-read string $last_class
  */
 class Discipline extends Model
 {
     use HasFactory;
     use AuditableWithDeletesTrait, SoftDeletes;
 
+    public const LAST_CLASS_TYPES = [
+        1 => 'итоговая',
+        2 => 'зачётное занятие',
+        3 => 'зачёт с оценкой',
+        4 => 'экзамен',
+    ];
 
+    protected $fillable = [
+        'name',
+        'short_name',
+        'faculty_id',
+        'semester',
+        'last_class_id',
+    ];
+
+    public static function getLastClassID($type)
+    {
+        return array_search($type, self::LAST_CLASS_TYPES);
+    }
+
+    /**
+     * get Type of last class
+     */
+    public function getLastClassAttribute(): string
+    {
+        return self::LAST_CLASS_TYPES[ $this->attributes['last_class_id'] ];
+    }
+
+    public  function department ()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public  function faculty ()
+    {
+        return $this->belongsTo(Faculty::class);
+    }
+
+    public static function search ($search)
+    {
+        return empty($search) ? static::query()
+            : static::where('name', 'ilike', '%'.$search.'%')
+                ->orWhere('short_name', 'ilike', '%'.$search.'%');
+    }
 }

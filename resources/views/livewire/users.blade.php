@@ -5,12 +5,13 @@
     <div class="py-4 max-w-7xl mx-auto sm:px-6 lg:px-12">
         <div class="bg-white overflow-auto shadow-xl sm:rounded-lg">
 
-
-            <div class="float-left">
-                <x-add-button wire:click="update()">
-                    Добавить
-                </x-add-button>
-            </div>
+            @if(auth()->user()->isModerator())
+                <div class="float-left">
+                    <x-add-button wire:click="update()">
+                        Добавить
+                    </x-add-button>
+                </div>
+            @endif
 
             <div class="m-2 md:flex sm:flex-row flex-col float-right ">
                 <div class="flex flex-row mb-1 sm:mb-0">
@@ -42,31 +43,31 @@
                 </div>
             </div>
 
-            <table class="min-w-full leading-normal">
+            <table class="min-w-full table-fixed">
                 <thead>
                 <tr>
-                    <th class="p-2 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
+                    <th class="p-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
                         №
                     </th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 text-center uppercase tracking-wider">
+                    <th class="w-1/3 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 text-center uppercase tracking-wider">
                         Ф.И.О
                     </th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center uppercase tracking-wider">
-                        Кафедра
+                    <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                        {{ Auth::user()->isAdmin() ? 'Кафедра': 'Роль' }}
                     </th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                    <th class="w-auto px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
                         e-mail
                     </th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                    <th class="w-1/3 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
                         Телефон
                     </th>
-
-
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
-                        Управление
-                    </th>
-                    <th class="px-5 w-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
-                        Дата изменений
+                    @if(auth()->user()->isModerator())
+                        <th class="w-2/5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center">
+                            Управление
+                        </th>
+                    @endif
+                    <th class="w-auto px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                        Изменено
                     </th>
                 </tr>
                 </thead>
@@ -91,32 +92,39 @@
                             </div>
                         </td>
                         <td class="p-3 text-gray-900 text-xs text-center">
-                            <div class="w-full rounded-lg p-1 {{ ($user->role=='admin') ? 'text-red-900 bg-red-100': '' }} {{ ($user->role=='moderator') ? 'text-green-900 bg-green-100': '' }}">
+                            <div class=" rounded-lg p-1 {{ $user->isAdmin() ? 'text-red-900 bg-red-100': '' }} {{ ($user->role=='moderator') ? 'text-green-900 bg-green-100': '' }}">
                                 {{ $user->getRoleName() }}
                             </div>
-                            {{ $user->department->name ?? 'не указана' }}
+
+                            @if(Auth::user()->isAdmin())
+                                <div class="text-wrap">
+                                    {{ $user->department->name ?? 'не указана' }}
+                                </div>
+                            @endif
+
                         </td>
-                        <td class="p-3 text-sm text-center">
-                            <p class="text-gray-900 whitespace-no-wrap">
+                        <td class="p-3 text-xs text-center">
+                            <p class="text-gray-900">
                                 {{ $user->email }}
                             </p>
                         </td>
                         <td class="p-3 text-sm text-center">
                             <p class="text-gray-900 whitespace-no-wrap">
-                                {{ !$user->phone ? '-' : $user->phone }}
+                                {{ $user->phone ?? '-' }}
                             </p>
                         </td>
-                        <td class="p-3 text-center">
-                            <button class="bg-green-700 hover:bg-green-500 ml-5 m-2 p-2 px-4 text-white text-sm font-semibold rounded" wire:click="update({{ $user->id }})">
-                                <i class="fas fa-edit" style="font-size:12px;"></i>
-                            </button>
-                            <button class="bg-red-700 hover:bg-red-500 m-2 p-2 px-4
-                                     text-white text-sm font-semibold rounded" wire:click="toggle($confirmingUserDeletion)">
-                                <i class="fas fa-trash" style="font-size:12px;"></i>
-                            </button>
-
-
-                        </td>
+                        @if(auth()->user()->isModerator())
+                            <td class="p-3 border-2">
+                                <div class="flex justify-center">
+                                    <button class="bg-green-700 hover:bg-green-500 ml-5 m-2 p-2 px-4 text-white text-sm font-semibold rounded" wire:click="update({{ $user->id }})">
+                                        <i class="fas fa-edit" style="font-size:12px;"></i>
+                                    </button>
+                                    <button class="bg-red-700 hover:bg-red-500 m-2 p-2 px-4 text-white text-sm font-semibold rounded" wire:click="deleteConfirmation({{ $user->id }})">
+                                        <i class="fas fa-trash" style="font-size:12px;"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        @endif
                         <td class="p-1 w-5 text-gray-500 text-xs text-center">
                             {{ $user->updated_at->diffForHumans() }}
                         </td>
@@ -136,63 +144,7 @@
     </div>
 
 
-<x-form-modal wire:model="openModal" :maxWidth="2">
-
-    <x-slot name="title">
-        <p class="pt-2 text-lg font-semibold">Управление пользователем</p>
-    </x-slot>
-
-    <x-slot name="content">
-
-
-            <div class="flex items-center m-3">
-                <x-label class="mr-3 text-lg">Ф.И.О.</x-label>
-                <x-input type="text" class="" wire:model.lazy="name" />
-                <x-input-error for="name" class="mt-2" />
-            </div>
-
-            <div class="flex items-center m-3">
-                <x-label class="mr-3 text-lg">E-mail</x-label>
-                <x-input type="text" class="" wire:model.lazy="email" />
-                <x-input-error for="email" class="mt-2" />
-            </div>
-
-            <div class="flex items-center m-3">
-                <x-label class="mr-6 text-lg">Роль</x-label>
-                <x-select class="" wire:model="role">
-                    <option value="0">Выберите...</option>
-                    @foreach(User::ROLES as $key => $value)
-                        <option value="{{ $key }}">{{ $value }}</option>
-                    @endforeach
-                </x-select>
-                <x-input-error for="role" class="mt-2" />
-            </div>
-
-            <div class="flex items-center m-3">
-                <x-label class="mr-3 text-lg">Должность</x-label>
-                <x-select class="0" wire:model="position">
-                    <option value="">Выберите...</option>
-                    @foreach(User::POSITIONS as $key => $value)
-                        <option value="{{ $key }}">{{ $value }}</option>
-                    @endforeach
-                </x-select>
-                <x-input-error for="position" class="mt-2" />
-            </div>
-
-    </x-slot>
-
-    <x-slot name="footer">
-
-
-            <x-button class="mr-2 bg-green-500 hover:bg-green-600 shadow-xl px-5 py-2 text-white rounded" wire:click.prevent="store()" wire:loading.attr="disabled">
-                Сохранить
-            </x-button>
-
-
-
-
-    </x-slot>
-</x-form-modal>
+@include('livewire.modals.edit_user')
 
 
 

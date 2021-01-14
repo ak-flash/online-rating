@@ -15,13 +15,16 @@ class AddExtraColumnsToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('current_team_id');
-            $table->string('phone_number', 15)->nullable()->unique();
+            $table->string('phone', 15)->nullable()->unique();
+            $table->boolean('show_phone')->default(false);
             $table->integer('position')->length(2)->default(1);
             $table->integer('role')->length(2)->default(3);
             $table->boolean('active')->default(true);
             $table->foreignId('department_id')->nullable()->constrained();
             // $table->text('profile_photo_path')->nullable();
             $table->date('date_of_birth')->nullable();
+            $table->auditableWithDeletes();
+            $table->softDeletes();
         });
     }
 
@@ -34,6 +37,8 @@ class AddExtraColumnsToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('phone_number', 'position', 'role', 'active', 'department_id', 'date_of_birth');
+            $table->dropAuditableWithDeletes();
+            $table->dropSoftDeletes();
         });
     }
 }

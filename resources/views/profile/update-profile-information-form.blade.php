@@ -62,8 +62,19 @@
         <!-- Email -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="email" value="{{ __('Email') }}" />
-            <x-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" />
+            <x-input id="email" type="email" class="mt-1 block w-1/2" wire:model.defer="state.email" />
             <x-input-error for="email" class="mt-2" />
+        </div>
+
+        <!-- Phone -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="phone" value="{{ __('PhoneNumber') }}" />
+            <div class="flex items-center">
+                <x-input id="phone" type="text" class="mt-1 block w-1/2" wire:model.defer="state.phone" />
+                <x-input type="checkbox" class="mx-2 ml-6" wire:model.defer="state.show_phone" />
+                <p class="text-xs">Показывать студентам</p>
+            </div>
+            <x-input-error for="phone" class="mt-2" />
         </div>
 
         <!-- Position -->

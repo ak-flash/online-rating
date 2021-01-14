@@ -2,24 +2,25 @@
     <div class="py-4 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
-            <button class="bg-green-700 hover:bg-green-500 ml-5 m-2 p-2 px-4
-                                     text-white text-sm font-semibold rounded">
-                <i class="fas fa-plus" style="font-size:12px;"></i> Новый Журнал
-            </button>
+            <div class="float-left">
+                <x-add-button wire:click="update()">
+                    Новый Журнал
+                </x-add-button>
+            </div>
 
             <div class="m-2 hidden md:flex sm:flex-row flex-col float-right">
                 <div class="flex flex-row mb-1 sm:mb-0">
 
                     <x-select-semester />
 
-                        <select class="text-gray-500 py-2 px-4 pr-8 leading-tight" wire:model="showPersonalGroups">
-                            <option value="1">Мои группы</option>
-                            <option value="0">Все группы</option>
-                        </select>
+                    <select class="text-gray-500 py-2 px-4 pr-8 leading-tight" wire:model="showPersonalGroups">
+                        <option value="1">Мои группы</option>
+                        <option value="0">Все группы</option>
+                    </select>
 
                 </div>
 
-                <x-search />        
+                <x-search />
 
                 <div class="flex flex-row mb-1 sm:mb-0">
                     <select class="rounded-r block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight" wire:model="perPage">
@@ -60,8 +61,7 @@
                 </thead>
                 <tbody>
 
-            @if($lessons->isNotEmpty())
-                @foreach($lessons as $lesson)
+                @forelse($lessons as $lesson)
 
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="p-3 text-center">
@@ -80,7 +80,7 @@
 
                         </td>
                         <td class="p-3 text-sm text-center">
-                            @if (!is_null($lesson->date)) 
+                            @if (!is_null($lesson->date))
                                 {{ Str::ucfirst(\Carbon\Carbon::parse($lesson->date)->isoFormat('dddd')) }}
                                 <p class="text-gray-900 font-semibold">
                                     {{ \Carbon\Carbon::parse($lesson->date)->translatedFormat('d F Y') }}
@@ -114,15 +114,14 @@
                         </td>
                     </tr>
 
-                @endforeach
 
-            @else
+            @empty
                 <tr>
-                    <td class="p-3 text-red-700 text-sm text-center" colspan="7">
+                    <td class="p-3 text-red-700 text-md text-center" colspan="7">
                         Журналы не найдены...
                     </td>
                 </tr>
-            @endif
+            @endforelse
 
                 </tbody>
             </table>

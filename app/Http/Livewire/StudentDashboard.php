@@ -45,10 +45,10 @@ class StudentDashboard extends Component
         }
     }
 
-    public function showMarks($kafedra)
+    public function showMarks($discipline_id)
     {
         $this->lesson['student_id'] = $this->student->id;
-        $this->lesson['department_id'] = $kafedra;
+        $this->lesson['discipline_id'] = $discipline_id;
         $this->nav('marks');
     }
 }

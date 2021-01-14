@@ -9,7 +9,7 @@ use Yajra\Auditable\AuditableWithDeletesTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Lesson
+ * App\Models\Journal
  *
  * @property int $id
  * @property int $user_id
@@ -33,24 +33,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudyClass[] $study_classes
  * @property-read int|null $study_classes_count
  * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson query()
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereCourseNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDayTypeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDepartmentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDisciplineId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereFacultyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereGroupNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereRoom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereSemester($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereTimeEnd($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereTimeStart($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereYear($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereCourseNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereDayTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereDepartmentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereDisciplineId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereFacultyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereGroupNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereRoom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereSemester($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereTimeEnd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereTimeStart($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereYear($value)
  * @mixin \Eloquent
  * @property int|null $created_by
  * @property int|null $updated_by
@@ -62,16 +62,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read string $deleted_by_name
  * @property-read string $updated_by_name
  * @property-read \App\Models\User|null $updater
- * @method static \Illuminate\Database\Query\Builder|Lesson onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson owned()
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|Lesson withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Lesson withoutTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Journal onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal owned()
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|Journal withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Journal withoutTrashed()
  */
-class Lesson extends Model
+class Journal extends Model
 {
     use HasFactory;
     use AuditableWithDeletesTrait, SoftDeletes;
@@ -115,28 +115,19 @@ class Lesson extends Model
         'spring' => [2, 4, 6, 8, 10, 12],
     ];
 
-    public static function getSemester($date, $study_year) {
 
+    public static function getSemesterType($date)
+    {
         $check_date = Carbon::parse($date);
 
-        $startDate_autumn = Carbon::parse($study_year.self::DATESEMESTERS['start_autumn']);
+        $study_months = $check_date->format('n');
 
-        $endDate_autumn = Carbon::parse(($study_year + 1).self::DATESEMESTERS['end_autumn']);
-
-        $startDate_spring = Carbon::parse(($study_year + 1).self::DATESEMESTERS['start_spring']);
-
-        $endDate_spring = Carbon::parse(($study_year + 1).self::DATESEMESTERS['end_spring']);
-
-
-        if($check_date->between($startDate_autumn,$endDate_autumn)){
-            return 'autumn';
-        }
-
-        if($check_date->between($startDate_spring,$endDate_spring)){
+        // Check if date between February and August (spring term)
+        if($study_months>=2&&$study_months<=8) {
             return 'spring';
         }
 
-        return false;
+        return 'autumn';
     }
 
     /**

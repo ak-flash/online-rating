@@ -2,7 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Discipline;
 use App\Models\Faculty;
+use App\Models\Journal;
+use App\Models\Student;
+use App\Models\StudyClass;
+use App\Models\User;
+use Database\Factories\StudyClassFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,12 +23,20 @@ class DatabaseSeeder extends Seeder
         $this->call([
             // FacultySeeder::class,
             // DepartmentSeeder::class,
+            // TopicSeeder::Seeder::class,
+            StudentStudyClassSeeder::class,
         ]);
 
-        \App\Models\User::factory(10)->create();
-        \App\Models\Student::factory(500)->create();
-        // \App\Models\Discipline::factory(10)->create();
-        // \App\Models\Lesson::factory(100)->create();
+        // User::factory(10)->create();
+        // Student::factory(500)->create();
+        // Discipline::factory(100)->create();
+
+        // Journal::factory(100)->create();
+        // StudyClass::factory(100)->create();
+
+
+
+
 
     }
 }

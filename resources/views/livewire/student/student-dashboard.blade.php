@@ -5,7 +5,7 @@
 
             <div class="flex flex-row border-b items-center justify-between pb-2">
                 <!-- Hearder -->
-                <span class="text-lg font-semibold capitalize dark:text-gray-300">
+                <span class="text-2xl font-semibold capitalize dark:text-gray-300">
                     <a href="{{ route('home') }}">ВолгГМУ</a>
 			    </span>
 
@@ -22,7 +22,7 @@
 
             </div>
 
-            <span class="mt-8">
+            <span class="mt-8 text-center">
                 <!-- User info -->
                 <img class="h-15 w-15 rounded-lg object-cover mx-auto" src="{{ $student->profile_photo_url }}" alt="student_avatar" />
 
@@ -32,7 +32,7 @@
 
                 <div class="my-5 border-t border-gray-400"></div>
 
-                <span class="text-sm py-2 dark:text-gray-300 border-t border-b">
+                <span class="text-sm py-2  dark:text-gray-300 border-t border-b">
                      №
                     <span class="font-semibold text-green-600 dark:text-green-300">
                        {{ $student->document_id }}

@@ -95,10 +95,10 @@ class StudyClass extends Model
     }
 
     public static function set_mark_color($mark) {
-        
-        $color = ($mark==2) ? 'bg-red-600' : 'bg-green-700'; 
+
+        $color = ($mark==2) ? 'bg-red-600' : 'bg-green-700';
 
         return '<div class="rounded-md '.$color.'
-        text-white text-xl m-1 px-3 py-2">'.$mark.'</div>';
+        text-white text-md m-1 px-2 py-1">'.$mark.'</div>';
     }
 }

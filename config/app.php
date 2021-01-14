@@ -121,7 +121,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY', 'base64:Wdgfm5+tiPiqZ7+DXz4rrNrWI/fgUwEbrTkTXilrN3w='),
 
     'cipher' => 'AES-256-CBC',
 
@@ -232,7 +232,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'User' => App\Models\User::class,
-        'Lesson' => App\Models\Lesson::class,
+        'Journal' => App\Models\Journal::class,
         'StudyClass' => App\Models\StudyClass::class,
     ],
 

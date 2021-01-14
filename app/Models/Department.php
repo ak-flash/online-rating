@@ -27,6 +27,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Department whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Department whereUserId($value)
  * @mixin \Eloquent
+ * @property string|null $address
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Discipline[] $disciplines
+ * @property-read int|null $disciplines_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Faculty[] $faculties
+ * @property-read int|null $faculties_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Department whereAddress($value)
  */
 class Department extends Model
 {
@@ -38,11 +44,24 @@ class Department extends Model
         'phone',
     ];
 
-    public  function user() {
+    public  function user ()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public static function search($search){
+    public  function disciplines ()
+    {
+        return $this->hasMany(Discipline::class);
+    }
+
+    public  function faculties ()
+    {
+        return $this->hasMany(Faculty::class);
+    }
+
+
+    public static function search ($search)
+    {
         return empty($search) ? static::query()
             : static::where('id', 'like', '%'.$search.'%')
                 ->orWhere('name', 'like', '%'.$search.'%');
