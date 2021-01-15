@@ -29,7 +29,7 @@ class Faculty extends Model
 {
     use HasFactory;
 
-    public static function getCourseNumber ($semester)
+    public static function getCourseNumber($semester)
     {
         return round($semester/2);
     }

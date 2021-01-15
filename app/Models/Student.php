@@ -41,6 +41,8 @@ use Illuminate\Support\Facades\Storage;
  * @mixin \Eloquent
  * @property string $last_name
  * @method static \Illuminate\Database\Eloquent\Builder|Student whereLastName($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudyClass[] $study_classes
+ * @property-read int|null $study_classes_count
  */
 class Student extends Model
 {
@@ -54,7 +56,7 @@ class Student extends Model
         return $this->hasMany(StudyClass::class);
     }
 
-    public function lesson($discipline_id)
+/*    public function lesson($discipline_id)
     {
         return $this->belongsToMany(StudyClass::class);
     }
@@ -64,7 +66,7 @@ class Student extends Model
         return $this->belongsToMany(StudyClass::class)
             ->where('lesson_id', $discipline_id)
             ->withPivot('mark1', 'mark2', 'notify', 'attendance', 'user_id', 'updated_at');
-    }
+    }*/
 
     public static function findStudent($document_id) {
         return Student::firstWhere('document_id', $document_id);

@@ -76,6 +76,20 @@ class Journal extends Model
     use HasFactory;
     use AuditableWithDeletesTrait, SoftDeletes;
 
+    protected $fillable = [
+        'discipline_id',
+        'group_number',
+        'time_start',
+        'time_end',
+        'day_type_id',
+        'user_id',
+        'department_id',
+        'faculty_id',
+        'semester',
+        'year',
+        'room',
+        'course_number',
+    ];
 
     protected $dates = ['created_at', 'updated_at'];
 
@@ -96,9 +110,9 @@ class Journal extends Model
     ];
 
     public const DAYTYPESRUS = [
-        1 => 'нечётная неделя',
+        1 => 'еженедельно',
         2 => 'чётная неделя',
-        3 => 'еженедельно',
+        3 => 'нечётная неделя',
         4 => 'цикл'
     ];
 
@@ -115,8 +129,21 @@ class Journal extends Model
         'spring' => [2, 4, 6, 8, 10, 12],
     ];
 
+    public static function getStudyYear($date)
+    {
+        $check_date = Carbon::parse($date);
+        $study_year = $check_date->format('Y');
+        $study_months = $check_date->format('n');
 
-    public static function getSemesterType($date)
+        // Check if date between February and August (spring term)
+        if($study_months>=2&&$study_months<=8) {
+            return $study_year;
+        }
+
+        return ($study_year-1);
+    }
+
+    public static function getSemesterType($date): string
     {
         $check_date = Carbon::parse($date);
 
@@ -132,6 +159,8 @@ class Journal extends Model
 
     /**
      * get Day Id of class
+     * @param $type
+     * @return mixed
      */
     public static function getDayTypeID($type)
     {

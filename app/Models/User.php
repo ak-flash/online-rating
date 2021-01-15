@@ -61,6 +61,29 @@ use Yajra\Auditable\AuditableWithDeletesTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property int|null $deleted_by
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property bool|null $show_phone
+ * @property-read User|null $creator
+ * @property-read User|null $deleter
+ * @property-read string $created_by_name
+ * @property-read string $deleted_by_name
+ * @property-read string $updated_by_name
+ * @property-read int|null $lessons_count
+ * @property-read \App\Models\Department|null $moderator_department
+ * @property-read User|null $updater
+ * @method static \Illuminate\Database\Query\Builder|User onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|User owned()
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereShowPhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|User withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
  */
 class User extends Authenticatable
 {

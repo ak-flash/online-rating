@@ -17,7 +17,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="18">
+          <list size="19">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -36,6 +36,7 @@
             <item index="15" class="java.lang.String" itemvalue="x-confirmation-modal" />
             <item index="16" class="java.lang.String" itemvalue="x-secondary-button" />
             <item index="17" class="java.lang.String" itemvalue="x-danger-button" />
+            <item index="18" class="java.lang.String" itemvalue="x-add-button" />
           </list>
         </value>
       </option>

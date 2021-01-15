@@ -83,16 +83,8 @@
                         </td>
 
 
-                        <td class="p-3 border-b border-gray-200 bg-white text-center whitespace-nowrap">
-                            <button class="bg-green-700 hover:bg-green-500 ml-5 m-2 p-2 px-4 text-white text-sm font-semibold rounded" wire:click="update({{ $department->id }})">
-                                <i class="fas fa-edit" style="font-size:12px;"></i>
-                            </button>
-                            <button class="bg-red-700 hover:bg-red-500 m-2 p-2 px-4
-                                     text-white text-sm font-semibold rounded" wire:click="toggle($confirmingUserDeletion)">
-                                <i class="fas fa-trash" style="font-size:12px;"></i>
-                            </button>
-
-
+                        <td class="p-3 border-2">
+                            <x-update-delete-button value="{{ $department->id }}" />
                         </td>
                         <td class="p-1 w-5 border-b border-gray-200 text-gray-500 bg-white text-xs text-center">
                             {{ is_null($department->updated_at) ?  'никогда' : $department->updated_at->diffForHumans() }}

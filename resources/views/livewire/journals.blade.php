@@ -1,6 +1,11 @@
 <div>
+
+    <x-app-spinner target="search" />
+    <x-app-spinner target="showPersonalGroups" />
+
+
     <div class="py-4 max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+        <div class="bg-white overflow-auto shadow-xl sm:rounded-lg">
 
             <div class="float-left">
                 <x-add-button wire:click="update()">
@@ -33,7 +38,7 @@
             </div>
 
 
-            <table class="min-w-full leading-normal">
+            <table class="min-w-full table-fixed">
                 <thead>
                 <tr>
                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
@@ -52,64 +57,71 @@
                         Дисциплина
                     </th>
                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
-                        Тема занятия
+                        Аудитория
                     </th>
                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
-                        Аудитория
+                        Управление
+                    </th>
+                    <th class="w-auto px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                        Изменено
                     </th>
                 </tr>
                 </thead>
                 <tbody>
 
-                @forelse($lessons as $lesson)
+                @forelse($journals as $journal)
 
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="p-3 text-center">
-                            {{ (($lessons->currentPage() * $perPage) - $perPage) + $loop->iteration }}
+                            {{ (($journals->currentPage() * $perPage) - $perPage) + $loop->iteration }}
                         </td>
                         <td class="text-left py-5 cursor-pointer">
-                            <div class="flex">
-                                {{ $lesson->course_number }} курс
-                                <p class="px-2 font-lg font-semibold">
-                                    Группа {{ $lesson->group_number }}
+                            <a href="{{ route('study_classes', $journal->id) }}" class="flex">
+                                {{ $journal->course_number }} курс
+                                <p class="px-2 font-lg font-semibold hover:underline">
+                                    Группа {{ $journal->group_number }}
                                 </p>
-                            </div>
-                            <p class="text-{{ $lesson->faculty->color }}-500">
-                                {{ $lesson->faculty->name }}
+                            </a>
+                            <p class="text-{{ $journal->faculty->color }}-500">
+                                {{ $journal->faculty->name }}
                             </p>
 
                         </td>
                         <td class="p-3 text-sm text-center">
-                            @if (!is_null($lesson->date))
-                                {{ Str::ucfirst(\Carbon\Carbon::parse($lesson->date)->isoFormat('dddd')) }}
+                            @if (!is_null($journal->date))
+                                {{ Str::ucfirst(\Carbon\Carbon::parse($journal->date)->isoFormat('dddd')) }}
                                 <p class="text-gray-900 font-semibold">
-                                    {{ \Carbon\Carbon::parse($lesson->date)->translatedFormat('d F Y') }}
+                                    {{ \Carbon\Carbon::parse($journal->date)->translatedFormat('d F Y') }}
                                 </p>
                             @endif
 
 
                             <div class="text-xs text-gray-500">
-                                {{ $lesson->getDayTypeRus() }}
+                                {{ $journal->getDayTypeRus() }}
                             </div>
                         </td>
                         <td class="p-3 text-center">
 
-                            {{ \Carbon\Carbon::parse($lesson->time_start)->format('H:i') }} - {{ \Carbon\Carbon::parse($lesson->time_end)->format('H:i') }}
+                            {{ \Carbon\Carbon::parse($journal->time_start)->format('H:i') }} - {{ \Carbon\Carbon::parse($journal->time_end)->format('H:i') }}
 
                         </td>
                         <td class="p-3 text-sm text-center">
                             <p class="text-gray-900 whitespace-no-wrap">
-                                {{ $lesson->discipline->short_name }}
+                                {{ $journal->discipline->short_name }}
                             </p>
                         </td>
+
                         <td class="p-3 text-sm text-center">
                             <div class="text-xs text-gray-500">
-                                {{ $lesson->title }}
+                                {{ $journal->room }}
                             </div>
+                        </td>
+                        <td class="p-3 border-2">
+                            <x-update-delete-button value="{{ $journal->id }}" />
                         </td>
                         <td class="p-3 text-sm text-center">
                             <div class="text-xs text-gray-500">
-                                {{ $lesson->room }}
+                                {{ $journal->updated_at->diffForHumans() }}
                             </div>
                         </td>
                     </tr>
@@ -127,9 +139,12 @@
             </table>
             <div class="px-5 py-2 flex xs:flex-row items-center xs:justify-between">
 
-                {{ $lessons->onEachSide(1)->links('livewire.pagination-links-view') }}
+                {{ $journals->onEachSide(1)->links('livewire.pagination-links-view') }}
 
             </div>
         </div>
     </div>
+
+    @include('livewire.modals.edit_journal')
+
 </div>

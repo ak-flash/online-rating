@@ -58,12 +58,32 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|StudyClass withTrashed()
  * @method static \Illuminate\Database\Query\Builder|StudyClass withoutTrashed()
+ * @property int $journal_id
+ * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereJournalId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $students
+ * @property-read int|null $students_count
  */
 class StudyClass extends Model
 {
     use HasFactory;
     use AuditableWithDeletesTrait, SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'journal_id',
+        'topic_id',
+        'topic_id',
+        'date',
+        'time_start',
+        'time_end',
+        'room',
+    ];
+
+    protected $dates = ['date', 'created_at', 'updated_at'];
 
     public const TYPES = [
         1 => 'занятие семинарского типа',
@@ -90,9 +110,6 @@ class StudyClass extends Model
         return self::TYPES[ $this->attributes['type_id'] ];
     }
 
-    public function student() {
-        return $this->belongsToMany(Student::class);
-    }
 
     public static function set_mark_color($mark) {
 
@@ -100,5 +117,11 @@ class StudyClass extends Model
 
         return '<div class="rounded-md '.$color.'
         text-white text-md m-1 px-2 py-1">'.$mark.'</div>';
+    }
+
+    public function students() {
+        return $this->belongsToMany(Student::class)
+            ->orderBy('last_name')
+            ->withPivot('mark1', 'mark2', 'notify', 'attendance', 'user_id', 'updated_at');
     }
 }

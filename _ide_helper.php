@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 8.21.0.
+ * Generated for Laravel 8.22.1.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -5283,6 +5283,17 @@
         {
                         /** @var \Illuminate\Support\Testing\Fakes\EventFake $instance */
                         $instance->assertNotDispatched($event, $callback);
+        }
+                    /**
+         * Assert that no events were dispatched.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function assertNothingDispatched()
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\EventFake $instance */
+                        $instance->assertNothingDispatched();
         }
                     /**
          * Get all of the events matching a truth-test callback.
@@ -14604,41 +14615,77 @@
      * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
      * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
      * @mixin \Eloquent
+     * @property int|null $created_by
+     * @property int|null $updated_by
+     * @property int|null $deleted_by
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property bool|null $show_phone
+     * @property-read User|null $creator
+     * @property-read User|null $deleter
+     * @property-read string $created_by_name
+     * @property-read string $deleted_by_name
+     * @property-read string $updated_by_name
+     * @property-read int|null $lessons_count
+     * @property-read \App\Models\Department|null $moderator_department
+     * @property-read User|null $updater
+     * @method static \Illuminate\Database\Query\Builder|User onlyTrashed()
+     * @method static \Illuminate\Database\Eloquent\Builder|User owned()
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedBy($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedBy($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereShowPhone($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedBy($value)
+     * @method static \Illuminate\Database\Query\Builder|User withTrashed()
+     * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
      */ 
         class User {
          
     }
             /**
-     * App\Models\StudyClass
+     * App\Models\Journal
      *
      * @property int $id
-     * @property int $lesson_id
-     * @property string $title
-     * @property int $type_id
-     * @property string $date
+     * @property int $user_id
+     * @property int $department_id
+     * @property int $discipline_id
      * @property string $time_start
      * @property string $time_end
+     * @property int $day_type_id
+     * @property int $faculty_id
+     * @property string $year
+     * @property int|null $semester
+     * @property int|null $course_number
+     * @property int|null $group_number
      * @property string|null $room
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property-read string $type
-     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $student
-     * @property-read int|null $student_count
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass newModelQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass newQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass query()
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereDate($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereLessonId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereRoom($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTimeEnd($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTimeStart($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTitle($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTypeId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereUpdatedAt($value)
+     * @property-read \App\Models\Department $department
+     * @property-read \App\Models\Discipline $discipline
+     * @property-read \App\Models\Faculty $faculty
+     * @property string $day_type
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudyClass[] $study_classes
+     * @property-read int|null $study_classes_count
+     * @property-read \App\Models\User $user
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal query()
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereCourseNumber($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereDayTypeId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereDepartmentId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereDisciplineId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereFacultyId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereGroupNumber($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereRoom($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereSemester($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereTimeEnd($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereTimeStart($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereUserId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereYear($value)
      * @mixin \Eloquent
-     * @property int $topic_id
      * @property int|null $created_by
      * @property int|null $updated_by
      * @property int|null $deleted_by
@@ -14649,17 +14696,50 @@
      * @property-read string $deleted_by_name
      * @property-read string $updated_by_name
      * @property-read \App\Models\User|null $updater
-     * @method static \Illuminate\Database\Query\Builder|StudyClass onlyTrashed()
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass owned()
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereCreatedBy($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereDeletedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereDeletedBy($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTopicId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereUpdatedBy($value)
-     * @method static \Illuminate\Database\Query\Builder|StudyClass withTrashed()
-     * @method static \Illuminate\Database\Query\Builder|StudyClass withoutTrashed()
+     * @method static \Illuminate\Database\Query\Builder|Journal onlyTrashed()
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal owned()
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereCreatedBy($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereDeletedBy($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Journal whereUpdatedBy($value)
+     * @method static \Illuminate\Database\Query\Builder|Journal withTrashed()
+     * @method static \Illuminate\Database\Query\Builder|Journal withoutTrashed()
      */ 
-        class StudyClass {
+        class Journal {
+         
+    }
+            /**
+     * App\Models\Faculty
+     *
+     * @property int $id
+     * @property string $name
+     * @property string $tag
+     * @property string|null $color
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @method static \Illuminate\Database\Eloquent\Builder|Faculty newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Faculty newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|Faculty query()
+     * @method static \Illuminate\Database\Eloquent\Builder|Faculty whereColor($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Faculty whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Faculty whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Faculty whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Faculty whereTag($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|Faculty whereUpdatedAt($value)
+     * @mixin \Eloquent
+     */ 
+        class Faculty {
+         
+    }
+     
+}
+
+    namespace App\Helper { 
+            /**
+     * 
+     *
+     */ 
+        class Helper {
          
     }
      
@@ -15438,6 +15518,17 @@
                         /** @var \Facade\FlareClient\Flare $instance */
                         return $instance->group($groupName, $properties);
         }
+         
+    }
+     
+}
+
+    namespace Manny { 
+            /**
+     * 
+     *
+     */ 
+        class Manny {
          
     }
      
@@ -19519,9 +19610,12 @@ namespace  {
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
             class User extends \App\Models\User {}
-            class StudyClass extends \App\Models\StudyClass {}
+            class Journal extends \App\Models\Journal {}
+            class Faculty extends \App\Models\Faculty {}
+            class Helper extends \App\Helper\Helper {}
             class Debugbar extends \Barryvdh\Debugbar\Facade {}
             class Flare extends \Facade\Ignition\Facades\Flare {}
+            class Manny extends \Manny\Manny {}
             class Agent extends \Jenssegers\Agent\Facades\Agent {}
             class Livewire extends \Livewire\Livewire {}
      

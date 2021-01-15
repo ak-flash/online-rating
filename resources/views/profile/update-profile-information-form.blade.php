@@ -24,7 +24,7 @@
                                     reader.readAsDataURL($refs.photo.files[0]);
                             " />
 
-                <x-jet-label for="photo" value="{{ __('Photo') }}" />
+                <x-label for="photo" value="{{ __('Photo') }}" />
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
@@ -70,7 +70,7 @@
         <div class="col-span-6 sm:col-span-4">
             <x-label for="phone" value="{{ __('PhoneNumber') }}" />
             <div class="flex items-center">
-                <x-input id="phone" type="text" class="mt-1 block w-1/2" wire:model.defer="state.phone" />
+                <x-input type="text" class="mt-1 block w-1/2" wire:model.defer="state.phone" data-mask='+# (###) ###-####' />
                 <x-input type="checkbox" class="mx-2 ml-6" wire:model.defer="state.show_phone" />
                 <p class="text-xs">Показывать студентам</p>
             </div>

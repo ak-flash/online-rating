@@ -3748,6 +3748,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
 
+__webpack_require__(/*! maska */ "./node_modules/maska/dist/maska.esm.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -3756,6 +3758,7 @@ __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
   \***********************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
+window.Maska = __webpack_require__(/*! maska */ "./node_modules/maska/dist/maska.esm.js");
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -20945,6 +20948,32 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
+/***/ "./node_modules/maska/dist/maska.esm.js":
+/*!**********************************************!*\
+  !*** ./node_modules/maska/dist/maska.esm.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__,
+/* harmony export */   "create": () => /* binding */ k,
+/* harmony export */   "install": () => /* binding */ h,
+/* harmony export */   "mask": () => /* binding */ o,
+/* harmony export */   "maska": () => /* binding */ d,
+/* harmony export */   "tokens": () => /* binding */ c
+/* harmony export */ });
+/*!
+ * maska v1.3.2
+ * (c) 2019-2020 Alexander Shabunevich
+ * Released under the MIT License.
+ */
+function e(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function t(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function n(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function r(e,t){var n=Object.keys(e);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(e);t&&(r=r.filter((function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable}))),n.push.apply(n,r)}return n}function a(e){for(var t=1;t<arguments.length;t++){var a=null!=arguments[t]?arguments[t]:{};t%2?r(Object(a),!0).forEach((function(t){n(e,t,a[t])})):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(a)):r(Object(a)).forEach((function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(a,t))}))}return e}function o(e,t,n){var r=!(arguments.length>3&&void 0!==arguments[3])||arguments[3];return u(t).length>1?i(t)(e,t,n,r):s(e,t,n,r)}function u(e){try{return JSON.parse(e)}catch(t){return[e]}}function i(e){var t=u(e).sort((function(e,t){return e.length-t.length}));return function(e,n,r){for(var a=!(arguments.length>3&&void 0!==arguments[3])||arguments[3],o=0;o<t.length;){var u=t[o];o++;var i=t[o];if(!(i&&s(e,i,r,!0).length>u.length))return s(e,u,r,a)}return""}}function s(e,t,n){for(var r=!(arguments.length>3&&void 0!==arguments[3])||arguments[3],a=0,o=0,u="",i="";a<t.length&&o<e.length;){var s=t[a],c=e[o],p=n[s];if(p&&p.pattern)p.pattern.test(c)&&(u+=l(c,p),a++,r&&t[a]&&!n[t[a]]&&(u+=t[a],a++)),o++;else if(p&&p.repeat){var f=n[t[a-1]];f&&!f.pattern.test(c)?a++:a--}else p&&p.escape&&(s=t[++a]),r&&(u+=s),c===s&&o++,a++}for(;r&&a<t.length;){var v=t[a];if(n[v]){i="";break}i+=v,a++}return u+i}function l(e,t){return t.transform&&(e=t.transform(e)),t.uppercase?e.toLocaleUpperCase():t.lowercase?e.toLocaleLowerCase():e}var c={"#":{pattern:/[0-9]/},X:{pattern:/[0-9a-zA-Z]/},S:{pattern:/[a-zA-Z]/},A:{pattern:/[a-zA-Z]/,uppercase:!0},a:{pattern:/[a-zA-Z]/,lowercase:!0},"!":{escape:!0},"*":{repeat:!0}};function p(e){return e instanceof HTMLInputElement?e:e.querySelector("input")||e}function f(e){return"[object String]"===Object.prototype.toString.call(e)}var v=function(){function n(t){var r=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};if(e(this,n),!t)throw new Error("Maska: no element for mask");if(r.tokens)for(var o in r.tokens)r.tokens[o]=a({},r.tokens[o]),r.tokens[o].pattern&&f(r.tokens[o].pattern)&&(r.tokens[o].pattern=new RegExp(r.tokens[o].pattern));this._opts={mask:r.mask,tokens:a(a({},c),r.tokens)},this._el=f(t)?document.querySelectorAll(t):t.length?t:[t],this.init()}var r,u,i;return r=n,(u=[{key:"init",value:function(){for(var e=this,t=0;t<this._el.length;t++){var n=p(this._el[t]);!this._opts.mask||n.dataset.mask&&n.dataset.mask===this._opts.mask||(n.dataset.mask=this._opts.mask),this.updateValue(n),n.dataset.maskInited||(n.dataset.maskInited=!0,n.addEventListener("input",(function(t){return e.updateValue(t.target,t)})),n.addEventListener("beforeinput",(function(t){return e.beforeInput(t)})))}}},{key:"destroy",value:function(){for(var e=this,t=0;t<this._el.length;t++){var n=p(this._el[t]);n.removeEventListener("input",(function(t){return e.updateValue(t.target,t)})),n.removeEventListener("beforeinput",(function(t){return e.beforeInput(t)})),delete n.dataset.mask,delete n.dataset.maskInited}}},{key:"updateValue",value:function(e,t){var n=e.type.match(/^number$/i)&&e.validity.badInput;if((e.value||n)&&e.dataset.mask){var r=e.selectionEnd,a=e.value,u=a[r-1];e.value=o(e.value,e.dataset.mask,this._opts.tokens),t&&"insertText"===t.inputType&&r===a.length&&(r=e.value.length),function(e,t,n){for(;t&&t<e.value.length&&e.value.charAt(t-1)!==n;)t++;(e.type?e.type.match(/^(text|search|password|tel|url)$/i):!e.type)&&e===document.activeElement&&(e.setSelectionRange(t,t),setTimeout((function(){e.setSelectionRange(t,t)}),0))}(e,r,u),e.value!==a&&e.dispatchEvent(function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null,n=document.createEvent("Event");return n.initEvent(e,!0,!0),t&&(n.inputType=t),n}("input",t&&t.inputType||null))}}},{key:"beforeInput",value:function(e){e.target.type.match(/^number$/i)&&e.data&&isNaN(e.target.value+e.data)&&e.preventDefault()}}])&&t(r.prototype,u),i&&t(r,i),n}();function d(e,t){if(t.value)return t.value&&function(e){return!(f(e.value)&&e.value===e.oldValue||Array.isArray(e.value)&&JSON.stringify(e.value)===JSON.stringify(e.oldValue)||e.value&&e.value.mask&&e.oldValue&&e.oldValue.mask&&e.value.mask===e.oldValue.mask)}(t)?new v(e,function(e){var t={};return e.mask?(t.mask=Array.isArray(e.mask)?JSON.stringify(e.mask):e.mask,t.tokens=e.tokens?a({},e.tokens):{}):t.mask=Array.isArray(e)?JSON.stringify(e):e,t}(t.value)):void 0}function h(e){e.directive("maska",d)}function k(e,t){return new v(e,t)}"undefined"!=typeof window&&window.Vue&&window.Vue.use&&window.Vue.use(h);/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (h);
+
+
+/***/ }),
+
 /***/ "./resources/css/app.css":
 /*!*******************************!*\
   !*** ./resources/css/app.css ***!
@@ -20993,6 +21022,18 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// It's empty as some runtime module handles the default behavior
 /******/ 	__webpack_require__.x = x => {}
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {

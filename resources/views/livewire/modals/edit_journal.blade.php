@@ -1,48 +1,55 @@
 <x-form-modal wire:model="openModal" :maxWidth="4">
 
     <x-slot name="title">
-        <p class="pt-2 text-lg font-semibold">Управление дисциплиной</p>
+        <p class="pt-2 text-lg font-semibold">Управление журналом</p>
     </x-slot>
 
     <x-slot name="content">
 
-        <div class="grid grid-cols-3 gap-4 items-center">
+        <div class="grid grid-cols-3 gap-4 items-center"  x-data="{ faculty: null }">
 
-            <label class="font-bold">Название</label>
-            <x-input type="text" class="col-span-2" wire:model.lazy="name" />
-            <x-input-error for="name" class="col-span-3 text-center" />
-
-            <label class="">Короткое</label>
-            <x-input type="text" class="col-span-2 w-1/2" wire:model.lazy="short_name" />
-            <x-input-error for="short_name" class="col-span-3 text-center" />
-
-            <label class="font-bold">Факультет</label>
-            <x-select class="col-span-2" wire:model="faculty_id">
+            <label class="">Тип занятия</label>
+            <x-select class="col-span-2 w-3/5" wire:model="day_type_id">
                 <option value="">Выберите...</option>
-                @foreach(\App\Models\Faculty::all(['id','name']) as $value)
-                    <option value="{{ $value->id }}">{{ $value->name }}</option>
-                @endforeach
-            </x-select>
-            <x-input-error for="faculty_id" class="col-span-3 text-center" />
-
-
-            <label class="font-bold">Семестр</label>
-            <x-select class="col-span-2 w-1/3" wire:model="semester">
-                <option value="">...</option>
-                @for ($i = 1; $i <= 12; $i++)
-                    <option value="{{ $i }}">{{ $i }}</option>
-                @endfor
-            </x-select>
-            <x-input-error for="semester" class="col-span-3 text-center" />
-
-            <label class="">ПА</label>
-            <x-select class="col-span-2 w-3/5" wire:model="last_class_id">
-                <option value="">Выберите...</option>
-                @foreach(\App\Models\Discipline::LAST_CLASS_TYPES as $key => $value)
+                @foreach(\App\Models\Journal::DAYTYPESRUS as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>
                 @endforeach
             </x-select>
-            <x-input-error for="last_class_id" class="col-span-3 text-center" />
+            <x-input-error for="day_type_id" class="col-span-3 text-center" />
+
+            <label class="">Время</label>
+            <x-input type="text" class="w-1/2" data-mask='##:##' wire:model.lazy="time_start" />
+            <x-input type="text" class="w-1/2" data-mask='##:##' wire:model.lazy="time_end" />
+            <x-input-error for="time_start" class="col-span-3 text-center" />
+            <x-input-error for="time_end" class="col-span-3 text-center" />
+
+
+            <label class="font-bold">Дисциплина</label>
+            <x-select class="col-span-2" wire:model="discipline_id" id="discipline">
+                <option value="">Выберите...</option>
+                @foreach($disciplines as $discipline)
+                    <option value="{{ $discipline->id }}">{{ $discipline->name }}
+                        ({{ Faculty::getCourseNumber($discipline->semester) }} {{ $discipline->faculty->tag }} {{ $discipline->semester }} семестр)
+                    </option>
+                @endforeach
+            </x-select>
+            <x-input-error for="discipline_id" class="col-span-3 text-center" />
+
+            <label class="font-bold">Факультет</label>
+            <span class="col-span-2" x-text="getFaculty()"></span>
+
+            <label class="font-bold">Группа</label>
+            <x-select class="col-span-2 w-1/3" wire:model="group_number">
+                <option value="">...</option>
+                @for ($i = 1; $i <= 55; $i++)
+                    <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
+            </x-select>
+            <x-input-error for="group_number" class="col-span-3 text-center" />
+
+            <label class="font-bold">Учебная комната</label>
+            <x-input type="text" class="col-span-2 w-1/2" wire:model.lazy="room" />
+            <x-input-error for="room" class="col-span-3 text-center" />
 
         </div>
     </x-slot>
@@ -67,9 +74,9 @@
     </x-slot>
 
     <x-slot name="content">
-       Вы уверены, что хотите удалить дисциплину?
+       Вы уверены, что хотите удалить журнал?
         <div class="m-2 text-bold text-lg">
-            {{ $name }}
+
         </div>
     </x-slot>
 
@@ -84,3 +91,16 @@
         </x-secondary-button>
     </x-slot>
 </x-confirmation-modal>
+
+<script>
+    function getFaculty() {
+        var sel = document.getElementById("discipline");
+        var text= sel.options[sel.selectedIndex].text;
+
+        if(sel.selectedIndex===0) {
+            text="-";
+        }
+
+        return text.match(/\((.*?)\)/g);
+    }
+</script>

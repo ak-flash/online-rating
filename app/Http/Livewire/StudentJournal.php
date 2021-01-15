@@ -22,9 +22,9 @@ class StudentJournal extends Component
 
     public function render()
     {
-        $this->year = $this->year ?? config('app.study_year', 2020);
+        $this->year = $this->year ?? Journal::getStudyYear(now());
 
-        $this->semester = $this->semester ?? Journal::getSemester(now(), $this->year);
+        $this->semester = $this->semester ?? Journal::getSemesterType(now());
 
         $lessons = Journal::whereFacultyId($this->student->faculty_id)
             ->whereCourseNumber($this->student->course_number)

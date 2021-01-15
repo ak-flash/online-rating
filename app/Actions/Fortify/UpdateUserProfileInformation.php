@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Helper\Helper;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -20,6 +21,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update($user, array $input)
     {
+        $input['phone'] = Helper::clearMask($input['phone']);
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
@@ -63,4 +66,5 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
         $user->sendEmailVerificationNotification();
     }
+
 }

@@ -15,6 +15,8 @@ class CreateLecturesTable extends Migration
     {
         Schema::create('lectures', function (Blueprint $table) {
             $table->id();
+            $table->auditableWithDeletes();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

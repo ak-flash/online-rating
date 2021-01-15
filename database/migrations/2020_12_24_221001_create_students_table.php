@@ -25,6 +25,8 @@ class CreateStudentsTable extends Migration
             $table->string('password')->nullable();
             $table->boolean('active')->default(true);
             $table->text('profile_photo_path')->nullable();
+            $table->auditableWithDeletes();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

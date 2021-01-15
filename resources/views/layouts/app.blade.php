@@ -38,5 +38,13 @@
         @stack('modals')
 
         @livewireScripts
+
+        <script>
+            window.onload = function(e){
+                // Make input mask
+                var inputs = document.getElementsByTagName('input');
+                Maska.create(inputs);
+            }
+        </script>
     </body>
 </html>

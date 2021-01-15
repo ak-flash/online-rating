@@ -15,8 +15,6 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-
-    'study_year' => env('APP_STUDY_YEAR', 2020),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -233,7 +231,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'User' => App\Models\User::class,
         'Journal' => App\Models\Journal::class,
-        'StudyClass' => App\Models\StudyClass::class,
+        'Faculty' => App\Models\Faculty::class,
+//        'StudyClass' => App\Models\StudyClass::class,
+        'Helper' => App\Helper\Helper::class
     ],
 
 ];

@@ -14,6 +14,7 @@ class CreateStudentStudyClassTable extends Migration
     public function up()
     {
         Schema::create('student_study_class', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('study_class_id')->constrained();
             $table->foreignId('student_id')->constrained();
             $table->unique(['study_class_id', 'student_id']);
@@ -23,6 +24,8 @@ class CreateStudentStudyClassTable extends Migration
             $table->boolean('attendance')->default(0);
             $table->foreignId('user_id')->constrained();
             $table->text('permission_file_path')->nullable();
+            $table->auditableWithDeletes();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
