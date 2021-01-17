@@ -15,6 +15,11 @@ class CreateLecturesTable extends Migration
     {
         Schema::create('lectures', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('discipline_id')->constrained();
+            $table->integer('l_number')->length(2);
+            $table->string('title');
+            $table->string('tags');
+            $table->unique(['t_number', 'discipline_id']);
             $table->auditableWithDeletes();
             $table->softDeletes();
             $table->timestamps();

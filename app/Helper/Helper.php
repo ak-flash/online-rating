@@ -3,6 +3,8 @@
 namespace App\Helper;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 class Helper
 {
@@ -22,4 +24,10 @@ class Helper
     public static function formatDateForBase ($date = ''){
         return Carbon::createFromFormat('d/m/Y', $date);
     }
+
+    public static function getRouteName(){
+        $currentRouteName = Route::currentRouteName();
+        return __(Str::ucfirst($currentRouteName));
+    }
+
 }

@@ -29,6 +29,10 @@ class Topics extends Component
         'tags' => 'nullable|string|max:100',
     ];
 
+    protected $messages = [
+        'topicId.unique' => 'Тема с таким номером занятия уже есть!',
+    ];
+
     public function mount(Discipline $discipline)
     {
         $this->discipline = $discipline;
@@ -66,7 +70,10 @@ class Topics extends Component
 
     public function store()
     {
-        $this->validate();
+        $this->validate([
+            'topicNumber' => 'required|numeric|unique:topics,t_number,'
+                .$this->discipline->id,
+        ]);
 
         $topic = Topic::updateOrCreate(['id' => $this->topicId], [
             'discipline_id' => $this->discipline->id,

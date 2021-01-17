@@ -7,6 +7,8 @@
         <div class="bg-white overflow-auto shadow-xl sm:rounded-lg">
 
             <div class="float-left flex items-center items-center py-2">
+
+
                 @if(\App\Models\Journal::isOwner($journal->user_id))
                     <x-add-button class="mr-5" wire:click="update()">
                         Занятие
@@ -25,9 +27,12 @@
             </div>
 
             <div class="float-right flex m-4 items-center">
+
+                <x-back-button />
+
                 <div class="text-md mr-4">
                     <x-secondary-button class="mr-1" wire:click="$toggle('onlyCurrentLesson')" >
-                        Показать {{ $onlyCurrentLesson ? 'все занятия' : 'последнее' }}
+                        Показать {{ $onlyCurrentLesson ? 'все' : 'последнее' }}
                     </x-secondary-button>
                 </div>
 
@@ -100,8 +105,14 @@
 
                         <td class="border-r p-3 text-sm text-center">
 
-                            <div class="flex justify-center">
-                                @livewire('edit-mark',
+                            <div class="flex justify-center text-lg">
+                                <div class="mr-2">
+                                    {{ $student_study_class->pivot->mark1 }}
+                                </div>
+                                <div class="">
+                                    {{ $student_study_class->pivot->mark2 }}
+                                </div>
+                                {{--@livewire('edit-mark',
                                         ['mark' => $student_study_class->pivot->mark1,
                                         'lesson_id' => $student_study_class->pivot->id,
                                         'type' => 'mark1'],
@@ -111,7 +122,7 @@
                                         ['mark' => $student_study_class->pivot->mark2,
                                         'lesson_id' => $student_study_class->pivot->id,
                                         'type' => 'mark2'],
-                                key('student-'.$student_study_class->id.'-mark2-'.$student_study_class->pivot->id.$loop->iteration))
+                                key('student-'.$student_study_class->id.'-mark2-'.$student_study_class->pivot->id.$loop->iteration))--}}
                             </div>
                         </td>
                             @php
@@ -137,8 +148,6 @@
                                 </div>
                                 {{ $student->name }}
                             </td>
-
-
                         </tr>
                     @empty
                         <tr>
@@ -148,7 +157,22 @@
                         </tr>
                     @endforelse
                 @endforelse
+                <tr class="border">
+                    <td colspan="2" class="border-r">
 
+                    </td>
+                    @foreach($study_classes->sortBy('date') as $study_class)
+
+                            <td class="p-2 border-r">
+                                <div class="flex justify-center">
+                                    <x-secondary-button class="" wire:click="editMode({{ $study_class->id }});" >
+                                    Изменить
+                                    </x-secondary-button>
+                                </div>
+                            </td>
+
+                    @endforeach
+                </tr>
                 </tbody>
             </table>
 

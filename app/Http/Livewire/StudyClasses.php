@@ -16,6 +16,8 @@ class StudyClasses extends Component
     public $students;
     public $confirmingDeletion = 0;
     public $openModal = false;
+    public $editMode = false;
+    public $editStudyClassId = 0;
     public $onlyCurrentLesson = true;
     public $studyClassId = 0;
     public $date, $topicId, $timeStart, $timeEnd, $room;
@@ -23,12 +25,15 @@ class StudyClasses extends Component
 
     protected $rules = [
         'studyClassId' => 'required|numeric',
-        'topicId' => 'required|numeric',
         'date' => 'required|date_format:d/m/Y',
         'timeStart' => 'date_format:H:i',
         'timeEnd' => 'date_format:H:i|after:timeStart',
         'room' => 'nullable|string',
         'studyClassTypeId' => 'nullable|numeric',
+    ];
+
+    protected $messages = [
+        'topicId.unique' => 'Данная тема уже добавлена в другое занятие!',
     ];
 
     public function mount(Journal $journal)
@@ -55,10 +60,9 @@ class StudyClasses extends Component
             ->with('students')
             ->get();
 
-        $alreadyPassedTopics = $study_classes->pluck('topic_id')->toArray();
+        // $alreadyPassedTopics = $study_classes->pluck('topic_id')->toArray();
 
         $topics = Topic::whereDisciplineId($this->journal->discipline_id)
-            ->whereNotIn('id', $alreadyPassedTopics)
             ->orderBy('t_number')
             ->get();
 
@@ -135,7 +139,10 @@ class StudyClasses extends Component
     public function store()
     {
 
-        $this->validate();
+        $this->validate([
+            'topicId' => 'required|numeric|unique:study_classes,topic_id,'
+                .$this->journal->id,
+            ]);
 
         if ($this->studyClassId) {
             $study_class = StudyClass::findOrFail($this->studyClassId);
@@ -169,5 +176,11 @@ class StudyClasses extends Component
         $this->emit('show-toast', $message, 'success');
 
         $this->closeModal();
+    }
+
+    public function editMode($study_class_id)
+    {
+        $this->editMode = true;
+        $this->editStudyClassId = $study_class_id;
     }
 }

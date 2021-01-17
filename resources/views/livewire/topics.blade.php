@@ -5,11 +5,7 @@
     <div class="py-4 max-w-7xl mx-auto sm:px-6 lg:px-12">
         <div class="bg-white overflow-auto shadow-xl sm:rounded-lg">
             <div class="float-left">
-                <a href="{{ url()->previous() }}">
-                    <x-secondary-button class="ml-3">
-                        <- Назад
-                    </x-secondary-button>
-                </a>
+
 
                 @if(auth()->user()->isModerator())
 
@@ -20,6 +16,7 @@
                 @endif
             </div>
             <div class="m-2 md:flex sm:flex-row flex-col float-right ">
+                <x-back-button />
 
                 <x-search />
 

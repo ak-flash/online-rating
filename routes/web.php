@@ -27,19 +27,20 @@ Route::prefix('dashboard')
             return view('dashboard');
         })->name('dashboard');
 
-        Route::get('/department/{id}', \App\Http\Livewire\DepartmentSettings::class)->name('department.settings');
+        Route::get('/department/{department}', \App\Http\Livewire\DepartmentSettings::class)
+            ->whereNumber('department')->name('department.settings');
 
         Route::get('/journals', \App\Http\Livewire\Journals::class)
             ->name('journals');
 
         Route::get('/journal/{journal}', \App\Http\Livewire\StudyClasses::class)
-            ->name('study_classes');
+            ->whereNumber('journal')->name('study_classes');
 
         Route::get('/disciplines', \App\Http\Livewire\Disciplines::class)
             ->name('disciplines');
 
         Route::get('/discipline/{discipline}', \App\Http\Livewire\Topics::class)
-            ->name('topics');
+            ->whereNumber('discipline')->name('topics');
 
         Route::get('/students', \App\Http\Livewire\Students::class)
             ->name('students');
@@ -71,5 +72,9 @@ Route::prefix('student')
         Route::get('/logout', [\App\Models\Student::class, 'logout'])
             ->name('student.logout');
     });
+
+/*Route::fallback(function () {
+    //
+});*/
 
 require __DIR__.'/auth.php';

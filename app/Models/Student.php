@@ -53,7 +53,7 @@ class Student extends Model
     }
 
     public function study_classes() {
-        return $this->hasMany(StudyClass::class)->orderByDesc('date');
+        return $this->belongsToMany(StudyClass::class)->orderByDesc('date');
     }
 
 /*    public function lesson($discipline_id)
