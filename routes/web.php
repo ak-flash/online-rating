@@ -32,13 +32,13 @@ Route::prefix('dashboard')
         Route::get('/journals', \App\Http\Livewire\Journals::class)
             ->name('journals');
 
-        Route::get('/journal/{id}', \App\Http\Livewire\StudyClasses::class)
+        Route::get('/journal/{journal}', \App\Http\Livewire\StudyClasses::class)
             ->name('study_classes');
 
         Route::get('/disciplines', \App\Http\Livewire\Disciplines::class)
             ->name('disciplines');
 
-        Route::get('/discipline/{id}', \App\Http\Livewire\Topics::class)
+        Route::get('/discipline/{discipline}', \App\Http\Livewire\Topics::class)
             ->name('topics');
 
         Route::get('/students', \App\Http\Livewire\Students::class)

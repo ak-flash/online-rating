@@ -21,7 +21,13 @@
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
                     <!-- component -->
-                    <div class="p-5 text-2xl"> Статистика за семестр
+                    <div class="p-5">
+                        <div class="text-lg">
+                            Текущая неделя: {{ Helper::getTypeOfWeek(now()) }}
+                        </div>
+                        <div class="text-2xl">
+                            Статистика за семестр
+                        </div>
                     </div>
                     <style>
                         @import url(https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css);

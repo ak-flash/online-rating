@@ -230,9 +230,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'User' => App\Models\User::class,
-        'Journal' => App\Models\Journal::class,
-        'Faculty' => App\Models\Faculty::class,
-//        'StudyClass' => App\Models\StudyClass::class,
         'Helper' => App\Helper\Helper::class
     ],
 

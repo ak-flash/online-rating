@@ -80,11 +80,11 @@
                         <td class="{{ !$user->active ? 'bg-red-300' : '' }} text-sm text-center">
                             {{ $user->id }}
                         </td>
-                        <td class="p-3 text-sm text-left">
+                        <td class="text-sm text-left py-3">
                             <img class="h-10 w-10 rounded-full object-cover mr-3 flex sm:float-left" src="{{ $user->profile_photo_url }}" />
 
-                            <div class="{{ !$user->active ? 'line-through' : '' }} md:whitespace-nowrap flex-grow">
-                                {{ $user->name }}
+                            <div class="{{ !$user->active ? 'line-through' : '' }} md:whitespace-nowrap">
+                                @livewire('edit-user-name', compact('user'), key($user->id))
                             </div>
                             <div class="flex text-sm text-gray-500">
                                 {{ $user->position }}
@@ -114,8 +114,11 @@
                             </p>
                         </td>
                         @if(auth()->user()->isModerator())
-                            <td class="p-3 border-2">
-                                <x-update-delete-button value="{{ $user->id }}" />
+                            <td class="p-3 border">
+                                <div class="flex justify-center">
+                                    <x-update-button value="{{ $user->id }}" />
+                                    <x-delete-button value="{{ $user->id }}" />
+                                </div>
                             </td>
                         @endif
                         <td class="p-1 w-5 text-gray-500 text-xs text-center">

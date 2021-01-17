@@ -77,7 +77,9 @@
                             {{ (($disciplines->currentPage() * $perPage) - $perPage) + $loop->iteration }}
                         </td>
                         <td class="p-3 text-sm text-center">
-                                {{ $discipline->name }}
+                            <a href="{{ route('topics', $discipline->id) }}" class="cursor-pointer hover:underline">
+                            {{ $discipline->name }}
+                            </a>
                         </td>
                         <td class="p-3 text-gray-900 text-xs text-center">
                                 {{ $discipline->short_name }}
@@ -102,8 +104,11 @@
                             </p>
                         </td>
                         @if(auth()->user()->isModerator())
-                            <td class="p-3 border-2">
-                                <x-update-delete-button value="{{ $discipline->id }}" />
+                            <td class="p-3 border">
+                                <div class="flex justify-center">
+                                    <x-update-button value="{{ $discipline->id }}" />
+                                    <x-delete-button value="{{ $discipline->id }}" />
+                                </div>
                             </td>
                         @endif
                         <td class="p-1 w-5 text-gray-500 text-xs text-center">

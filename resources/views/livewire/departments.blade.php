@@ -83,8 +83,11 @@
                         </td>
 
 
-                        <td class="p-3 border-2">
-                            <x-update-delete-button value="{{ $department->id }}" />
+                        <td class="p-3 border">
+                            <div class="flex justify-center">
+                                    <x-update-button value="{{ $department->id }}" />
+                                    <x-delete-button value="{{ $department->id }}" />
+                            </div>
                         </td>
                         <td class="p-1 w-5 border-b border-gray-200 text-gray-500 bg-white text-xs text-center">
                             {{ is_null($department->updated_at) ?  'никогда' : $department->updated_at->diffForHumans() }}

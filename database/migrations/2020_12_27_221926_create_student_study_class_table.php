@@ -22,7 +22,6 @@ class CreateStudentStudyClassTable extends Migration
             $table->integer('mark2')->length(3)->default(0);
             $table->string('notify',150)->nullable();
             $table->boolean('attendance')->default(0);
-            $table->foreignId('user_id')->constrained();
             $table->text('permission_file_path')->nullable();
             $table->auditableWithDeletes();
             $table->softDeletes();

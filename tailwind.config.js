@@ -16,7 +16,7 @@ module.exports = {
     },
 
     variants: {
-        opacity: ['responsive', 'hover', 'focus', 'disabled'],
+        opacity: ['responsive', 'hover', 'disabled'],
     },
 
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],

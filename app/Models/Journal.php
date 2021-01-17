@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Yajra\Auditable\AuditableWithDeletesTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $discipline_id
  * @property string $time_start
  * @property string $time_end
- * @property int $day_type_id
+ * @property int $day_type
  * @property int $faculty_id
  * @property string $year
  * @property int|null $semester
@@ -29,7 +30,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Models\Department $department
  * @property-read \App\Models\Discipline $discipline
  * @property-read \App\Models\Faculty $faculty
- * @property string $day_type
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudyClass[] $study_classes
  * @property-read int|null $study_classes_count
  * @property-read \App\Models\User $user
@@ -70,6 +70,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Journal whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|Journal withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Journal withoutTrashed()
+ * @property int $week_type
+ * @property-read string $week
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereDayType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereWeekType($value)
+ * @property int $day_type_id
+ * @property int $week_type_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal whereWeekTypeId($value)
  */
 class Journal extends Model
 {
@@ -82,6 +89,7 @@ class Journal extends Model
         'time_start',
         'time_end',
         'day_type_id',
+        'week_type_id',
         'user_id',
         'department_id',
         'faculty_id',
@@ -102,18 +110,27 @@ class Journal extends Model
         '3.4' => '66',
     ];
 
-    public const DAYTYPES = [
+    public const WEEKTYPES = [
         1 => 'oddweek',
         2 => 'evenweek',
         3 => 'everyweek',
         4 => 'cycle'
     ];
 
-    public const DAYTYPESRUS = [
+    public const WEEKTYPESRUS = [
         1 => 'еженедельно',
         2 => 'чётная неделя',
         3 => 'нечётная неделя',
         4 => 'цикл'
+    ];
+
+    public const DAYTYPES = [
+        1 => 'пн',
+        2 => 'вт',
+        3 => 'ср',
+        4 => 'чт',
+        5 => 'пт',
+        6 => 'сб'
     ];
 
     public const DATESEMESTERS = [
@@ -175,20 +192,21 @@ class Journal extends Model
         return self::DAYTYPES[ $this->attributes['day_type_id'] ];
     }
 
-    public function getDayTypeRus(): string
+
+
+    public static function getWeekTypeID($type)
     {
-        return self::DAYTYPESRUS[ $this->attributes['day_type_id'] ];
+        return array_search($type, self::WEEKTYPES);
     }
-    /**
-     * set DayType to class
-     * @param $value
-     */
-    public function setDayTypeAttribute($value)
+
+    public function getWeekTypeAttribute(): string
     {
-        $day_typeID = self::getDayTypeID($value);
-        if ($day_typeID) {
-            $this->attributes['day_type_id'] = $day_typeID;
-        }
+        return self::WEEKTYPES[ $this->attributes['week_type_id'] ];
+    }
+
+    public function getWeekTypeRus(): string
+    {
+        return self::WEEKTYPESRUS[ $this->attributes['week_type_id'] ];
     }
 
     public function faculty() {
@@ -212,11 +230,25 @@ class Journal extends Model
     }
 
 
+    public static function isOwner($user_id)
+    {
+        if($user_id == Auth::id()){
+            return true;
+        }
+        return false;
+    }
 
     public static function findByStudentsGroup($faculty_id, $course_number, $group_number) {
         return static::where('faculty_id', $faculty_id)
             ->where('course_number', $course_number)
             ->where('group_number', $group_number);
+    }
+
+    public static function search ($search)
+    {
+        return empty($search) ? static::query()
+            : static::where('group_number', 'like', $search);
+
     }
 
 }

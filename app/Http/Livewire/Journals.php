@@ -3,9 +3,10 @@
 namespace App\Http\Livewire;
 
 use App\Models\Discipline;
+use App\Models\Faculty;
+use App\Models\Journal;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Journal;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,33 +15,35 @@ class Journals extends Component
     use WithPagination;
 
     public $search = '';
-    public $perPage = 5;
+    public $perPage = 20;
     public $confirmingDeletion =0;
     public $openModal = false;
     public $showPersonalGroups = true;
+    public $hasLessons = false;
     public $year, $semester;
-    public $journal_id = 0;
-    public $disciplines, $discipline_id, $faculty_id, $group_number,
-        $time_start, $time_end, $day_type_id, $room;
+    public $journalId = 0;
+    public $disciplines, $disciplineId, $userId, $facultyId, $groupNumber,
+        $timeStart, $timeEnd, $dayTypeId, $weekTypeId, $room, $journalYear;
 
     protected $rules = [
-        'discipline_id' => 'required|numeric',
-        'group_number' => 'required|numeric',
-        'time_start' => 'date_format:H:i',
-        'time_end' => 'date_format:H:i|after:time_start',
-        'day_type_id' => 'required|integer',
+        'disciplineId' => 'required|numeric',
+        'groupNumber' => 'required|numeric',
+        'timeStart' => 'date_format:H:i',
+        'timeEnd' => 'date_format:H:i|after:timeStart',
+        'dayTypeId' => 'required|integer',
         'room' => 'nullable|string',
     ];
 
     public function render()
     {
-        $personal_groups = $this->showPersonalGroups;
+        $personalGroups = $this->showPersonalGroups;
 
         $this->year = $this->year ?? Journal::getStudyYear(now());
 
         $this->semester = $this->semester ?? Journal::getSemesterType(now());
 
-        $journals = Journal::when($personal_groups, function ($q) {
+        $journals = Journal::search($this->search)
+            ->when($personalGroups, function ($q) {
             return $q->whereUserId(Auth::id());
         }, function ($q) {
             return $q->whereDepartmentId(Auth::user()->department_id);
@@ -77,17 +80,27 @@ class Journals extends Component
         $time_end = Carbon::parse($journal->time_end);
 
         if($journal->id) {
-            $this->journal_id = $journal->id;
-            $this->discipline_id = $journal->discipline_id;
-            $this->group_number = $journal->group_number;
-            $this->time_start = $time_start->format('H:i');
-            $this->time_end = $time_end->format('H:i');
-            $this->day_type_id = $journal->day_type_id;
+            $this->journalId = $journal->id;
+            $this->userId = $journal->user_id;
+            $this->facultyId = $journal->faculty_id;
+            $this->journalYear = $journal->year;
+            $this->disciplineId = $journal->discipline_id;
+            $this->groupNumber = $journal->group_number;
+            $this->timeStart = $time_start->format('H:i');
+            $this->timeEnd = $time_end->format('H:i');
+            $this->dayTypeId = $journal->day_type_id;
+            $this->weekTypeId = $journal->week_type_id;
             $this->room = $journal->room;
+
+            if($journal->study_classes->isNotEmpty()){
+                $this->hasLessons = true;
+
+                $message = 'Данный журнал содержит занятия';
+                $this->emit('show-toast', $message, 'danger');
+            }
         } else {
             $this->resetInputFields();
             $this->resetValidation();
-
         }
 
         $this->openModal = true;
@@ -102,27 +115,59 @@ class Journals extends Component
 
     public function store()
     {
+
         $this->validate();
 
-        $discipline = Discipline::findOrFail($this->discipline_id);
+        $discipline = Discipline::findOrFail($this->disciplineId);
 
-        $journal = Journal::updateOrCreate(['id' => $this->journal_id], [
-            'discipline_id' => $this->discipline_id,
-            'group_number' => $this->group_number,
-            'time_start' => $this->time_start,
-            'time_end' => $this->time_end,
-            'day_type_id' => $this->day_type_id,
-            'room' => $this->room,
-            'user_id' => Auth::user()->id,
-            'department_id' => Auth::user()->department_id,
-            'faculty_id' => $discipline->faculty_id,
-            'semester' => $discipline->semester,
-            'course_number' => Faculty::getCourseNumber($discipline->semester),
-            'year' => now()->format('Y'),
-        ]);
+        if($this->journalId) {
+
+            $journal = Journal::findOrFail($this->journalId);
+
+            $journal->day_type_id = $this->dayTypeId;
+            $journal->week_type_id = $this->weekTypeId;
+            $journal->time_start = $this->timeStart;
+            $journal->time_end = $this->timeEnd;
+            $journal->room = $this->room;
+
+            if (Auth::user()->isModerator()){
+                $journal->user_id = $this->userId;
+            }
+
+            // Change data only if it`s new journal without lessons
+            if($journal->study_classes->isEmpty()) {
+                $journal->discipline_id = $this->disciplineId;
+                $journal->group_number = $this->groupNumber;
+                $journal->faculty_id = $discipline->faculty_id;
+                $journal->semester = $discipline->semester;
+                $journal->course_number = Faculty::getCourseNumber($discipline->semester);
+            }
+
+            $journal->save();
+
+        } else {
+            $journal = Journal::create([
+                'discipline_id' => $this->disciplineId,
+                'group_number' => $this->groupNumber,
+                'time_start' => $this->timeStart,
+                'time_end' => $this->timeEnd,
+                'day_type_id' => $this->dayTypeId,
+                'week_type_id' => $this->weekTypeId,
+                'room' => $this->room,
+                'user_id' => Auth::id(),
+                'department_id' => Auth::user()->department_id,
+                'faculty_id' => $discipline->faculty_id,
+                'semester' => $discipline->semester,
+                'course_number' => Faculty::getCourseNumber($discipline->semester),
+                'year' => now()->format('Y'),
+            ]);
+        }
 
 
-        $message = $this->journal_id ? 'Данные обновлены' : 'Журнал создан';
+
+
+
+        $message = $this->journalId ? 'Данные обновлены' : 'Журнал создан';
 
         $this->emit('show-toast', $message, 'success');
 
@@ -132,8 +177,8 @@ class Journals extends Component
     public function deleteConfirmation(Journal $journal)
     {
 
-        $this->journal_id = $journal->id;
-        $this->group_number = $journal->group_number;
+        $this->journalId = $journal->id;
+        $this->groupNumber = $journal->group_number;
 
         $this->confirmingDeletion = true;
 
@@ -141,7 +186,7 @@ class Journals extends Component
 
     public function delete()
     {
-        Journal::destroy($this->journal_id);
+        Journal::destroy($this->journalId);
 
         $this->emit('show-toast', 'Журнал удалён!', 'success');
 
@@ -157,13 +202,14 @@ class Journals extends Component
 
     private function resetInputFields()
     {
-        $this->journal_id = 0;
-        $this->discipline_id = '';
-        $this->group_number = '';
-        $this->faculty_id = '';
-        $this->time_start = '';
-        $this->time_end = '';
-        $this->day_type_id = '';
+        $this->journalId = 0;
+        $this->disciplineId = '';
+        $this->groupNumber = '';
+        $this->facultyId = '';
+        $this->timeStart = '';
+        $this->timeEnd = '';
+        $this->dayTypeId = '';
+        $this->weekTypeId = '';
     }
 
     public function updated($propertyName)

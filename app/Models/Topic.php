@@ -44,11 +44,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Topic whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|Topic withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Topic withoutTrashed()
+ * @property string|null $tags
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic whereTags($value)
  */
 class Topic extends Model
 {
     use HasFactory;
     use AuditableWithDeletesTrait, SoftDeletes;
 
+    protected $fillable = [
+        'discipline_id',
+        'title',
+        'tags',
+        't_number',
+    ];
 
+    protected $dates = ['created_at', 'updated_at'];
 }

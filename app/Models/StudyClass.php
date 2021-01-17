@@ -62,6 +62,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereJournalId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $students
  * @property-read int|null $students_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Journal[] $journal
+ * @property-read int|null $journal_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Topic[] $topic
+ * @property-read int|null $topic_count
  */
 class StudyClass extends Model
 {
@@ -119,9 +123,18 @@ class StudyClass extends Model
         text-white text-md m-1 px-2 py-1">'.$mark.'</div>';
     }
 
+    public function journal() {
+        return $this->belongsToMany(Journal::class);
+    }
+
+    public function topic() {
+        return $this->belongsToMany(Topic::class);
+    }
+
     public function students() {
         return $this->belongsToMany(Student::class)
             ->orderBy('last_name')
-            ->withPivot('mark1', 'mark2', 'notify', 'attendance', 'user_id', 'updated_at');
+            ->withPivot('id', 'mark1', 'mark2', 'notify', 'attendance', 'updated_at',  'updated_by',  'permission_file_path')
+            ->withTimestamps();
     }
 }
