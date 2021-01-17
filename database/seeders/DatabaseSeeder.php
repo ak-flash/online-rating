@@ -24,11 +24,11 @@ class DatabaseSeeder extends Seeder
             // FacultySeeder::class,
             // DepartmentSeeder::class,
             // TopicSeeder::Seeder::class,
-            StudentStudyClassSeeder::class,
+            // StudentStudyClassSeeder::class,
         ]);
 
         // User::factory(10)->create();
-        // Student::factory(500)->create();
+         Student::factory(500)->create();
         // Discipline::factory(100)->create();
 
         // Journal::factory(100)->create();
