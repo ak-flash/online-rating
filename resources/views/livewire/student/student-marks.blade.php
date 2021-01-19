@@ -3,7 +3,7 @@
     <div class="pb-2 mt-2 flex items-center justify-between text-gray-600
 				dark:text-gray-400 border-b dark:border-gray-600">
         <!-- Header -->
-        <h2 class="ml-4 md:ml-0 text-3xl font-semibold dark:text-gray-400">
+        <h2 class="ml-4 md:ml-0 text-3xl dark:text-gray-400">
             Журнал оценок
         </h2>
 
@@ -13,20 +13,20 @@
 
         <div class="ml-4 text-lg">
              Рейтинг:
-               <div class="flex text-2xl {{ $rating>=3 ? 'text-green-700':'text-red-700' }}">
+               {{--<div class="flex text-2xl {{ $rating>=3 ? 'text-green-700':'text-red-700' }}">
                    {{ $rating }}
                    <div class="mx-2 text-sm">
                        ( {{ $rating ?
                         \App\Models\Journal::RATING_TABLE[strval($rating)]
                         : 0 }} )
                    </div>
-               </div>
+               </div>--}}
         </div>
         <div class="relative">
-            <select class="h-full rounded-md border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4  leading-tight focus:outline-none focus:border focus:bg-white focus:border-gray-500">
+            <x-select class="">
                 <option value="1">Вид: Timeline</option>
                 <option value="2">Вид: Простой</option>
-            </select>
+            </x-select>
         </div>
 
         <a href="" class="bg-green-700 hover:bg-green-500 shadow p-2 px-4 float-right rounded-lg text-white">
@@ -137,40 +137,40 @@
                         <div class="relative wrap overflow-hidden p-5 md:p-10 h-full">
 
 
-                        @if($lessons->isNotEmpty())
                             <div class="border-2-2 absolute border-opacity-20 border-indigo-700 h-full border md:inset-x-1/2"></div>
 
-                            @foreach ($lessons as $lesson)
+                            @forelse ($lessons as $lesson)
 
                             <!-- left timeline -->
                             <div class="mb-8 flex md:justify-between
                             {{ ($loop->index)%2 ? '' : 'md:flex-row-reverse' }} items-center w-full">
                                 <div class="md:order-1 md:w-5/12"></div>
                                 <div class="z-20 flex md:items-center md:order-1 bg-gray-800 shadow-xl w-8 h-8 rounded-full">
-                                    <h1 class="mx-auto text-white font-semibold text-lg">
-                                        {{ $loop->iteration }}
+                                    <h1 class="mx-auto text-white font-bold text-lg">
+                                        {{ (count($lessons) - $loop->iteration + 1) }}
                                     </h1>
                                 </div>
-                                <div class="md:order-1 w-full {{ $this->lessonCleared($lesson->pivot->attendance, $lesson->pivot->mark1, $lesson->pivot->mark2)  ? 'bg-green-600' : 'bg-red-600' }} text-white rounded-lg shadow-xl md:w-5/12 md:px-6 py-2 {{ in_array($lesson->type, ['ИТОГОВАЯ', 'ЗАЧЕТНОЕ занятие', 'ЭКЗАМЕН']) ? 'border-8 border-pink-600' : '' }}">
+                                <div class="md:order-1 w-full {{ $this->lessonCleared($lesson->pivot->attendance, $lesson->pivot->mark1, $lesson->pivot->mark2)  ? 'bg-green-600' : 'bg-red-600' }} text-white rounded-lg shadow-xl md:w-5/12 md:px-6 py-2 {{ in_array($lesson->type, ['ИТОГОВАЯ', 'ЗАЧЕТНОЕ занятие', 'ЭКЗАМЕН']) ? 'border-8 border-green-800' : '' }}">
 
-                                  <div class="mb-2">
+                                  <div class="mb-4">
                                       {{ Str::ucfirst($lesson->type) }}
                                   </div>
 
-                                    <div class="flex m-2 md:m-0">
+                                    <div class="flex m-2 md:m-0 justify-center">
 
-
-                                          <div class="rounded-md text-green-900 text-lg {{ $lesson->pivot->attendance  ? 'bg-green-100' : 'bg-red-200' }} flex items-center px-3 md:p-4 font-semibold">
+                                          <div class="rounded-md text-green-900 text-lg {{ $lesson->pivot->attendance  ? 'bg-green-100' : 'bg-red-200' }} items-center px-3 md:p-4 font-bold">
                                                 {{ \Carbon\Carbon::parse($lesson->date)->translatedFormat('d F Y') }}
                                           </div>
-
-
-                            {!! App\Models\StudyClass::set_mark_color($lesson->pivot->mark1) !!}
-
-
-                            {!! App\Models\StudyClass::set_mark_color($lesson->pivot->mark2) !!}
-
+                                        <div class="ml-5 flex items-center  text-lg">
+                                            <x-student-marks for="student"
+                                                mark1="{{ $lesson->pivot->mark1 }}"
+                                                mark2="{{ $lesson->pivot->mark2 }}"
+                                            />
+                                        </div>
                                      </div>
+
+
+
                                     <h3 class="m-2 pl-3 text-white text-md">
                                         {{ $lesson->title }}
                                     </h3>
@@ -178,8 +178,8 @@
 
                                         {{ \Carbon\Carbon::parse($lesson->pivot->updated_at)->format('d/m/Y H:i') }}
 
-                                        @if(isset($lessons->edited_by))
-                                            ({{ $this->getShortName($lessons->edited_by[$lesson->pivot->user_id]) }})
+                                        @if(isset($lesson->pivot->updated_by))
+                                            ({{ Helper::getShortName($lesson->pivot->editedBy->name) }})
                                         @endif
                                     </div>
                                 </div>
@@ -187,15 +187,13 @@
 
 
 
-                                @endforeach
-
-                            @else
+                                @empty
                                 <div class="px-5 py-5 border-b border-gray-200 bg-white" colspan="6">
                                         <p class="text-red-700 text-md text-center">
                                             Занятия не найдены...
                                         </p>
                                     </div>
-                            @endif
+                                @endforelse
 
                         </div>
                     </div>

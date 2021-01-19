@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Yajra\Auditable\AuditableWithDeletesTrait;
 
@@ -55,7 +55,7 @@ use Yajra\Auditable\AuditableWithDeletesTrait;
  * @method static \Illuminate\Database\Query\Builder|StudentStudyClass withoutTrashed()
  * @mixin \Eloquent
  */
-class StudentStudyClass extends Model
+class StudentStudyClass extends Pivot
 {
     use HasFactory;
     use AuditableWithDeletesTrait, SoftDeletes;
@@ -68,4 +68,9 @@ class StudentStudyClass extends Model
      * @var string
      */
     protected $table = 'student_study_class';
+
+    public function editedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }

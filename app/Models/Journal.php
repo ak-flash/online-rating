@@ -226,7 +226,8 @@ class Journal extends Model
     }
 
     public function study_classes() {
-        return $this->hasMany(StudyClass::class);
+        return $this->hasMany(StudyClass::class)
+            ->orderByDesc('date');
     }
 
 

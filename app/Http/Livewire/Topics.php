@@ -72,7 +72,7 @@ class Topics extends Component
     {
         $this->validate([
             'topicNumber' => 'required|numeric|unique:topics,t_number,'
-                .$this->discipline->id,
+                .$this->topicId,
         ]);
 
         $topic = Topic::updateOrCreate(['id' => $this->topicId], [

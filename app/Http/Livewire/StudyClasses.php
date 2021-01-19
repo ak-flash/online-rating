@@ -18,7 +18,7 @@ class StudyClasses extends Component
     public $openModal = false;
     public $editMode = false;
     public $editStudyClassId = 0;
-    public $onlyCurrentLesson = true;
+    public $onlyCurrentLesson = false;
     public $studyClassId = 0;
     public $date, $topicId, $timeStart, $timeEnd, $room;
     public $studyClassTypeId = 1;
@@ -65,7 +65,6 @@ class StudyClasses extends Component
         $topics = Topic::whereDisciplineId($this->journal->discipline_id)
             ->orderBy('t_number')
             ->get();
-
 
        /* foreach ($study_classes->last() as $student) {
             dd($student);
@@ -141,7 +140,7 @@ class StudyClasses extends Component
 
         $this->validate([
             'topicId' => 'required|numeric|unique:study_classes,topic_id,'
-                .$this->journal->id,
+                .$this->studyClassId,
             ]);
 
         if ($this->studyClassId) {
@@ -178,9 +177,11 @@ class StudyClasses extends Component
         $this->closeModal();
     }
 
-    public function editMode($study_class_id)
+    public function editModeEnable($study_class_id)
     {
-        $this->editMode = true;
+        $this->editMode = $this->editMode == true ? false : true;
+
         $this->editStudyClassId = $study_class_id;
+
     }
 }

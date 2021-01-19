@@ -32,15 +32,15 @@ class StudentJournal extends Component
             ->where('year', $this->year)
             ->whereIn('semester', Journal::SEMESTERS[$this->semester])
             ->with(['user:id,name,position,profile_photo_path', 'department:id,name', 'discipline:id,name'])
-            ->with(['study_classes' => function($query) {
-                $query->latest('date')->leftJoin('student_study_class', 'study_classes.id', '=', 'student_study_class.study_class_id')->select('lesson_id', 'date', 'type_id', 'mark1', 'mark2', 'student_study_class.updated_at');
-            }])
+            ->with('study_classes', function ($q) {
+                return $q->select(['id','journal_id','date','created_by','type_id'])->limit(1);
+            })
             ->orderBy('department_id')
             ->paginate($this->perPage);
 
 
 
-        //dd($lessons);
+        //dd($lessons[0]);
         return view('livewire.student.student-journal', [
             'lessons' => $lessons,
         ]);

@@ -17,7 +17,12 @@ module.exports = {
 
     variants: {
         opacity: ['responsive', 'hover', 'disabled'],
+        scrollbar: ['dark'],
     },
 
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/typography'),
+        require('tailwind-scrollbar'),
+    ],
 };

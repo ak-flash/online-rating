@@ -38,42 +38,47 @@
 
                 <x-button>Excel</x-button>
             </div>
+        </div>
+    </div>
 
-
-            <table class="min-w-full table-fixed">
+    <div class="flex flex-col h-screen mx-auto sm:px-2 lg:px-4 mb-10">
+        <div class="flex-grow overflow-auto bg-white scrollbar scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+            <table class="relative w-full">
                 <thead>
                 <tr>
-                    <th class="px-5 py-3 w-10 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
+                    <th class="sticky top-0 px-5 py-3 w-10 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
                         №
                     </th>
-                    <th class="px-5 py-3 w-auto border-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 tracking-wider">
+                    <th class="sticky top-0 px-5 py-3 w-auto border-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 tracking-wider">
                         Ф.И.О.
                     </th>
 
                     @foreach($study_classes->sortBy('date') as $study_class)
-                            <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs text-gray-600">
+                            <th class="sticky top-0 px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs text-gray-600">
                                 <a href="#" title="{{ $study_class->type }}" wire:click.prevent="update({{ $study_class->id }})" class="flex items-center justify-center">
-                                    <i class="fas fa-edit text-xl"></i>
-                                    <div class="ml-2 flex flex-col">
-                                        <div class="text-left text-sm">
+
+                                    {!! $onlyCurrentLesson ? '<i class="fas fa-edit text-xl mr-2"></i>' : '' !!}
+                                    <div class="flex flex-col">
+                                        <div class="text-left text-sm text-center">
                                             {{ $study_class->date->format('d/m/y') }}
                                         </div>
                                         <div class="">
                                             {{ $study_class->date->translatedFormat('l') }}
                                         </div>
+                                        @if($study_class->type_id>=4)
+                                            <p class="text-red-700">
+                                                {{ $study_class->type }}
+                                            </p>
+                                        @endif
                                     </div>
-                                    @if($study_class->type_id>=4)
-                                        <div class="text-red-700">
-                                            {{ $study_class->type }}
-                                        </div>
-                                    @endif
+
 
                                 </a>
                             </th>
 
                     @endforeach
                     @if($study_classes->isNotEmpty())
-                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
+                        <th class="sticky top-0 px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
                             Рейтинг
                         </th>
                     @endif
@@ -90,7 +95,7 @@
                         <td class="border-r p-3 text-center">
                           {{ $loop->iteration }}
                         </td>
-                        <td class="border-r p-3 text-sm whitespace-nowrap">
+                        <td class="sticky left-0 border-r p-3 text-sm whitespace-nowrap">
                             <div class="font-bold">
                                 {{ $student[0]['last_name'] }}
                             </div>
@@ -106,23 +111,35 @@
                         <td class="border-r p-3 text-sm text-center">
 
                             <div class="flex justify-center text-lg">
-                                <div class="mr-2">
-                                    {{ $student_study_class->pivot->mark1 }}
-                                </div>
-                                <div class="">
-                                    {{ $student_study_class->pivot->mark2 }}
-                                </div>
-                                {{--@livewire('edit-mark',
-                                        ['mark' => $student_study_class->pivot->mark1,
-                                        'lesson_id' => $student_study_class->pivot->id,
-                                        'type' => 'mark1'],
-                                        key('student-'.$student_study_class->id.'-mark1-'.$student_study_class->pivot->id.$loop->iteration))
 
-                                @livewire('edit-mark',
-                                        ['mark' => $student_study_class->pivot->mark2,
-                                        'lesson_id' => $student_study_class->pivot->id,
-                                        'type' => 'mark2'],
-                                key('student-'.$student_study_class->id.'-mark2-'.$student_study_class->pivot->id.$loop->iteration))--}}
+                                @php
+                                    $index_for_cycle = $loop->iteration - 1;
+                                @endphp
+
+{{--                                 If editor mode enabled insert livewire component--}}
+                                @if($editMode && $editStudyClassId == $student[$index_for_cycle]['pivot']['study_class_id'])
+                                    <div class="mr-3">
+                                        @livewire('edit-mark',
+                                            ['mark' => $student_study_class->pivot->mark1,
+                                            'lesson_id' => $student_study_class->pivot->id,
+                                            'type' => 'mark1'],
+                                            key('unique-'.$student_study_class->id.'-mark1-'.$student_study_class->pivot->id.$loop->iteration))
+                                    </div>
+                                    <div class="">
+                                        @livewire('edit-mark',
+                                            ['mark' => $student_study_class->pivot->mark2,
+                                            'lesson_id' => $student_study_class->pivot->id,
+                                            'type' => 'mark2'],
+                                    key('unique-'.$student_study_class->id.'-mark2-'.$student_study_class->pivot->id.$loop->iteration))
+                                    </div>
+                                @else
+                                    <x-student-marks for="teacher"
+                                        mark1="{{ $student_study_class->pivot->mark1 }}"
+                                        mark2="{{ $student_study_class->pivot->mark2 }}"
+                                    />
+
+
+                                @endif
                             </div>
                         </td>
                             @php
@@ -161,12 +178,12 @@
                     <td colspan="2" class="border-r">
 
                     </td>
-                    @foreach($study_classes->sortBy('date') as $study_class)
+                    @foreach($study_classes as $study_class)
 
                             <td class="p-2 border-r">
                                 <div class="flex justify-center">
-                                    <x-secondary-button class="" wire:click="editMode({{ $study_class->id }});" >
-                                    Изменить
+                                    <x-secondary-button class="" wire:click="editModeEnable({{ $study_class->id }});" >
+                                   {{ ($editMode && $editStudyClassId == $study_class->id) ? 'Закрыть' : 'Изменить' }}
                                     </x-secondary-button>
                                 </div>
                             </td>
@@ -175,9 +192,9 @@
                 </tr>
                 </tbody>
             </table>
-
         </div>
-    </div>
+        </div>
+
 
     @include('livewire.modals.edit_study_class')
 

@@ -95,7 +95,7 @@
                         </div>
                     </td>
 
-                    <td class="font-semibold text-center">
+                    <td class="font-bold text-center">
 
                         @if($lesson->study_classes->isNotEmpty())
 
@@ -110,13 +110,13 @@
                     <td class="px-5 text-center font-semibold">
                         @if($lesson->study_classes->isNotEmpty()&&$lesson->study_classes[0]->updated_at!=NULL)
 
-                            <div class="flex justify-center">
+                            {{--<div class="flex justify-center">
                                 {!! App\Models\StudyClass::set_mark_color($lesson->study_classes[0]->mark1) !!}
 
                                 {!! App\Models\StudyClass::set_mark_color($lesson->study_classes[0]->mark2) !!}
 
 
-                            </div>
+                            </div>--}}
                             <div class="rounded-lg bg-green-50 text-green-900 text-xs text-center p-1">
                                 {{ $lesson->study_classes[0]->updated_at->format('d/m/Y') }}
                             </div>

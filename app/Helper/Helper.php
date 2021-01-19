@@ -30,4 +30,34 @@ class Helper
         return __(Str::ucfirst($currentRouteName));
     }
 
+    // Get path for tailwind color
+    public static function getMarkColor($mark){
+        switch ($mark){
+            case 0: $color = 'grey-400';
+                break;
+            case 2: $color = 'red-700';
+                break;
+            case 3: $color = 'green-500';
+                break;
+            case 4: $color = 'green-600';
+                break;
+            case 5: $color = 'green-700';
+                break;
+            default: $color = 'grey-500';
+        }
+
+        return $color;
+    }
+
+    public static function getShortName($name): string
+    {
+        $name = explode(' ', $name);
+
+        $last_name = $name[0];
+        $first_name = mb_substr($name[1], 0,1);
+        $middle_name = mb_substr($name[2], 0,1);
+
+        return $last_name.' '.$first_name.'. '.$middle_name.'.';
+    }
+
 }

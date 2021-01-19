@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Seeders\StudentStudyClassSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Yajra\Auditable\AuditableWithDeletesTrait;
@@ -115,14 +116,6 @@ class StudyClass extends Model
     }
 
 
-    public static function set_mark_color($mark) {
-
-        $color = ($mark==2) ? 'bg-red-600' : 'bg-green-700';
-
-        return '<div class="rounded-md '.$color.'
-        text-white text-md m-1 px-2 py-1">'.$mark.'</div>';
-    }
-
     public function journal() {
         return $this->belongsToMany(Journal::class);
     }
@@ -131,10 +124,13 @@ class StudyClass extends Model
         return $this->belongsToMany(Topic::class);
     }
 
+
     public function students() {
         return $this->belongsToMany(Student::class)
             ->orderBy('last_name')
+            ->using(StudentStudyClass::class)
             ->withPivot('id', 'mark1', 'mark2', 'notify', 'attendance', 'updated_at',  'updated_by',  'permission_file_path')
             ->withTimestamps();
     }
+
 }

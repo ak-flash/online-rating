@@ -48,12 +48,20 @@ class Student extends Model
 {
     use HasFactory;
 
+
     public function faculty() {
         return $this->belongsTo(Faculty::class);
     }
 
-    public function study_classes() {
-        return $this->belongsToMany(StudyClass::class)->orderByDesc('date');
+
+
+
+    public function study_class() {
+        return $this->belongsToMany(StudyClass::class)
+            ->orderByDesc('date')
+            ->using(StudentStudyClass::class)
+            ->withPivot('id', 'mark1', 'mark2', 'notify', 'attendance', 'updated_at',  'updated_by',  'permission_file_path')
+            ->withTimestamps();
     }
 
 /*    public function lesson($discipline_id)
