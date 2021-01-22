@@ -163,11 +163,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers...
-         */
-        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
-        // Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
@@ -178,6 +173,15 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
 
+        /*
+         * Package Service Providers...
+         */
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+
+        /*
+        LaravelIdeHelper moved to AppServiceProvider
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        */
     ],
 
     /*

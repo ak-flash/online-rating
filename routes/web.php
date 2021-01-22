@@ -76,5 +76,3 @@ Route::prefix('student')
 /*Route::fallback(function () {
     //
 });*/
-
-require __DIR__.'/auth.php';
