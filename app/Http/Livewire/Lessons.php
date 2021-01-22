@@ -24,6 +24,7 @@ class Lessons extends Component
     public $date, $topicId, $timeStart, $timeEnd, $room;
     public $studyClassTypeId = 1;
     public $lessonId;
+    public $page = 1;
 
     protected $rules = [
         'studyClassId' => 'required|numeric',
@@ -50,35 +51,21 @@ class Lessons extends Component
 
     public function render()
     {
-        /*$study_classes = Lesson::whereJournalId($this->journal->id)
-            ->when($this->onlyCurrentLesson, function ($q) {
-                return $q->limit(1);
-            })
-            ->orderBy('date', 'desc')
-            ->with('students', function ($q) {
-                return $q->whereFacultyId($this->journal->faculty_id)
-                    ->whereCourseNumber($this->journal->course_number)
-                    ->whereGroupNumber($this->journal->group_number)
-                    ->orderBy('last_name');
-            })
-            ->get();*/
-
-
-        /*$lessons = DB::select(DB::raw('SELECT students.id AS st_id, students.name, students.last_name, lessons.id AS les_id, lessons.date, lessons.topic_id, lessons.type_id, lesson_student.id AS pivot_id, lesson_student.mark1, lesson_student.mark2, lesson_student.updated_by, lesson_student.updated_at FROM students LEFT JOIN lesson_student ON students.id = lesson_student.student_id LEFT JOIN lessons ON lessons.id = lesson_student.lesson_id WHERE lessons.journal_id=11 ORDER BY lessons.date DESC'));
-
-        $lessons = collect($lessons);*/
-
         $lessonsDates = Lesson::where('journal_id', $this->journal->id)
-            ->orderBy('date')
+            ->orderByDesc('date')
             ->with('topic')
             ->get(['id', 'date','topic_id','type_id']);
 
+
+
         if($this->showOneLesson){
             $lessonsIds = [ $lessonsDates->pluck('id')->first() ];
+            $this->page = count($lessonsDates);
+            //$lessonsDates = $lessonsDates->whereIn('id', $lessonsIds);
         } else {
             $lessonsIds = $lessonsDates->pluck('id')->toArray();
+            $this->page = 1;
         }
-
 
         $lessons = DB::table('lesson_student')
             ->join('lessons', function ($q) use ($lessonsIds)
@@ -89,7 +76,13 @@ class Lessons extends Component
             ->join('students', 'students.id', '=', 'lesson_student.student_id')
             ->select('students.id AS st_id', 'students.name', 'students.last_name','lesson_student.id AS piv_id', 'lessons.id', 'lessons.topic_id', 'lessons.date', 'lesson_student.mark1', 'lesson_student.mark2', 'lesson_student.updated_by', 'lesson_student.updated_at')
             ->orderBy('students.last_name')
-            ->orderBy('lessons.date')
+            /*->when($this->showOneLesson, function ($q) {
+                return $q->orderByDesc('lessons.date');
+            })
+            ->when(!$this->showOneLesson, function ($q) {
+                return $q->orderBy('lessons.date');
+            })*/
+            ->orderByDesc('lessons.date')
             ->get();
 
 
@@ -114,6 +107,7 @@ class Lessons extends Component
             'lessonsDates' => $lessonsDates,
             'students' => $this->students,
             'topics' => $allTopics,
+            'oneViewIndex' => (count($lessonsDates) - $this->page),
         ]);
     }
 

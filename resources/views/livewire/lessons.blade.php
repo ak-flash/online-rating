@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div class="flex flex-col h-screen mx-auto sm:px-2 lg:px-4 mb-10">
+    <div class="flex flex-col h-screen mx-auto sm:px-2 lg:px-4 mb-10" id="journal_table">
         <div class="flex-grow overflow-auto bg-white scrollbar scrollbar-thumb-gray-400 scrollbar-track-gray-200">
             <table class="relative w-full">
                 <thead>
@@ -60,7 +60,32 @@
                         Ф.И.О.
                     </th>
 
-                    @foreach($lessonsDates as $lesson)
+
+                        @if($showOneLesson)
+                            <th class="sticky top-0 px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs text-gray-600">
+
+                                <a href="#" title="{{ $lessonsDates[$oneViewIndex]->type }}" wire:click.prevent="update({{ $lessonsDates[$oneViewIndex]->id }})" class="flex items-center justify-center">
+
+                                    {!! $showOneLesson ? '<i class="fas fa-edit text-xl mr-2"></i>' : '' !!}
+                                    <div class="flex flex-col">
+                                        <div class="text-left text-sm text-center">
+                                            {{ $lessonsDates[$oneViewIndex]->date->format('d/m/y') }}
+                                        </div>
+                                        <div class="font-normal">
+                                            {{ $lessonsDates[$oneViewIndex]->date->translatedFormat('l') }}
+                                        </div>
+                                        @if($lessonsDates[$oneViewIndex]->type_id>=4)
+                                            <p class="text-red-700">
+                                                {{ $lessonsDates[$oneViewIndex]->type }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                </a>
+                            </th>
+
+
+                        @else
+                        @foreach($lessonsDates->reverse() as $lesson)
                             <th class="sticky top-0 px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs text-gray-600">
 
                                 <a href="#" title="{{ $lesson->type }}" wire:click.prevent="update({{ $lesson->id }})" class="flex items-center justify-center">
@@ -82,7 +107,8 @@
                                 </a>
                             </th>
 
-                    @endforeach
+                        @endforeach
+                        @endif
                     @if($lessons->isNotEmpty())
                         <th class="sticky top-0 px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
                             Рейтинг
@@ -105,10 +131,9 @@
                         {{ $student[0]->name }}
                     </td>
 
-                    @foreach($student as $student_lesson)
+                    @foreach($student->reverse() as $student_lesson)
 
-
-                        @if($lessonsDates[$loop->iteration-1]->date->eq(
+                        @if($lessonsDates[$oneViewIndex-$loop->index]->date->eq(
                                         Helper::formatDate($student_lesson->date, 'Y-m-d H:i:s')
                                         ))
 
@@ -184,27 +209,51 @@
 {{--                Table bottom--}}
                 <tr class="border">
                     <td colspan="2" class="border-r">
-
+                        <x-button onclick="openFullscreen()">full</x-button>
                     </td>
 
-                    @foreach($lessonsDates as $lesson)
+                    @if($showOneLesson)
+                        <td class="p-2 border-r">
+                            <div class="flex justify-center">
+                                <x-secondary-button class="" wire:click="editModeEnable({{ $lessonsDates[$oneViewIndex]->id }});" >
+                                    {{ ($editMode && $editStudyClassId == $lessonsDates[$oneViewIndex]->id) ? 'Закрыть' : 'Изменить' }}
+                                </x-secondary-button>
+                            </div>
+                        </td>
+                    @else
+                        @foreach($lessonsDates->reverse() as $lesson)
 
                             <td class="p-2 border-r">
                                 <div class="flex justify-center">
                                     <x-secondary-button class="" wire:click="editModeEnable({{ $lesson->id }});" >
-                                   {{ ($editMode && $editStudyClassId == $lesson->id) ? 'Закрыть' : 'Изменить' }}
+                                        {{ ($editMode && $editStudyClassId == $lesson->id) ? 'Закрыть' : 'Изменить' }}
                                     </x-secondary-button>
                                 </div>
                             </td>
 
-                    @endforeach
+                        @endforeach
+                    @endif
                 </tr>
                 </tbody>
             </table>
+
         </div>
         </div>
 
 
     @include('livewire.modals.edit_lesson')
 
+    <script>
+        var elem = document.getElementById("journal_table");
+        
+        function openFullscreen() {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        }
+    </script>
 </div>
