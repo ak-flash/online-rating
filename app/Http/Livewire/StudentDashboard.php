@@ -6,11 +6,11 @@ use Livewire\Component;
 
 class StudentDashboard extends Component
 {
-    protected $listeners = ['showMarks'];
+    protected $listeners = ['setLessonStudentIds'];
 
     public $showJournal = 1;
     public $showSettings = 0;
-    public $showMarks = 0;
+    public $showLessons = 0;
     public $student;
     public $lesson;
 
@@ -26,29 +26,29 @@ class StudentDashboard extends Component
     }
 
     public function nav($menu_item){
-        if($menu_item=='journal'){
+        if($menu_item=='journals'){
             $this->showJournal = true;
             $this->showSettings = false;
-            $this->showMarks = false;
+            $this->showLessons = false;
         }
 
         if($menu_item=='settings'){
             $this->showJournal = false;
             $this->showSettings = true;
-            $this->showMarks = false;
+            $this->showLessons = false;
         }
 
-        if($menu_item=='marks'){
+        if($menu_item=='lessons'){
             $this->showJournal = false;
             $this->showSettings = false;
-            $this->showMarks = true;
+            $this->showLessons = true;
         }
     }
 
-    public function showMarks($discipline_id)
+    public function setLessonStudentIds($journalId)
     {
         $this->lesson['student_id'] = $this->student->id;
-        $this->lesson['discipline_id'] = $discipline_id;
-        $this->nav('marks');
+        $this->lesson['journal_id'] = $journalId;
+        $this->nav('lessons');
     }
 }

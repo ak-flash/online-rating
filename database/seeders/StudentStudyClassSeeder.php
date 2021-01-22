@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Student;
-use App\Models\StudyClass;
+use App\Models\Lesson;
 use App\Models\User;
 use DB;
 use Illuminate\Database\Seeder;
@@ -22,7 +22,7 @@ class StudentStudyClassSeeder extends Seeder
             DB::table('student_study_class')->insert(
                 [
                     'student_id' => Student::inRandomOrder()->value('id'),
-                    'study_class_id' => StudyClass::inRandomOrder()->value('id'),
+                    'study_class_id' => Lesson::inRandomOrder()->value('id'),
                     'mark1' => rand(2, 5),
                     'mark2' => rand(2, 5),
                     'user_id' => User::inRandomOrder()->value('id'),

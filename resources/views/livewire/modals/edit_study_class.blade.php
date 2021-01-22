@@ -11,7 +11,7 @@
             <label class="">Тип занятия</label>
             <x-select class="col-span-2 w-full" wire:model="studyClassTypeId">
                 <option value="">Выберите...</option>
-                @foreach(\App\Models\StudyClass::TYPES as $key => $value)
+                @foreach(\App\Models\Lesson::TYPES as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>
                 @endforeach
             </x-select>

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Database\Seeders\StudentStudyClassSeeder;
+use App\Http\Livewire\StudentLessons;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Yajra\Auditable\AuditableWithDeletesTrait;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 /**
- * App\Models\StudyClass
+ * App\Models\Lesson
  *
  * @property int $id
  * @property int $lesson_id
@@ -25,19 +25,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read string $type
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $student
  * @property-read int|null $student_count
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass query()
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereLessonId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereRoom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTimeEnd($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTimeStart($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTypeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereLessonId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereRoom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereTimeEnd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereTimeStart($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property int $topic_id
  * @property int|null $created_by
@@ -50,25 +50,27 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read string $deleted_by_name
  * @property-read string $updated_by_name
  * @property-read \App\Models\User|null $updater
- * @method static \Illuminate\Database\Query\Builder|StudyClass onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass owned()
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereDeletedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereTopicId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|StudyClass withTrashed()
- * @method static \Illuminate\Database\Query\Builder|StudyClass withoutTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Lesson onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson owned()
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereTopicId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|Lesson withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Lesson withoutTrashed()
  * @property int $journal_id
- * @method static \Illuminate\Database\Eloquent\Builder|StudyClass whereJournalId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Lesson whereJournalId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $students
  * @property-read int|null $students_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Journal[] $journal
  * @property-read int|null $journal_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Topic[] $topic
  * @property-read int|null $topic_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $studentLesson
+ * @property-read int|null $student_lesson_count
  */
-class StudyClass extends Model
+class Lesson extends Model
 {
     use HasFactory;
     use AuditableWithDeletesTrait, SoftDeletes;
@@ -117,19 +119,17 @@ class StudyClass extends Model
 
 
     public function journal() {
-        return $this->belongsToMany(Journal::class);
+        return $this->belongsTo(Journal::class);
     }
 
     public function topic() {
         return $this->belongsToMany(Topic::class);
     }
 
-
-    public function students() {
+    public function student() {
         return $this->belongsToMany(Student::class)
             ->orderBy('last_name')
-            ->using(StudentStudyClass::class)
-            ->withPivot('id', 'mark1', 'mark2', 'notify', 'attendance', 'updated_at',  'updated_by',  'permission_file_path')
+            ->withPivot('id', 'mark1', 'mark2', 'notify', 'attendance',  'updated_by',  'permission_file_path')
             ->withTimestamps();
     }
 

@@ -9,7 +9,7 @@ use App\Models\Journal;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class LessonFactory extends Factory
+class JournalFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Yajra\Auditable\AuditableWithDeletesTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -30,7 +31,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Models\Department $department
  * @property-read \App\Models\Discipline $discipline
  * @property-read \App\Models\Faculty $faculty
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudyClass[] $study_classes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Lesson[] $study_classes
  * @property-read int|null $study_classes_count
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Journal newModelQuery()
@@ -77,6 +78,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $day_type_id
  * @property int $week_type_id
  * @method static \Illuminate\Database\Eloquent\Builder|Journal whereWeekTypeId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Lesson[] $lessons
+ * @property-read int|null $lessons_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\LessonStudent[] $studentLesson
+ * @property-read int|null $student_lesson_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Journal getStudentJournal($year, $semester)
  */
 class Journal extends Model
 {
@@ -225,9 +231,13 @@ class Journal extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function study_classes() {
-        return $this->hasMany(StudyClass::class)
+    public function lessons() {
+        return $this->hasMany(Lesson::class)
             ->orderByDesc('date');
+    }
+
+    public function studentLesson() {
+        return $this->hasManyThrough(LessonStudent::class,Lesson::class)                ->orderByDesc('date');
     }
 
 
@@ -251,5 +261,28 @@ class Journal extends Model
             : static::where('group_number', 'like', $search);
 
     }
+
+    public function scopeGetStudentJournal($query, $studentId, $year, $semester)
+    {
+
+        return $query->select('id', 'department_id', 'discipline_id', 'user_id', 'week_type_id')
+            ->where('year', '=', $year)
+            ->whereIn('semester', Journal::SEMESTERS[$semester])
+            ->whereHas('studentLesson', function ($q) use ($studentId) {
+                return $q->where('student_id', '=', $studentId);
+            })
+            ->with(['department' => function ($q) {
+                return $q->select('id', 'name');
+            }, 'discipline' => function ($q) {
+                return $q->select('id', 'name');
+            }, 'lessons' => function ($q) {
+                return $q->orderByDesc('date')->limit(1);
+            }, 'lessons.student' => function ($q) use ($studentId) {
+                return $q->select('students.id')
+                    ->where('student_id', '=', $studentId);
+            }]);
+
+    }
+
 
 }

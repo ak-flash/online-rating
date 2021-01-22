@@ -41,8 +41,12 @@ use Illuminate\Support\Facades\Storage;
  * @mixin \Eloquent
  * @property string $last_name
  * @method static \Illuminate\Database\Eloquent\Builder|Student whereLastName($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\StudyClass[] $study_classes
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Lesson[] $study_classes
  * @property-read int|null $study_classes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Lesson[] $study_class
+ * @property-read int|null $study_class_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Lesson[] $lesson
+ * @property-read int|null $lesson_count
  */
 class Student extends Model
 {
@@ -56,25 +60,20 @@ class Student extends Model
 
 
 
-    public function study_class() {
-        return $this->belongsToMany(StudyClass::class)
+    public function lessons() {
+        return $this->belongsToMany(Lesson::class)
             ->orderByDesc('date')
-            ->using(StudentStudyClass::class)
+            ->using(LessonStudent::class)
             ->withPivot('id', 'mark1', 'mark2', 'notify', 'attendance', 'updated_at',  'updated_by',  'permission_file_path')
             ->withTimestamps();
     }
 
-/*    public function lesson($discipline_id)
+    public function lesson($journal_id)
     {
-        return $this->belongsToMany(StudyClass::class);
+        return $this->belongsToMany(Lesson::class)
+            ->where('journal_id', $journal_id)
+            ->withPivot('mark1', 'mark2', 'notify', 'attendance', 'updated_at', 'updated_by');
     }
-
-    public function les_son($discipline_id)
-    {
-        return $this->belongsToMany(StudyClass::class)
-            ->where('lesson_id', $discipline_id)
-            ->withPivot('mark1', 'mark2', 'notify', 'attendance', 'user_id', 'updated_at');
-    }*/
 
     public static function findStudent($document_id) {
         return Student::firstWhere('document_id', $document_id);

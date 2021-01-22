@@ -49,12 +49,12 @@ class Department extends Model
         return $this->belongsTo(User::class);
     }
 
-    public  function disciplines ()
+    public  function disciplines()
     {
-        return $this->hasMany(Discipline::class);
+        return $this->hasMany(Discipline::class)->orderBy('name');
     }
 
-    public  function faculties ()
+    public  function faculties()
     {
         return $this->hasMany(Faculty::class);
     }

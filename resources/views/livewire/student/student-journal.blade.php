@@ -77,19 +77,18 @@
                 </thead>
                 <tbody>
 
-            @if($lessons->isNotEmpty())
-                @foreach($lessons as $lesson)
+                @forelse($journals as $journal)
 
                 <tr class="border-b border-gray-200 bg-white hover:bg-gray-100">
                     <td class="text-center">
-                        {{ (($lessons->currentPage() * $perPage) - $perPage) + $loop->iteration }}
+                        {{ (($journals->currentPage() * $perPage) - $perPage) + $loop->iteration }}
                     </td>
                     <td class="py-4">
                         <div class="flex items-center ">
-                          <button class="text-left text-black font-bold" wire:click="showMarks({{ $lesson->discipline->id }})">
-                              {{ Str::ucfirst($lesson->department->name) }}
+                          <button class="text-left text-black font-bold" wire:click="showLessonsPage({{ $journal->id }})">
+                              {{ Str::ucfirst($journal->department->name) }}
                             <div class="text-xs text-gray-500 font-normal">
-                                {{ $lesson->discipline->name }}
+                                {{ $journal->discipline->name }}
                             </div>
                           </button>
                         </div>
@@ -97,59 +96,59 @@
 
                     <td class="font-bold text-center">
 
-                        @if($lesson->study_classes->isNotEmpty())
+{{--                        @if($journal->lessons->isNotEmpty())--}}
 
-                            {{ \Carbon\Carbon::parse($lesson->study_classes[0]->date)->translatedFormat('d F Y') }}
-                            <div class="text-xs text-gray-600 font-thin">
-                                {{ $lesson->study_classes[0]->type }}
-                            </div>
+{{--                            {{ \Carbon\Carbon::parse($lesson->study_classes[0]->date)->translatedFormat('d F Y') }}--}}
+{{--                            <div class="text-xs text-gray-600 font-thin">--}}
+{{--                                {{ $lesson->study_classes[0]->type }}--}}
+{{--                            </div>--}}
 
-                        @endif
+{{--                        @endif--}}
 
                     </td>
-                    <td class="px-5 text-center font-semibold">
-                        @if($lesson->study_classes->isNotEmpty()&&$lesson->study_classes[0]->updated_at!=NULL)
+                    <td class="px-5 text-center font-bold">
+                       {{-- @if($lesson->study_classes->isNotEmpty()&&$lesson->study_classes[0]->updated_at!=NULL)
 
-                            {{--<div class="flex justify-center">
-                                {!! App\Models\StudyClass::set_mark_color($lesson->study_classes[0]->mark1) !!}
+                            --}}{{--<div class="flex justify-center">
+                                {!! App\Models\Lesson::set_mark_color($lesson->study_classes[0]->mark1) !!}
 
-                                {!! App\Models\StudyClass::set_mark_color($lesson->study_classes[0]->mark2) !!}
+                                {!! App\Models\Lesson::set_mark_color($lesson->study_classes[0]->mark2) !!}
 
 
-                            </div>--}}
+                            </div>--}}{{--
                             <div class="rounded-lg bg-green-50 text-green-900 text-xs text-center p-1">
                                 {{ $lesson->study_classes[0]->updated_at->format('d/m/Y') }}
                             </div>
-                        @endif
+                        @endif--}}
                     </td>
                     <td class="pl-4">
                         <div class="flex">
-                             <img class="h-10 w-10 rounded-full object-cover mr-3" src="{{ $lesson->user->profile_photo_path ?
-             '../storage/'.$lesson->user->profile_photo_path : '../img/avatar-placeholder.png' }}"/>
+                             <img class="h-10 w-10 rounded-full object-cover mr-3" src="{{ $journal->user->profile_photo_path ?
+             '../storage/'.$journal->user->profile_photo_path : '../img/avatar-placeholder.png' }}"/>
                              <div class="flex-col text-gray-900 whitespace-no-wrap text-sm">
-                                 {{ $lesson->user->name }}
+                                 {{ Helper::getShortName($journal->user->name) }}
                                  <div class="text-xs text-gray-500">
-                                 {{ $lesson->user->position }}
+                                 {{ $journal->user->position }}
                                  </div>
                              </p>
                         </div>
                      </td>
                 </tr>
 
-                @endforeach
-            @else
+
+            @empty
                 <tr>
                     <td class="p-3 text-red-700 text-sm text-center" colspan="7">
                         Журналы не найдены...
                     </td>
                 </tr>
-            @endif
+            @endforelse
 
                 </tbody>
             </table>
             <div class="px-5 py-2 bg-white border-t flex xs:flex-row items-center xs:justify-between">
 
-                    {{ $lessons->links('livewire.pagination-links-view') }}
+                    {{ $journals->links('livewire.pagination-links-view') }}
 
                 </div>
             </div>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\StudentStudyClass;
+use App\Models\LessonStudent;
 use Livewire\Component;
 
 class EditMark extends Component
@@ -25,7 +25,7 @@ class EditMark extends Component
 
     public function save()
     {
-        $lesson = StudentStudyClass::findOrFail($this->lessonId);
+        $lesson = LessonStudent::findOrFail($this->lessonId);
 
         $type = (string)$this->type;
 

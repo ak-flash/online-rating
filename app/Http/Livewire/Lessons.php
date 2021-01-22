@@ -4,13 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Journal;
 use App\Models\Student;
-use App\Models\StudyClass;
+use App\Models\Lesson;
 use App\Models\Topic;
 use Carbon\Carbon;
 use Helper;
 use Livewire\Component;
 
-class StudyClasses extends Component
+class Lessons extends Component
 {
     public $journal;
     public $students;
@@ -52,7 +52,7 @@ class StudyClasses extends Component
 
     public function render()
     {
-        $study_classes = StudyClass::whereJournalId($this->journal->id)
+        $study_classes = Lesson::whereJournalId($this->journal->id)
             ->when($this->onlyCurrentLesson, function ($q) {
                 return $q->limit(1);
             })
@@ -70,7 +70,7 @@ class StudyClasses extends Component
             dd($student);
         }*/
 
-        return view('livewire.study-classes', [
+        return view('livewire.lessons', [
             'study_classes' => $study_classes,
             'students' => $this->students,
             'topics' => $topics,
@@ -89,7 +89,7 @@ class StudyClasses extends Component
         return 0;
     }
 
-    public function update(StudyClass $study_class)
+    public function update(Lesson $study_class)
     {
 
         if ($study_class->id) {
@@ -144,7 +144,7 @@ class StudyClasses extends Component
             ]);
 
         if ($this->studyClassId) {
-            $study_class = StudyClass::findOrFail($this->studyClassId);
+            $study_class = Lesson::findOrFail($this->studyClassId);
             $study_class->date = Helper::formatDateForBase($this->date);
             $study_class->topic_id = $this->topicId;
             $study_class->time_start = $this->timeStart;
@@ -155,7 +155,7 @@ class StudyClasses extends Component
             $study_class->save();
 
         } else {
-            $study_class = StudyClass::create([
+            $study_class = Lesson::create([
                 'topic_id' => $this->topicId,
                 'date' => Helper::formatDateForBase($this->date, 'Y-m-d'),
                 'time_start' => $this->timeStart,

@@ -6,7 +6,7 @@ use App\Models\Student;
 use App\Models\User;
 use Livewire\Component;
 
-class StudentMarks extends Component
+class StudentLessons extends Component
 {
     public $lesson;
     public $rating;
@@ -14,17 +14,18 @@ class StudentMarks extends Component
     public function render()
     {
         $lessons = Student::find($this->lesson['student_id'])
-            ->study_class($this->lesson['discipline_id'])
-            ->getResults();
+            ->lesson($this->lesson['journal_id'])
+            ->orderByDesc('date')
+            ->get();
 
-        return view('livewire.student.student-marks',
+        return view('livewire.student.student-lessons',
             [ 'lessons' => $lessons]);
     }
 
 
 
 
-    public function lessonCleared($attendance, $mark1, $mark2)
+    public function isReclassed($attendance, $mark1, $mark2)
     {
         $cleared = false;
 

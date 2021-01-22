@@ -4,18 +4,18 @@ namespace Database\Factories;
 
 use App\Models\Discipline;
 use App\Models\Journal;
-use App\Models\StudyClass;
+use App\Models\Lesson;
 use App\Models\Topic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class StudyClassFactory extends Factory
+class LessonsFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = StudyClass::class;
+    protected $model = Lesson::class;
 
     /**
      * Define the model's default state.

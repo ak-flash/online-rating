@@ -33,7 +33,7 @@ Route::prefix('dashboard')
         Route::get('/journals', \App\Http\Livewire\Journals::class)
             ->name('journals');
 
-        Route::get('/journal/{journal}', \App\Http\Livewire\StudyClasses::class)
+        Route::get('/journal/{journal}', \App\Http\Livewire\Lessons::class)
             ->whereNumber('journal')->name('study_classes');
 
         Route::get('/disciplines', \App\Http\Livewire\Disciplines::class)

@@ -6,9 +6,9 @@ use App\Models\Discipline;
 use App\Models\Faculty;
 use App\Models\Journal;
 use App\Models\Student;
-use App\Models\StudyClass;
+use App\Models\Lesson;
 use App\Models\User;
-use Database\Factories\StudyClassFactory;
+use Database\Factories\LessonsFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         // Discipline::factory(100)->create();
 
         // Journal::factory(100)->create();
-        // StudyClass::factory(100)->create();
+        // Lesson::factory(100)->create();
 
 
 

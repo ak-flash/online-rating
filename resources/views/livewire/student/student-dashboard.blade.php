@@ -130,12 +130,12 @@
 
                         <button class="py-2 px-4 block border-b-2 focus:outline-none font-medium capitalize focus:text-green-500 focus:border-green-500 dark-focus:text-green-200 dark-focus:border-green-200  transition duration-100 ease-in-out
 {{ $showSettings ? 'border-transparent' : 'border-green-500 text-green-500' }}
-                            " wire:click="nav('journal')">
+                            " wire:click="nav('journals')">
                             Занятия
                         </button>
 
                         <button class="py-2 px-4 block border-b-2 focus:outline-none font-medium capitalize focus:text-green-500 focus:border-green-500 dark-focus:text-green-200 dark-focus:border-green-200 border-transparent transition duration-100 ease-in-out
-{{ $showJournal||$showMarks ? 'border-transparent' : 'border-green-500 text-green-500' }}
+{{ $showJournal||$showLessons ? 'border-transparent' : 'border-green-500 text-green-500' }}
                             " wire:click="nav('settings')">
                             Настройки
                         </button>
@@ -146,12 +146,12 @@
 
                 <x-app-spinner target="" />
 
-                @if($showMarks)
-                    <livewire:student-marks :lesson="$lesson"/>
+                @if($showLessons)
+                    <livewire:student-lessons :lesson="$lesson"/>
                 @endif
 
                 @if($showJournal)
-                    <livewire:student-journal :student="$student"/>
+                    <livewire:student-journals :student="$student"/>
                 @endif
 
                 @if($showSettings)

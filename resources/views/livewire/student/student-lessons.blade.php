@@ -150,7 +150,7 @@
                                         {{ (count($lessons) - $loop->iteration + 1) }}
                                     </h1>
                                 </div>
-                                <div class="md:order-1 w-full {{ $this->lessonCleared($lesson->pivot->attendance, $lesson->pivot->mark1, $lesson->pivot->mark2)  ? 'bg-green-600' : 'bg-red-600' }} text-white rounded-lg shadow-xl md:w-5/12 md:px-6 py-2 {{ in_array($lesson->type, ['ИТОГОВАЯ', 'ЗАЧЕТНОЕ занятие', 'ЭКЗАМЕН']) ? 'border-8 border-green-800' : '' }}">
+                                <div class="md:order-1 w-full {{ $this->isReclassed($lesson->pivot->attendance, $lesson->pivot->mark1, $lesson->pivot->mark2)  ? 'bg-green-600' : 'bg-red-600' }} text-white rounded-lg shadow-xl md:w-5/12 md:px-6 py-2 {{ in_array($lesson->type, ['ИТОГОВАЯ', 'ЗАЧЕТНОЕ занятие', 'ЭКЗАМЕН']) ? 'border-8 border-green-800' : '' }}">
 
                                   <div class="mb-4">
                                       {{ Str::ucfirst($lesson->type) }}
@@ -178,9 +178,9 @@
 
                                         {{ \Carbon\Carbon::parse($lesson->pivot->updated_at)->format('d/m/Y H:i') }}
 
-                                        @if(isset($lesson->pivot->updated_by))
+                                        {{--@if(isset($lesson->pivot->updated_by))
                                             ({{ Helper::getShortName($lesson->pivot->editedBy->name) }})
-                                        @endif
+                                        @endif--}}
                                     </div>
                                 </div>
                             </div>

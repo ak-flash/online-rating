@@ -21,6 +21,8 @@ class CreateDisciplinesTable extends Migration
             $table->foreignId('faculty_id')->constrained();
             $table->integer('semester')->length(2)->default(1);
             $table->integer('last_class_id')->length(2)->default(1);
+			$table->auditableWithDeletes();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
