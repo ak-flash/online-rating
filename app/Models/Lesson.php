@@ -123,7 +123,7 @@ class Lesson extends Model
     }
 
     public function topic() {
-        return $this->belongsToMany(Topic::class);
+        return $this->belongsTo(Topic::class);
     }
 
     public function students() {

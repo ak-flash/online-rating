@@ -1,6 +1,6 @@
 <div x-data=" { isEditing: false } " x-cloak>
     <div class="" x-show=!isEditing >
-        <span class="underline cursor-pointer" x-on:click="isEditing = true; $refs.editor.classList.remove('hidden')" >
+        <span class="cursor-pointer" x-on:click="isEditing = true; $refs.editor.classList.remove('hidden')" >
             <div class="px-2 py-1 rounded-md border
                 {{ $studentMark==0 ? 'text-black' : 'text-white' }}
                 bg-{{ Helper::getMarkColor($studentMark) }}">

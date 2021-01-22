@@ -8,12 +8,12 @@ use Livewire\Component;
 class EditMark extends Component
 {
     public $studentMark;
-    public $lessonId;
+    public $lessonStudentId;
     public $type;
 
-    public function mount($lesson_id, $mark, $type)
+    public function mount($lesson_student_id, $mark, $type)
     {
-        $this->lessonId = $lesson_id;
+        $this->lessonStudentId = $lesson_student_id;
         $this->type = $type;
         $this->studentMark = $mark;
     }
@@ -25,7 +25,7 @@ class EditMark extends Component
 
     public function save()
     {
-        $lesson = LessonStudent::findOrFail($this->lessonId);
+        $lesson = LessonStudent::findOrFail($this->lessonStudentId);
 
         $type = (string)$this->type;
 

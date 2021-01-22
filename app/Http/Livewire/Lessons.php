@@ -8,6 +8,7 @@ use App\Models\Lesson;
 use App\Models\Topic;
 use Carbon\Carbon;
 use Helper;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Lessons extends Component
@@ -18,10 +19,11 @@ class Lessons extends Component
     public $openModal = false;
     public $editMode = false;
     public $editStudyClassId = 0;
-    public $onlyCurrentLesson = true;
+    public $showOneLesson = false;
     public $studyClassId = 0;
     public $date, $topicId, $timeStart, $timeEnd, $room;
     public $studyClassTypeId = 1;
+    public $lessonId;
 
     protected $rules = [
         'studyClassId' => 'required|numeric',
@@ -43,16 +45,12 @@ class Lessons extends Component
         $this->timeStart = Carbon::parse($journal->time_start)->format('H:i');
         $this->timeEnd = Carbon::parse($journal->time_end)->format('H:i');
 
-        $this->students = Student::whereFacultyId($journal->faculty_id)
-            ->whereCourseNumber($journal->course_number)
-            ->whereGroupNumber($journal->group_number)
-            ->orderBy('last_name')
-            ->get();
+
     }
 
     public function render()
     {
-        $study_classes = Lesson::whereJournalId($this->journal->id)
+        /*$study_classes = Lesson::whereJournalId($this->journal->id)
             ->when($this->onlyCurrentLesson, function ($q) {
                 return $q->limit(1);
             })
@@ -63,12 +61,39 @@ class Lessons extends Component
                     ->whereGroupNumber($this->journal->group_number)
                     ->orderBy('last_name');
             })
+            ->get();*/
+
+
+        /*$lessons = DB::select(DB::raw('SELECT students.id AS st_id, students.name, students.last_name, lessons.id AS les_id, lessons.date, lessons.topic_id, lessons.type_id, lesson_student.id AS pivot_id, lesson_student.mark1, lesson_student.mark2, lesson_student.updated_by, lesson_student.updated_at FROM students LEFT JOIN lesson_student ON students.id = lesson_student.student_id LEFT JOIN lessons ON lessons.id = lesson_student.lesson_id WHERE lessons.journal_id=11 ORDER BY lessons.date DESC'));
+
+        $lessons = collect($lessons);*/
+
+        $lessonsDates = Lesson::where('journal_id', $this->journal->id)
+            ->orderBy('date')
+            ->with('topic')
+            ->get(['id', 'date','topic_id','type_id']);
+
+        if($this->showOneLesson){
+            $lessonsIds = [ $lessonsDates->pluck('id')->first() ];
+        } else {
+            $lessonsIds = $lessonsDates->pluck('id')->toArray();
+        }
+
+
+        $lessons = DB::table('lesson_student')
+            ->join('lessons', function ($q) use ($lessonsIds)
+            {
+                $q->on('lesson_student.lesson_id', '=', 'lessons.id')
+                    ->whereIn('lessons.id', $lessonsIds);
+            })
+            ->join('students', 'students.id', '=', 'lesson_student.student_id')
+            ->select('students.id AS st_id', 'students.name', 'students.last_name','lesson_student.id AS piv_id', 'lessons.id', 'lessons.topic_id', 'lessons.date', 'lesson_student.mark1', 'lesson_student.mark2', 'lesson_student.updated_by', 'lesson_student.updated_at')
+            ->orderBy('students.last_name')
+            ->orderBy('lessons.date')
             ->get();
 
-        //dd($study_classes->flatMap->student->groupBy('id')->all());
-        // $alreadyPassedTopics = $study_classes->pluck('topic_id')->toArray();
 
-        $topics = Topic::whereDisciplineId($this->journal->discipline_id)
+        $allTopics = Topic::whereDisciplineId($this->journal->discipline_id)
             ->orderBy('t_number')
             ->get();
 
@@ -76,24 +101,23 @@ class Lessons extends Component
             dd($student);
         }*/
 
+        if($lessons->isEmpty()) {
+            $this->students = Student::whereFacultyId($this->journal->faculty_id)
+                ->whereCourseNumber($this->journal->course_number)
+                ->whereGroupNumber($this->journal->group_number)
+                ->orderBy('last_name')
+                ->get();
+        }
+
         return view('livewire.lessons', [
-            'study_classes' => $study_classes,
+            'lessons' => $lessons,
+            'lessonsDates' => $lessonsDates,
             'students' => $this->students,
-            'topics' => $topics,
+            'topics' => $allTopics,
         ]);
     }
 
-    public function getRating($rating_array)
-    {
-        $rating_array = array_diff($rating_array, [0, 1]);
 
-        if(count($rating_array)!=0) {
-            $rating = array_sum($rating_array) / count($rating_array);
-            return round($rating, 1);
-        }
-
-        return 0;
-    }
 
     public function update(Lesson $study_class)
     {
@@ -187,6 +211,10 @@ class Lessons extends Component
         $this->editMode = $this->editMode == true ? false : true;
 
         $this->editStudyClassId = $study_class_id;
+    }
 
+    public function repairStudent($studentId, $journalId)
+    {
+        $this->emit('show-toast', 'Исправлено', 'success');
     }
 }
