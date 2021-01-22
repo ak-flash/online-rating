@@ -28,6 +28,8 @@ class CreateJournalsTable extends Migration
             $table->integer('course_number')->nullable();
             $table->integer('group_number')->nullable();
             $table->string('room', 100)->nullable();
+            $table->auditableWithDeletes();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

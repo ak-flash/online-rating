@@ -34,7 +34,7 @@ Route::prefix('dashboard')
             ->name('journals');
 
         Route::get('/journal/{journal}', \App\Http\Livewire\Lessons::class)
-            ->whereNumber('journal')->name('study_classes');
+            ->whereNumber('journal')->name('lessons');
 
         Route::get('/disciplines', \App\Http\Livewire\Disciplines::class)
             ->name('disciplines');

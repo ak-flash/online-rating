@@ -36,7 +36,7 @@
                 <option value="">Выберите...</option>
                 @foreach($disciplines as $discipline)
                     <option value="{{ $discipline->id }}">{{ $discipline->name }}
-                        ({{ \App\Models\Faculty::getCourseNumber($discipline->semester) }} {{ $discipline->faculty->tag }} {{ $discipline->semester }} семестр)
+                        ({{ Helper::getCourseNumber($discipline->semester) }} {{ $discipline->faculty->tag }} {{ $discipline->semester }} семестр)
                     </option>
                 @endforeach
             </x-select>

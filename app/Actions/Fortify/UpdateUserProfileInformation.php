@@ -27,7 +27,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'phone' => ['nullable', 'numeric', 'digits_between:3,18', Rule::unique('users')->ignore($user->id)],
-            'position' => ['nullable', 'string', 'max:15'],
+            'position_id' => ['nullable', 'string', 'max:15'],
             'photo' => ['nullable', 'image', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
 
@@ -44,7 +44,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'email' => $input['email'],
                 'phone' => $input['phone'],
                 'show_phone' => $input['show_phone'],
-                'position' => $user->getPositionId($input['position']),
+                'position_id' => $input['position_id'],
             ])->save();
         }
     }

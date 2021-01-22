@@ -22,6 +22,7 @@
                     <p class="text-{{ $journal->faculty->color }}-500 text-sm">
                         ({{ $journal->faculty->name }})
                     </p>
+                {{ $journal->discipline->name }}
 
 
             </div>
@@ -46,10 +47,10 @@
             <table class="relative w-full">
                 <thead>
                 <tr>
-                    <th class="sticky top-0 px-5 py-3 w-10 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
+                    <th class="sticky top-0 px-5 py-3 w-10 border-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
                         №
                     </th>
-                    <th class="sticky top-0 px-5 py-3 w-auto border-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 tracking-wider">
+                    <th class="sticky top-0 px-5 py-3 w-auto border-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 tracking-wider">
                         Ф.И.О.
                     </th>
 
@@ -96,7 +97,7 @@
                           {{ $loop->iteration }}
                         </td>
                         <td class="sticky left-0 border-r p-3 text-sm whitespace-nowrap">
-                            <div class="font-bold">
+                            <div class="rounded-sm p-1 px-2 font-bold bg-gray-200 opacity-90">
                                 {{ $student[0]['last_name'] }}
                             </div>
                             {{ $student[0]['name'] }}
@@ -117,7 +118,7 @@
                                 @endphp
 
 {{--                                 If editor mode enabled insert livewire component--}}
-                                @if($editMode && $editStudyClassId == $student[$index_for_cycle]['pivot']['study_class_id'])
+                                @if($editMode && $editStudyClassId == $student[$index_for_cycle]['pivot']['lesson_id'])
                                     <div class="mr-3">
                                         @livewire('edit-mark',
                                             ['mark' => $student_study_class->pivot->mark1,
@@ -148,7 +149,7 @@
                             @endphp
                         @endforeach
                         <td class="border-r p-3 text-sm text-center">
-                            {{  \App\Http\Livewire\StudyClasses::getRating($rating) }}
+                            {{  \App\Http\Livewire\Lessons::getRating($rating) }}
                         </td>
                     </tr>
 
@@ -196,6 +197,6 @@
         </div>
 
 
-    @include('livewire.modals.edit_study_class')
+    @include('livewire.modals.edit_lesson')
 
 </div>

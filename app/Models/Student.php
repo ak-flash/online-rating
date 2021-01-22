@@ -47,6 +47,8 @@ use Illuminate\Support\Facades\Storage;
  * @property-read int|null $study_class_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Lesson[] $lesson
  * @property-read int|null $lesson_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Lesson[] $lessons
+ * @property-read int|null $lessons_count
  */
 class Student extends Model
 {

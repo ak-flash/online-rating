@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            AdminSeeder::class,
             // FacultySeeder::class,
             // DepartmentSeeder::class,
             // TopicSeeder::Seeder::class,
@@ -28,15 +29,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // User::factory(10)->create();
-         Student::factory(500)->create();
+        // Student::factory(500)->create();
         // Discipline::factory(100)->create();
 
         // Journal::factory(100)->create();
         // Lesson::factory(100)->create();
-
-
-
-
 
     }
 }

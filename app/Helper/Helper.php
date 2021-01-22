@@ -60,4 +60,8 @@ class Helper
         return $last_name.' '.$first_name.'. '.$middle_name.'.';
     }
 
+    public static function getCourseNumber($semester)
+    {
+        return round($semester/2);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Helper\Helper;
 use App\Models\Discipline;
 use App\Models\Faculty;
 use App\Models\Journal;
@@ -51,9 +52,10 @@ class Journals extends Component
         ->where('year', $this->year)
         ->whereIn('semester', Journal::SEMESTERS[$this->semester])
         ->with('faculty', 'discipline')
-            ->paginate($this->perPage);
+        ->paginate($this->perPage);
 
         $this->disciplines = Discipline::whereDepartmentId(Auth::user()->department_id)
+            ->with('faculty')
             ->get();
 
         return view('livewire.journals', [
@@ -92,7 +94,7 @@ class Journals extends Component
             $this->weekTypeId = $journal->week_type_id;
             $this->room = $journal->room;
 
-            if($journal->study_classes->isNotEmpty()){
+            if($journal->lessons->isNotEmpty()){
                 $this->hasLessons = true;
 
                 $message = 'Данный журнал содержит занятия';
@@ -135,12 +137,12 @@ class Journals extends Component
             }
 
             // Change data only if it`s new journal without lessons
-            if($journal->study_classes->isEmpty()) {
+            if($journal->lessons->isEmpty()) {
                 $journal->discipline_id = $this->disciplineId;
                 $journal->group_number = $this->groupNumber;
                 $journal->faculty_id = $discipline->faculty_id;
                 $journal->semester = $discipline->semester;
-                $journal->course_number = Faculty::getCourseNumber($discipline->semester);
+                $journal->course_number = Helper::getCourseNumber($discipline->semester);
             }
 
             $journal->save();
@@ -158,7 +160,7 @@ class Journals extends Component
                 'department_id' => Auth::user()->department_id,
                 'faculty_id' => $discipline->faculty_id,
                 'semester' => $discipline->semester,
-                'course_number' => Faculty::getCourseNumber($discipline->semester),
+                'course_number' => Helper::getCourseNumber($discipline->semester),
                 'year' => now()->format('Y'),
             ]);
         }
@@ -176,12 +178,14 @@ class Journals extends Component
 
     public function deleteConfirmation(Journal $journal)
     {
+        if ($journal->lessons->isEmpty()) {
+            $this->journalId = $journal->id;
+            $this->groupNumber = $journal->group_number;
 
-        $this->journalId = $journal->id;
-        $this->groupNumber = $journal->group_number;
-
-        $this->confirmingDeletion = true;
-
+            $this->confirmingDeletion = true;
+        } else {
+            $this->emit('show-toast', 'Нельзя удалить! В журнале есть занятия!', 'danger');
+        }
     }
 
     public function delete()

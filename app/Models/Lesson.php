@@ -126,7 +126,7 @@ class Lesson extends Model
         return $this->belongsToMany(Topic::class);
     }
 
-    public function student() {
+    public function students() {
         return $this->belongsToMany(Student::class)
             ->orderBy('last_name')
             ->withPivot('id', 'mark1', 'mark2', 'notify', 'attendance',  'updated_by',  'permission_file_path')

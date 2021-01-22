@@ -39,30 +39,30 @@
             <table class="min-w-full table-fixed">
                 <thead>
                 <tr>
-                    <th class="p-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
+                    <th class="p-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
                         №
                     </th>
-                    <th class="w-1/3 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 text-center uppercase tracking-wider">
+                    <th class="w-1/3 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 text-center uppercase tracking-wider">
                         Название
                     </th>
-                    <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center uppercase tracking-wider">
+                    <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center uppercase tracking-wider">
                         Короткое
                     </th>
-                    <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                    <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
                         Курс/Семестр
                     </th>
-                    <th class="w-auto px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                    <th class="w-auto px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
                         Факультет
                     </th>
-                    <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                    <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
                         ПА
                     </th>
                     @if(auth()->user()->isModerator())
-                        <th class="w-1/3 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                        <th class="w-1/3 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
                         Управление
                         </th>
                     @endif
-                    <th class="w-auto px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                    <th class="w-auto px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
                         Изменено
                     </th>
                 </tr>
@@ -87,7 +87,7 @@
                         <td class="p-3 text-sm text-center">
 
                             <div class="inline text-2xl">
-                                {{ \App\Models\Faculty::getCourseNumber($discipline->semester) }}
+                                {{ Helper::getCourseNumber($discipline->semester) }}
                             </div>
 
                                 ({{ $discipline->semester }} сем)

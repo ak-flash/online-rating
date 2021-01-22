@@ -2,7 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e01d56fe-f93b-4366-97a1-5b3a000a081c" name="Default Changelist" comment="many changes...)))">
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/seeders/AdminSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Actions/Fortify/UpdateUserProfileInformation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Actions/Fortify/UpdateUserProfileInformation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helper/Helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helper/Helper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Journals.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Journals.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Lessons.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Lessons.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Topics.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Topics.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Livewire/Users.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Livewire/Users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Faculty.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Faculty.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Lesson.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Lesson.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Student.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Student.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_24_204835_add_extra_columns_to_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_24_204835_add_extra_columns_to_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_24_221023_create_journals_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_24_221023_create_journals_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/disciplines.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/disciplines.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/journals.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/journals.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/lessons.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/lessons.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/modals/edit_journal.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/modals/edit_journal.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/modals/edit_study_class.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/modals/edit_lesson.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/livewire/modals/edit_user.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/livewire/modals/edit_user.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/profile/update-profile-information-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/profile/update-profile-information-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,6 +185,7 @@
       <path value="$PROJECT_DIR$/vendor/paragonie/constant_time_encoding" />
       <path value="$PROJECT_DIR$/vendor/react/promise" />
       <path value="$PROJECT_DIR$/vendor/hallindavid/manny" />
+      <path value="$PROJECT_DIR$/vendor/beyondcode/laravel-query-detector" />
     </include_path>
   </component>
   <component name="ProjectId" id="1m6f6R9IYq9ChqGUUjoF4Mon81g" />
@@ -219,7 +245,7 @@
       <workItem from="1610626335363" duration="5512000" />
       <workItem from="1610649544897" duration="114599000" />
       <workItem from="1610892259225" duration="51142000" />
-      <workItem from="1611308780310" duration="2218000" />
+      <workItem from="1611308780310" duration="12723000" />
     </task>
     <task id="LOCAL-00001" summary="many changes...)))">
       <created>1610648639630</created>

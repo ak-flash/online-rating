@@ -30,7 +30,7 @@ class Topics extends Component
     ];
 
     protected $messages = [
-        'topicId.unique' => 'Тема с таким номером занятия уже есть!',
+        'topicNumber.unique' => 'Тема с таким номером занятия уже есть!',
     ];
 
     public function mount(Discipline $discipline)
@@ -71,8 +71,8 @@ class Topics extends Component
     public function store()
     {
         $this->validate([
-            'topicNumber' => 'required|numeric|unique:topics,t_number,'
-                .$this->topicId,
+            'topicNumber' => 'required|numeric|unique:topics,t_number,' . $this->topicId . ',id,discipline_id,' . $this->discipline->id,
+
         ]);
 
         $topic = Topic::updateOrCreate(['id' => $this->topicId], [

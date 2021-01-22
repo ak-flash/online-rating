@@ -20,12 +20,13 @@ class Users extends Component
     public $confirmingDeletion =0;
     public $openModal = false;
     public $user_id = 0;
-    public $name, $email, $phone, $role, $position;
+    public $name, $email, $phone, $role_id, $position_id;
 
     protected $rules = [
         'name' => 'required|string|min:6|max:255',
         'email' => 'required|string|email|max:255',
-        'role' => 'required|integer',
+        'role_id' => 'required|integer',
+        'position_id' => 'nullable|integer',
         'phone' => 'nullable|digits_between:3,15|numeric',
     ];
 
@@ -37,10 +38,10 @@ class Users extends Component
                     ->whereNotIn('id', [Auth::user()->id]);
             })
             ->when($this->findByPosition != 0, function ($q) {
-                return $q->wherePosition($this->findByPosition);
+                return $q->wherePositionId($this->findByPosition);
             })
             ->when($this->findByRole != 0, function ($q) {
-                return $q->whereRole($this->findByRole);
+                return $q->whereRoleId($this->findByRole);
             })
             ->orderBy('name')
             ->with('department')
@@ -57,10 +58,7 @@ class Users extends Component
         $this->resetValidation();
     }
 
-    public function updatingPerPage()
-    {
-        $this->resetPage();
-    }
+
 
     public function update(User $user)
     {
@@ -70,8 +68,8 @@ class Users extends Component
             $this->name = $user->name;
             $this->email = $user->email;
             $this->phone = $user->phone;
-            $this->role = $user->getRoleId($user->role);
-            $this->position = $user->getPositionId($user->position);
+            $this->role_id = $user->role_id;
+            $this->position_id = $user->position_id;
         } else {
             $this->resetInputFields();
             $this->resetValidation();
@@ -91,16 +89,16 @@ class Users extends Component
         $this->validate();
 
         // Forbid for moderator to make admin
-        if(Auth::user()->isNotAdmin()&&$this->role==1) {
-            $this->role = 3;
+        if(Auth::user()->isNotAdmin()&&$this->role_id==1) {
+            $this->role_id = 3;
         }
 
         $user = User::updateOrCreate(['id' => $this->user_id], [
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'role' => $this->role,
-            'position' => $this->position,
+            'role_id' => $this->role_id,
+            'position_id' => $this->position_id,
         ]);
 
         if ($this->user_id !== $user->id) {
@@ -151,13 +149,28 @@ class Users extends Component
         $this->name = '';
         $this->email = '';
         $this->phone = '';
-        $this->position = 0;
-        $this->role = 0;
+        $this->position_id = 0;
+        $this->role_id = 0;
 
     }
 
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
+    }
+
+    public function updatingPerPage()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFindByPosition()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFindByRole()
+    {
+        $this->resetPage();
     }
 }

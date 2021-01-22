@@ -21,7 +21,7 @@
             <x-input-error for="phone" class="col-span-3 text-center" />
 
             <label class="font-bold">Роль</label>
-            <x-select class="col-span-2" wire:model="role">
+            <x-select class="col-span-2" wire:model="role_id">
                 <option value="0">Выберите...</option>
                 @foreach(User::listRoles(auth()->user()->isAdmin()) as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>
@@ -30,7 +30,7 @@
             <x-input-error for="role" class="col-span-3 text-center" />
 
             <label class="">Должность</label>
-            <x-select class="col-span-2" wire:model="position">
+            <x-select class="col-span-2" wire:model="position_id">
                 <option value="">Выберите...</option>
                 @foreach(User::POSITIONS as $key => $value)
                 <option value="{{ $key }}">{{ $value }}</option>
@@ -68,7 +68,7 @@
             Удалить
         </x-danger-button>
 
-        <x-secondary-button wire:click="$toggle('confirmingDeletion')" wire:loading.attr="disabled">
+        <x-secondary-button wire:click="$set('confirmingDeletion', false)" wire:loading.attr="disabled">
             Отмена
         </x-secondary-button>
     </x-slot>

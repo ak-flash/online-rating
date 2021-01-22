@@ -84,6 +84,10 @@ use Yajra\Auditable\AuditableWithDeletesTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|User withTrashed()
  * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
+ * @property int $position_id
+ * @property int|null $role_id
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePositionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRoleId($value)
  */
 class User extends Authenticatable
 {
@@ -103,8 +107,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'position',
-        'role',
+        'position_id',
+        'role_id',
         'phone',
         'department_id',
     ];
@@ -180,12 +184,12 @@ class User extends Authenticatable
      */
     public function getRoleAttribute(): string
     {
-        return self::ROLES[ $this->attributes['role'] ];
+        return self::ROLES[ $this->attributes['role_id'] ];
     }
 
     public function getRoleName(): string
     {
-        return self::ROLENAMES[ $this->attributes['role'] ];
+        return self::ROLENAMES[ $this->attributes['role_id'] ];
     }
 
     public static function listRoles($admin): array
@@ -210,7 +214,7 @@ class User extends Authenticatable
 
     public function getPositionAttribute(): string
     {
-        return self::POSITIONS[ $this->attributes['position'] ];
+        return self::POSITIONS[ $this->attributes['position_id'] ];
     }
 
 

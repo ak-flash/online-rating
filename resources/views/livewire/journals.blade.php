@@ -80,10 +80,10 @@
                             {{ (($journals->currentPage() * $perPage) - $perPage) + $loop->iteration }}
                         </td>
                         <td class="text-left p-2 px-4 border-r">
-                            <a href="{{ route('study_classes', $journal->id) }}" class="cursor-pointer">
+                            <a href="{{ route('lessons', $journal->id) }}" class="cursor-pointer">
                                 <div class="flex">
                                     {{ $journal->course_number }} курс
-                                    <p class="px-2 text-xl font-semibold hover:underline">
+                                    <p class="px-2 text-xl font-bold hover:underline">
                                         Группа {{ $journal->group_number }}
                                     </p>
                                 </div>
@@ -96,7 +96,7 @@
                         <td class="p-3 text-sm text-center border-r">
                             @if (!is_null($journal->date))
                                 {{ Str::ucfirst(\Carbon\Carbon::parse($journal->date)->isoFormat('dddd')) }}
-                                <p class="text-gray-900 font-semibold">
+                                <p class="text-gray-900 font-bold">
                                     {{ \Carbon\Carbon::parse($journal->date)->translatedFormat('d F Y') }}
                                 </p>
                             @endif
@@ -127,9 +127,7 @@
                                 @if(\App\Models\Journal::isOwner($journal->user_id))
                                     <x-update-button value="{{ $journal->id }}" />
 
-                                    @if($journal->study_classes->isEmpty())
-                                        <x-delete-button value="{{ $journal->id }}" />
-                                    @endif
+                                    <x-delete-button value="{{ $journal->id }}" />
                                 @endif
                             </div>
                         </td>
@@ -157,6 +155,7 @@
         </div>
     </div>
 
-    @include('livewire.modals.edit_journal')
-
+    @if($openModal)
+        @include('livewire.modals.edit_journal')
+    @endif
 </div>

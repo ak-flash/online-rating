@@ -18,7 +18,7 @@ class Lessons extends Component
     public $openModal = false;
     public $editMode = false;
     public $editStudyClassId = 0;
-    public $onlyCurrentLesson = false;
+    public $onlyCurrentLesson = true;
     public $studyClassId = 0;
     public $date, $topicId, $timeStart, $timeEnd, $room;
     public $studyClassTypeId = 1;
@@ -57,9 +57,15 @@ class Lessons extends Component
                 return $q->limit(1);
             })
             ->orderBy('date', 'desc')
-            ->with('students')
+            ->with('students', function ($q) {
+                return $q->whereFacultyId($this->journal->faculty_id)
+                    ->whereCourseNumber($this->journal->course_number)
+                    ->whereGroupNumber($this->journal->group_number)
+                    ->orderBy('last_name');
+            })
             ->get();
 
+        //dd($study_classes->flatMap->student->groupBy('id')->all());
         // $alreadyPassedTopics = $study_classes->pluck('topic_id')->toArray();
 
         $topics = Topic::whereDisciplineId($this->journal->discipline_id)
@@ -139,8 +145,7 @@ class Lessons extends Component
     {
 
         $this->validate([
-            'topicId' => 'required|numeric|unique:study_classes,topic_id,'
-                .$this->studyClassId,
+            'topicId' => 'required|numeric|unique:lessons,topic_id,' . $this->studyClassId . ',id,journal_id,' . $this->journal->id,
             ]);
 
         if ($this->studyClassId) {
