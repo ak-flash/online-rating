@@ -10,17 +10,22 @@
 
 
                 @if(\App\Models\Journal::isOwner($journal->user_id))
-                    <x-add-button class="mr-5" wire:click="update()">
+                    <x-add-button wire:click="update()">
                         Занятие
                     </x-add-button>
                 @endif
 
-                <div class="block ml-3">
+                <div class="block ml-8">
                     {{ $journal->course_number }} курс
-                    <p class="px-2 text-xl font-bold">
-                        Группа {{ $journal->group_number }}
+                    <p>
+                        Группа
                     </p>
                 </div>
+
+                <div class="px-2 text-3xl font-bold">
+                    {{ $journal->group_number }}
+                </div>
+
                 <div class="flex-grow-0 ml-3">
                     <p class="text-{{ $journal->faculty->color }}-500 text-sm">
                         ({{ $journal->faculty->name }})
@@ -44,6 +49,11 @@
                 </div>
 
                 <x-button>Excel</x-button>
+
+
+                <x-secondary-button class="ml-3" onclick="openFullscreen('journal_table')">
+                    <i class="fa fa-expand-arrows-alt"></i>
+                </x-secondary-button>
             </div>
         </div>
     </div>
@@ -209,7 +219,7 @@
 {{--                Table bottom--}}
                 <tr class="border">
                     <td colspan="2" class="border-r">
-                        <x-button onclick="openFullscreen()">full</x-button>
+
                     </td>
 
                     @if($showOneLesson)
@@ -243,5 +253,4 @@
 
     @include('livewire.modals.edit_lesson')
 
-    <x-open-fullscreen for="journal_table" />
 </div>

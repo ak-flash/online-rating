@@ -30,15 +30,11 @@
                     <x-search class="" />
 
 
-                    <select class="rounded-r hidden sm:block bg-white text-gray-700 py-2 px-4 pr-8 leading-tight" wire:model="perPage">
-                        <option>5</option>
-                        <option>10</option>
-                        <option>20</option>
-                    </select>
+                    <x-per-page-select class="rounded-r-md" />
 
 
                 </div>
-                <x-secondary-button class="h-9">Кнопка</x-secondary-button>
+
             </div>
 
 
@@ -51,19 +47,19 @@
                     <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 tracking-wider">
                         Курс/Факультет/Группа
                     </th>
-                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
+                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
                         Занятие
                     </th>
-                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
+                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
                         Время
                     </th>
-                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
+                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
                         Дисциплина
                     </th>
-                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
                         Аудитория
                     </th>
-                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
                         Управление
                     </th>
                     <th class="w-auto px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
@@ -125,9 +121,11 @@
                         <td class="p-3 border-r">
                             <div class="flex justify-center">
                                 @if(\App\Models\Journal::isOwner($journal->user_id))
+
                                     <x-update-button value="{{ $journal->id }}" />
 
                                     <x-delete-button value="{{ $journal->id }}" />
+
                                 @endif
                             </div>
                         </td>
@@ -155,7 +153,7 @@
         </div>
     </div>
 
-    @if($openModal)
-        @include('livewire.modals.edit_journal')
-    @endif
+
+    @include('livewire.modals.edit_journal')
+
 </div>

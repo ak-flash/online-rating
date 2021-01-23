@@ -10,11 +10,8 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                'sans': ['Roboto', 'Helvetica', 'Arial', 'sans-serif'],
             },
-            backgroundImage: theme => ({
-                'home-background': "url('/img/home-background.jpg')",
-            })
         },
     },
 

@@ -13,14 +13,12 @@
 
         <div class="ml-4 text-lg">
              Рейтинг:
-               {{--<div class="flex text-2xl {{ $rating>=3 ? 'text-green-700':'text-red-700' }}">
-                   {{ $rating }}
+               <div class="flex text-2xl {{ $rating>=3 ? 'text-green-700':'text-red-700' }}">
+                    3.4
                    <div class="mx-2 text-sm">
-                       ( {{ $rating ?
-                        \App\Models\Journal::RATING_TABLE[strval($rating)]
-                        : 0 }} )
+                       ( {{ \App\Models\Journal::RATING_TABLE['3.4'] }} )
                    </div>
-               </div>--}}
+               </div>
         </div>
         <div class="relative">
             <x-select class="">

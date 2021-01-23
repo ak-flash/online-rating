@@ -273,11 +273,13 @@ class Journal extends Model
             })
             ->with(['department' => function ($q) {
                 return $q->select('id', 'name');
+            }, 'user' => function ($q) {
+                return $q->select('id', 'name', 'position_id', 'profile_photo_path');
             }, 'discipline' => function ($q) {
                 return $q->select('id', 'name');
             }, 'lessons' => function ($q) {
-                return $q->orderByDesc('date')->limit(1);
-            }, 'lessons.student' => function ($q) use ($studentId) {
+                return $q->select('id', 'date', 'type_id', 'journal_id')->orderByDesc('date')->limit(1);
+            }, 'lessons.students' => function ($q) use ($studentId) {
                 return $q->select('students.id')
                     ->where('student_id', '=', $studentId);
             }]);

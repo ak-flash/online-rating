@@ -6,7 +6,7 @@
 
     <x-slot name="content">
 
-        <div class="grid grid-cols-3 gap-4 items-center"  x-data="{ faculty: null }">
+        <div class="grid grid-cols-3 gap-4 items-center"  x-data="">
 
             <label class="">Тип занятия</label>
             <x-select class="w-full" wire:model="weekTypeId">
@@ -59,17 +59,15 @@
             <x-input-error for="room" class="col-span-3 text-center" />
 
         </div>
+
+
     </x-slot>
 
     <x-slot name="footer">
 
-
         <x-button class="mr-2 bg-green-500 hover:bg-green-600 shadow-xl px-5 py-2 text-white rounded" wire:click.prevent="store()" wire:loading.attr="disabled">
             Сохранить
         </x-button>
-
-
-
 
     </x-slot>
 </x-form-modal>
@@ -93,7 +91,7 @@
             Удалить
         </x-danger-button>
 
-        <x-secondary-button wire:click="$toggle('confirmingDeletion')" wire:loading.attr="disabled">
+        <x-secondary-button wire:click="$set('confirmingDeletion', false)" wire:loading.attr="disabled">
             Отмена
         </x-secondary-button>
     </x-slot>
@@ -101,13 +99,13 @@
 
 <script>
     function getFaculty() {
-        var sel = document.getElementById("discipline");
-        var text= sel.options[sel.selectedIndex].text;
+        let selected = document.getElementById("discipline");
+        let text = "-";
 
-        if(sel.selectedIndex===0) {
-            text="-";
+        if(selected!==null && selected.selectedIndex!==0) {
+            text = selected.options[selected.selectedIndex].text;
+            text = text.match(/\((.*?)\)/g);
         }
-
-        return text.match(/\((.*?)\)/g);
+        return text;
     }
 </script>

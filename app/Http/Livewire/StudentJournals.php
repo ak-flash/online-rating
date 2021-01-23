@@ -27,9 +27,7 @@ class StudentJournals extends Component
         $this->semester = $this->semester ?? Journal::getSemesterType(now());
 
         $journals = Journal::getStudentJournal($this->student->id, $this->year, $this->semester)
-//            ->get();
             ->paginate($this->perPage);
-//dd($journal);
 
 
         return view('livewire.student.student-journal',

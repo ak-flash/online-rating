@@ -57,12 +57,15 @@
             <x-slot name="content">
                 <div class="flex flex-col items-center">
                     @isset($student)
-                        <p class="pt-2 text-lg font-semibold">Это ваш профиль?</p>
+                        <p class="pt-2 text-lg font-bold">Это ваш профиль?</p>
 
                         <img class="h-24 w-24 m-2 rounded-full mx-auto" src="{{ $student->profile_photo_url }}" alt="Avatar" />
-                        <p class="pt-2 text-xl font-semibold">
-                            {{ $student->name }}
+                        <p class="pt-2 text-xl font-bold">
+                            {{ $student->last_name }}
                         </p>
+
+                        {{ $student->name }}
+
                         <p class="text-sm text-gray-600 m-2 text-center">
                             Факультет: <b class="text-lg">{{ $student->faculty->name }}</b>
                         </p>
@@ -72,7 +75,7 @@
                         </p>
                     @else
                         <i class="fa fa-exclamation-triangle text-red-600" style="font-size:48px;"></i>
-                        <div class="pt-2 text-lg text-red font-semibold mb-3">Ваш профиль не найден!</div>
+                        <div class="pt-2 text-lg text-red font-bold mb-3">Ваш профиль не найден!</div>
                     @endisset
                 </div>
             </x-slot>
@@ -87,7 +90,7 @@
                     </x-button>
                 @endisset
 
-                <x-danger-button class="ml-2" x-on:click="show=false" wire:loading.attr="disabled">
+                <x-danger-button class="ml-2" x-on:click="show = false">
                     {{ __('Закрыть') }}
                 </x-danger-button>
 
