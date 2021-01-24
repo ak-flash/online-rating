@@ -19,8 +19,8 @@
             <label class="font-bold">Факультет</label>
             <x-select class="col-span-2" wire:model="faculty_id">
                 <option value="">Выберите...</option>
-                @foreach(\App\Models\Faculty::all(['id','name']) as $value)
-                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                @foreach($faculties as $faculty)
+                    <option value="{{ $faculty->id }}">{{ $faculty->speciality }}</option>
                 @endforeach
             </x-select>
             <x-input-error for="faculty_id" class="col-span-3 text-center" />

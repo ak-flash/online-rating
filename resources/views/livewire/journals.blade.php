@@ -10,9 +10,9 @@
             <div class="float-left">
                 <x-add-button wire:click="update()">
                     <div class="hidden sm:inline-block">
-                        Новый
+                        Журнал
                     </div>
-                    Журнал
+
                 </x-add-button>
             </div>
 

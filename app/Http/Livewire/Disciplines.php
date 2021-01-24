@@ -5,8 +5,10 @@ namespace App\Http\Livewire;
 use App\Helper\Helper;
 use App\Models\Discipline;
 use App\Models\Faculty;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
 use PHPUnit\TextUI\Help;
@@ -19,6 +21,7 @@ class Disciplines extends Component
     public $perPage = 5;
     public $findByFaculty = 0;
     public $confirmingDeletion =0;
+    public $confirmingSync =0;
     public $openModal = false;
     public $discipline_id = 0;
     public $name, $short_name, $faculty_id, $semester, $last_class_id;
@@ -39,10 +42,15 @@ class Disciplines extends Component
                 return $q->whereFacultyId($this->findByFaculty);
             })
             ->orderBy('semester')
-            ->with('faculty:id,name,color')
+            ->with('faculty:id,name,speciality,color')
             ->paginate($this->perPage);
 
-        return view('livewire.disciplines', [ 'disciplines' => $disciplines ]);
+        $faculties = Faculty::all(['id','speciality']);
+
+        return view('livewire.disciplines', [
+            'disciplines' => $disciplines,
+            'faculties' => $faculties,
+        ]);
     }
 
     public function updatingPerPage()
@@ -143,12 +151,16 @@ class Disciplines extends Component
         $this->validateOnly($propertyName);
     }
 
+
     public function getDisciplineFromOffSite()
     {
-        $faculties = Faculty::get(['id', 'specialty']);
+        $this->confirmingSync = false;
+
+        $faculties = Faculty::pluck('speciality', 'id')->toArray();
 
         $departmentId = Auth::user()->department_id;
         $departmentVolgmedId = Auth::user()->department->volgmed_id;
+
 
         // Get link
         $response = Http::get('https://www.volgmed.ru/ru/depts/list/'.$departmentVolgmedId.'/');
@@ -167,7 +179,7 @@ class Disciplines extends Component
 
         $openTag = "<tr><td class='GridTableBlue' width='18px;'><img src='https://www.volgmed.ru/templates/volgmu_pill/images/folder.gif' alt='Каталог' border='0'></td><td class='GridTableBlue'><a href='https://www.volgmed.ru/ru/files/list/";
 
-        $closeTag = "03 Образование";
+        $closeTag = "03 О";
 
         $pattern = "#".$openTag."(.*?)".$closeTag."#";
 
@@ -176,62 +188,79 @@ class Disciplines extends Component
         $facultyDisciplinesLinkId = explode('/', $match[1])[0];
 
 
-       $links = Helper::getLinksArrayFromVOLGMED($facultyDisciplinesLinkId);
+        $links = Helper::getLinksArrayFromVOLGMED($facultyDisciplinesLinkId);
 
-       dd($faculties);
-  /*      foreach ($links as $link) {
 
-            if($link['name'] == ){
+
+        foreach ($faculties as $facultyId => $facultySpeciality) {
+
+
+            $filtered = Arr::where($links, function ($value) use ($facultySpeciality) {
+
+                if(Str::contains($value['name'], $facultySpeciality)) {
+                    return $value;
+                }
+
+            });
+
+            $filtered = array_values($filtered);
+
+
+
+            if($filtered) {
+                $linksNextFolder = Helper::getLinksArrayFromVOLGMED($filtered[0]['id']);
+
+
+                if($linksNextFolder[0]['name'] == 'Дисциплины'){
+
+                    $linksNextNextFolder = Helper::getLinksArrayFromVOLGMED($linksNextFolder[0]['id']);
+
+                    collect($linksNextNextFolder)->each(function (array $row) use ($departmentId, $facultyId) {
+
+                        $disciplines = Discipline::updateOrCreate(
+                            [
+                                'department_id' => $departmentId,
+                                'faculty_id' => $facultyId,
+                                'volgmed_id' => $row['id'],
+                            ],
+                            [
+                                'name' => $row['name'],
+                                'department_id' => $departmentId,
+                                'faculty_id' => $facultyId,
+                                'volgmed_id' => $row['id'],
+                            ]
+                        );
+                    });
+
+                }
+
+                if(Str::contains($linksNextFolder[0]['name'], 'Дисциплина')){
+                    $disciplineName = explode('&quot;', $linksNextFolder[0]['name']);
+
+                    $disciplines = Discipline::updateOrCreate(
+                        [
+                            'volgmed_id' => $linksNextFolder[0]['id'],
+                            'department_id' => $departmentId,
+                            'faculty_id' => $facultyId,
+                        ],
+                        [
+                            'name' => $disciplineName[1],
+                            'department_id' => $departmentId,
+                            'faculty_id' => $facultyId,
+                            'volgmed_id' => $linksNextFolder[0]['id'],
+                        ]
+                    );
+
+
+                }
+
 
             }
 
-        }*/
-
-        $linksNextFolder = Helper::getLinksArrayFromVOLGMED($links[0]['id']);
-
-
-        if($linksNextFolder[0]['name'] == 'Дисциплины'){
-
-            $linksNextNextFolder = Helper::getLinksArrayFromVOLGMED($linksNextFolder[0]['id']);
-
-            collect($linksNextNextFolder)->each(function (array $row) use ($departmentId) {
-
-                $disciplines = Discipline::updateOrCreate(
-                    [
-                        'department_id' => $departmentId,
-                        'faculty_id' => 1,
-                        'volgmed_id' => $row['id'],
-                    ],
-                    [
-                        'name' => $row['name'],
-                        'department_id' => $departmentId,
-                        'faculty_id' => 1,
-                        'volgmed_id' => $row['id'],
-                    ]
-                );
-            });
-
-
-
-        } else {
-            $disciplineName = explode('&quot;', $linksNextFolder[0]['name']);
-
-            $disciplines = Discipline::updateOrCreate(
-                [
-                    'volgmed_id' => $row['id'],
-                    'department_id' => $departmentId,
-                    'faculty_id' => 1,
-                ],
-                [
-                    'name' => $disciplineName[1],
-                    'department_id' => $departmentId,
-                    'faculty_id' => 1,
-                    'volgmed_id' => $linksNextFolder[0]['id'],
-                ]
-            );
-
 
         }
+
+
 
 
 

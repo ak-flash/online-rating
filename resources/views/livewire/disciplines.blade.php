@@ -1,6 +1,7 @@
 <div>
 
     <x-app-spinner target="search" />
+    <x-app-spinner target="getDisciplineFromOffSite" />
 
     <div class="py-4 max-w-7xl mx-auto sm:px-6 lg:px-12">
         <div class="bg-white overflow-auto shadow-xl sm:rounded-lg">
@@ -11,7 +12,7 @@
                         Добавить
                     </x-add-button>
 
-                    <x-secondary-button wire:click="getDisciplineFromOffSite()" class="h-10 ml-3">
+                    <x-secondary-button wire:click="$set('confirmingSync', true)" class="h-10 ml-3">
                         Синхронизировать
                     </x-secondary-button>
                 </div>
@@ -19,12 +20,12 @@
             <div class="m-2 md:flex sm:flex-row flex-col float-right ">
                 <div class="flex flex-row mb-1 sm:mb-0">
 
-                    <select class="rounded-l block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight border-gray-300" wire:model="findByFaculty">
-                        <option value="0">Все факультеты</option>
-                        @foreach(\App\Models\Faculty::all(['id','name']) as $value)
-                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                    <x-select class="rounded-l rounded-r-none block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight border-gray-300" wire:model="findByFaculty">
+                        <option value="0">Все специальности</option>
+                        @foreach($faculties as $faculty)
+                            <option value="{{ $faculty->id }}">{{ $faculty->speciality }}</option>
                         @endforeach
-                    </select>
+                    </x-select>
 
 
                 </div>
@@ -43,14 +44,14 @@
                     <th class="w-1/3 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 text-center uppercase tracking-wider">
                         Название
                     </th>
-                    <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center uppercase tracking-wider">
-                        Короткое
+                    <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
+                        Аббревиатура
                     </th>
                     <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
                         Курс/Семестр
                     </th>
                     <th class="w-auto px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
-                        Факультет
+                        Специальность
                     </th>
                     <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
                         ПА
@@ -92,7 +93,7 @@
                         </td>
                         <td class="p-3 text-xs text-center">
                             <p class="text-white bg-{{ $discipline->faculty->color }}-600 rounded-md p-2">
-                                {{ $discipline->faculty->name }}
+                                {{ $discipline->faculty->speciality }}
 
                             </p>
                         </td>
@@ -135,6 +136,30 @@
 
     @include('livewire.modals.edit_discipline')
 
+
+    <x-confirmation-modal wire:model="confirmingSync" :maxWidth="4">
+        <x-slot name="title">
+            Синхронизировать с сайтом volgmed.ru?
+        </x-slot>
+
+        <x-slot name="content">
+            Будет произведена попытка синхронизировать информацию о дисциплинах с сайта volgmed.ru. Только дисциплины, без практик
+            <div class="m-2 text-bold text-lg">
+                Возможны ошибки, если оформление на вашей кафедре отличается от эталонных
+            </div>
+        </x-slot>
+
+        <x-slot name="footer">
+
+            <x-danger-button class="ml-2" wire:click="getDisciplineFromOffSite" wire:loading.attr="disabled">
+                Подтвердить
+            </x-danger-button>
+
+            <x-secondary-button wire:click="$toggle('confirmingSync')" wire:loading.attr="disabled">
+                Отмена
+            </x-secondary-button>
+        </x-slot>
+    </x-confirmation-modal>
 
 
 </div>
