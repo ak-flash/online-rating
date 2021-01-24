@@ -70,7 +70,7 @@
         <div class="col-span-6 sm:col-span-4">
             <x-label for="phone" value="{{ __('PhoneNumber') }}" />
             <div class="flex items-center">
-                <x-input type="text" class="mt-1 block w-1/2" wire:model.defer="state.phone" data-mask='+# (###) ###-####' />
+                <x-input type="text" if="phone" class="mt-1 block w-1/2" wire:model.defer="state.phone" data-mask='+# (###) ###-####' />
                 <x-input type="checkbox" class="mx-2 ml-6" wire:model.defer="state.show_phone" />
                 <p class="text-xs">Показывать студентам</p>
             </div>

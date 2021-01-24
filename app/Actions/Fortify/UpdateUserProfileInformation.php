@@ -10,7 +10,6 @@ use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
-    public $position;
 
     /**
      * Validate and update the given user's profile information.
@@ -27,9 +26,10 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'phone' => ['nullable', 'numeric', 'digits_between:3,18', Rule::unique('users')->ignore($user->id)],
-            'position_id' => ['nullable', 'string', 'max:15'],
+            'position_id' => ['nullable', 'numeric', 'max:15'],
             'photo' => ['nullable', 'image', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
+
 
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
@@ -39,6 +39,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
         } else {
+
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],

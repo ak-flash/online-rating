@@ -110,6 +110,7 @@ class User extends Authenticatable
         'position_id',
         'role_id',
         'phone',
+        'show_phone',
         'department_id',
     ];
 
