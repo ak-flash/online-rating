@@ -19,6 +19,7 @@ class CreateDepartmentsTable extends Migration
             $table->string('name', 190);
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
+            $table->integer('volgmed_id')->length(3)->nullable();
             $table->timestamps();
         });
     }

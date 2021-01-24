@@ -255,22 +255,22 @@ class User extends Authenticatable
     }
 
 
-    public  function department ()
+    public  function department()
     {
         return $this->belongsTo(Department::class);
     }
 
-    public  function moderator_department ()
+    public  function moderator_department()
     {
         return $this->hasOne(Department::class);
     }
 
-    public  function lessons ()
+    public  function lessons()
     {
         return $this->hasMany(Journal::class);
     }
 
-    public static function search ($search)
+    public static function search($search)
     {
         return empty($search) ? static::query()
             : static::where('id', 'like', '%'.$search.'%')

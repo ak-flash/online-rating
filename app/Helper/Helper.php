@@ -3,6 +3,8 @@
 namespace App\Helper;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -63,5 +65,30 @@ class Helper
     public static function getCourseNumber($semester)
     {
         return round($semester/2);
+    }
+
+    public static function getLinksArrayFromVOLGMED($linkId)
+    {
+        $links =array();
+
+        $response = Http::get('https://www.volgmed.ru/ru/files/list/'.$linkId.'/');
+
+
+        $openTag = "<tr><td class='GridTableBlue' width='18px;'><img src='https://www.volgmed.ru/templates/volgmu_pill/images/folder.gif' alt='Каталог' border='0'></td><td class='GridTableBlue'><a href='https://www.volgmed.ru/ru/files/list/";
+
+        $closeTag = "</a>";
+
+        $pattern = "#".$openTag."(.*?)".$closeTag."#";
+
+        // Get all links Ids from volgmed.ru
+        preg_match_all($pattern, $response->body(), $matches);
+
+        foreach ($matches[1] as $match) {
+            $links [] = [
+                'id' => explode('/', $match)[0],
+                'name' => explode('>', $match)[1]
+            ];
+        }
+        return $links;
     }
 }

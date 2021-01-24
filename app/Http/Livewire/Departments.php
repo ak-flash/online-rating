@@ -33,7 +33,7 @@ class Departments extends Component
             ->with('user')->orderBy('name')
             ->paginate($this->perPage);
 
-        $this->moderators = User::where('role', 2)->orWhere('role', 1)->get(['id', 'name']);
+        $this->moderators = User::where('role_id', 2)->orWhere('role_id', 1)->get(['id', 'name']);
         //dd($users);
         return view('livewire.departments', [ 'departments' => $departments ]);
     }

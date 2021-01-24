@@ -42,6 +42,7 @@ class Department extends Model
         'name',
         'user_id',
         'phone',
+        'volgmed_id',
     ];
 
     public  function user ()

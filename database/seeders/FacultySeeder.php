@@ -15,11 +15,11 @@ class FacultySeeder extends Seeder
     public function run()
     {
         DB::table('faculties')->insert([
-            ['name' => 'Лечебный', 'tag' => 'Леч', 'color' => 'green'],
-            ['name' => 'Педиатрический', 'tag' => 'Пед', 'color' => 'purple'],
-            ['name' => 'Медико-биологический', 'tag' => 'МБФ', 'color' => 'blue'],
-            ['name' => 'Стоматологический', 'tag' => 'Стом', 'color' => 'red'],
-            ['name' => 'Медико-профилактическое дело', 'tag' => 'МПД', 'color' => 'gray'],
+            ['name' => 'Лечебный','speciality' => 'Лечебое дело', 'tag' => 'Леч', 'color' => 'green'],
+            ['name' => 'Педиатрический', 'speciality' => 'Педиатрия', 'tag' => 'Пед', 'color' => 'purple'],
+            ['name' => 'Медико-биологический',' speciality' => 'Медицинская биохимия', 'tag' => 'МБФ', 'color' => 'blue'],
+            ['name' => 'Стоматологический', 'speciality' => 'Стоматология', 'tag' => 'Стом', 'color' => 'red'],
+            ['name' => 'Медико-профилактический', 'speciality' => 'Медико-профилактическое дело', 'tag' => 'МПД', 'color' => 'gray'],
             ]);
     }
 }

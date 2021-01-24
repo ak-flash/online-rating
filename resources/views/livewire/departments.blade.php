@@ -16,13 +16,7 @@
 
                 <x-search />
 
-                <div class="flex flex-row mb-1 sm:mb-0">
-                    <select class="rounded-r block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight" wire:model="perPage">
-                        <option>5</option>
-                        <option>10</option>
-                        <option>20</option>
-                    </select>
-                </div>
+                <x-per-page-select  class="rounded-r-md"/>
 
             </div>
 

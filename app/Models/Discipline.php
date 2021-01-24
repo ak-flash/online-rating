@@ -70,9 +70,11 @@ class Discipline extends Model
     protected $fillable = [
         'name',
         'short_name',
+        'department_id',
         'faculty_id',
         'semester',
         'last_class_id',
+        'volgmed_id',
     ];
 
     public static function getLastClassID($type)

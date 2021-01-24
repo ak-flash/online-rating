@@ -6,10 +6,14 @@
         <div class="bg-white overflow-auto shadow-xl sm:rounded-lg">
 
             @if(auth()->user()->isModerator())
-                <div class="float-left">
+                <div class="float-left flex items-center">
                     <x-add-button wire:click="update()">
                         Добавить
                     </x-add-button>
+
+                    <x-secondary-button wire:click="getDisciplineFromOffSite()" class="h-10 ml-3">
+                        Синхронизировать
+                    </x-secondary-button>
                 </div>
             @endif
             <div class="m-2 md:flex sm:flex-row flex-col float-right ">
@@ -27,13 +31,7 @@
 
                 <x-search />
 
-                <div class="flex flex-row mb-1 sm:mb-0">
-                    <select class="rounded-r block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight border-gray-300" wire:model="perPage">
-                        <option>5</option>
-                        <option>10</option>
-                        <option>20</option>
-                    </select>
-                </div>
+                <x-per-page-select  class="rounded-r-md"/>
             </div>
 
             <table class="min-w-full table-fixed">

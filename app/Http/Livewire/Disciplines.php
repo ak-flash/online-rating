@@ -2,10 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use App\Helper\Helper;
 use App\Models\Discipline;
+use App\Models\Faculty;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use Livewire\WithPagination;
+use PHPUnit\TextUI\Help;
 
 class Disciplines extends Component
 {
@@ -137,5 +141,104 @@ class Disciplines extends Component
     public function updated($propertyName)
     {
         $this->validateOnly($propertyName);
+    }
+
+    public function getDisciplineFromOffSite()
+    {
+        $faculties = Faculty::get(['id', 'specialty']);
+
+        $departmentId = Auth::user()->department_id;
+        $departmentVolgmedId = Auth::user()->department->volgmed_id;
+
+        // Get link
+        $response = Http::get('https://www.volgmed.ru/ru/depts/list/'.$departmentVolgmedId.'/');
+
+        $openTag = "Сотрудники</a></li><li><a href='https://www.volgmed.ru/ru/files/list/";
+        $closeTag = "Материалы для скачивания";
+
+        $pattern = "#".$openTag."(.*?)".$closeTag."#";
+
+        preg_match($pattern, $response->body(), $match);
+
+
+        $downloadLinkId = explode('/', $match[1])[0];
+
+        $response = Http::get('https://www.volgmed.ru/ru/files/list/'.$downloadLinkId.'/');
+
+        $openTag = "<tr><td class='GridTableBlue' width='18px;'><img src='https://www.volgmed.ru/templates/volgmu_pill/images/folder.gif' alt='Каталог' border='0'></td><td class='GridTableBlue'><a href='https://www.volgmed.ru/ru/files/list/";
+
+        $closeTag = "03 Образование";
+
+        $pattern = "#".$openTag."(.*?)".$closeTag."#";
+
+        preg_match($pattern, $response->body(), $match);
+
+        $facultyDisciplinesLinkId = explode('/', $match[1])[0];
+
+
+       $links = Helper::getLinksArrayFromVOLGMED($facultyDisciplinesLinkId);
+
+       dd($faculties);
+  /*      foreach ($links as $link) {
+
+            if($link['name'] == ){
+
+            }
+
+        }*/
+
+        $linksNextFolder = Helper::getLinksArrayFromVOLGMED($links[0]['id']);
+
+
+        if($linksNextFolder[0]['name'] == 'Дисциплины'){
+
+            $linksNextNextFolder = Helper::getLinksArrayFromVOLGMED($linksNextFolder[0]['id']);
+
+            collect($linksNextNextFolder)->each(function (array $row) use ($departmentId) {
+
+                $disciplines = Discipline::updateOrCreate(
+                    [
+                        'department_id' => $departmentId,
+                        'faculty_id' => 1,
+                        'volgmed_id' => $row['id'],
+                    ],
+                    [
+                        'name' => $row['name'],
+                        'department_id' => $departmentId,
+                        'faculty_id' => 1,
+                        'volgmed_id' => $row['id'],
+                    ]
+                );
+            });
+
+
+
+        } else {
+            $disciplineName = explode('&quot;', $linksNextFolder[0]['name']);
+
+            $disciplines = Discipline::updateOrCreate(
+                [
+                    'volgmed_id' => $row['id'],
+                    'department_id' => $departmentId,
+                    'faculty_id' => 1,
+                ],
+                [
+                    'name' => $disciplineName[1],
+                    'department_id' => $departmentId,
+                    'faculty_id' => 1,
+                    'volgmed_id' => $linksNextFolder[0]['id'],
+                ]
+            );
+
+
+        }
+
+
+
+        $this->emit('show-toast', 'Дисциплины добавлены', 'success');
+
+
+
+
     }
 }
