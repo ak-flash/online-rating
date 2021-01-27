@@ -5,18 +5,18 @@
     <div class="pb-2 flex items-center justify-between text-gray-600
         dark:text-gray-400 border-b dark:border-gray-600">
         <!-- Header -->
-        <h2 class="mx-4 md:mx-2 text-xl md:text-3xl pt-2 md:pt-0 font-semibold dark:text-gray-400">
+        <h2 class="hidden sm:flex mx-2 text-3xl dark:text-gray-400">
             Кафедры
         </h2>
 
-        <div class="my-2 mr-5 md:mt-4 md:mr-0 md:flex">
+        <div class="ml-3 my-2 mr-5 md:mt-4 md:mr-0 md:flex">
 
                 <x-select-semester />
 
 
             <div class="flex">
                 <div class="relative">
-                    <select class="block w-full focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm leading-tight border-gray-300 focus:border-indigo-300">
+                    <select class="block w-full rounded-lg sm:rounded-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm leading-tight border-gray-300 focus:border-indigo-300">
                         <option value="0">Все</option>
                         <option value="1">Есть долги</option>
                         <option value="2">Нет долгов</option>
@@ -71,17 +71,17 @@
                             {{ (($journals->currentPage() * $perPage) - $perPage) + $loop->iteration }}
                         </td>
                         <td class="py-4">
-                            <div class="flex items-center ">
-                              <button class="text-left text-black font-bold" wire:click="showLessonsPage({{ $journal->id }})">
+                            <div class="flex items-center">
+                              <button class="text-left text-black font-bold text-sm sm:text-base" wire:click="showLessonsPage({{ $journal->id }})">
                                   {{ Str::ucfirst($journal->department->name) }}
                                 <div class="text-xs text-gray-500 font-normal">
-                                    {{ $journal->discipline->name }}
+                                    {{ $journal->discipline->name ?? '-' }}
                                 </div>
                               </button>
                             </div>
                         </td>
 
-                        <td class="font-bold text-center">
+                        <td class="font-bold text-center text-sm sm:text-base">
                             @if($journal->lessons->isNotEmpty())
                                     {{ $journal->lessons[0]->date->translatedFormat('d F y') }}
 
@@ -90,7 +90,7 @@
                                     </div>
                             @endif
                         </td>
-                        <td class="px-5 text-center font-bold">
+                        <td class="px-5 text-center font-bold text-xs">
                             @if($journal->lessons->isNotEmpty())
                                 <div class="flex justify-center text-lg">
                                     <x-student-marks for="student"
@@ -110,7 +110,7 @@
                         </td>
                         <td class="pl-4">
                             <div class="flex">
-                                 <img class="h-10 w-10 rounded-full object-cover mr-2" src="{{ $journal->user->profile_photo_path ?
+                                 <img class="hidden sm:flex h-10 w-10 rounded-full object-cover mr-2" src="{{ $journal->user->profile_photo_path ?
                  '../storage/'.$journal->user->profile_photo_path : '../img/avatar-placeholder.png' }}" alt="{{ $journal->user->name }}"/>
                                  <div class="flex-col text-gray-900 whitespace-no-wrap text-sm mr-2">
                                      {{ Helper::getShortName($journal->user->name) }}

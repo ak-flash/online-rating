@@ -17,7 +17,9 @@
 
         <script src="{{ asset('js/functions.js') }}"></script>
 
-        <script src="https://kit.fontawesome.com/661974c3ba.js" crossorigin="anonymous"></script>
+
+
+{{--        <script src="https://kit.fontawesome.com/661974c3ba.js" crossorigin="anonymous"></script>--}}
 
     </head>
     <body>
@@ -40,8 +42,9 @@
         <script>
             window.onload = function(e){
                 // Make input mask
-                var inputs = document.getElementsByTagName('input');
+                let inputs = document.getElementsByTagName('input');
                 Maska.create(inputs);
+
             }
         </script>
     </body>

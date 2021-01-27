@@ -76,13 +76,8 @@ class Lessons extends Component
             ->join('students', 'students.id', '=', 'lesson_student.student_id')
             ->select('students.id AS st_id', 'students.name', 'students.last_name','lesson_student.id AS piv_id', 'lessons.id', 'lessons.topic_id', 'lessons.date', 'lesson_student.mark1', 'lesson_student.mark2', 'lesson_student.updated_by', 'lesson_student.updated_at')
             ->orderBy('students.last_name')
-            /*->when($this->showOneLesson, function ($q) {
-                return $q->orderByDesc('lessons.date');
-            })
-            ->when(!$this->showOneLesson, function ($q) {
-                return $q->orderBy('lessons.date');
-            })*/
             ->orderByDesc('lessons.date')
+            ->whereNull('lesson_student.deleted_at')
             ->get();
 
 
@@ -107,6 +102,7 @@ class Lessons extends Component
             'lessonsDates' => $lessonsDates,
             'students' => $this->students,
             'topics' => $allTopics,
+            'lastLesson' => $lessonsDates[(count($lessonsDates) - $this->page)],
             'oneViewIndex' => (count($lessonsDates) - $this->page),
         ]);
     }
@@ -143,7 +139,7 @@ class Lessons extends Component
     private function resetInputFields()
     {
         $this->studyClassId = 0;
-        $this->date = '';
+        $this->date = now()->format('d/m/Y');
         $this->studyClassTypeId = 1;
     }
 
@@ -161,7 +157,6 @@ class Lessons extends Component
 
     public function store()
     {
-
         $this->validate([
             'topicId' => 'required|numeric|unique:lessons,topic_id,' . $this->studyClassId . ',id,journal_id,' . $this->journal->id,
             ]);

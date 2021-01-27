@@ -24,6 +24,7 @@ class CreateStudentsTable extends Migration
             $table->string('email')->unique();
             $table->string('password')->nullable();
             $table->boolean('active')->default(true);
+            $table->boolean('chief')->default(false);
             $table->text('profile_photo_path')->nullable();
             $table->auditableWithDeletes();
             $table->softDeletes();

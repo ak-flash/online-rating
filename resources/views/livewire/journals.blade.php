@@ -90,15 +90,17 @@
                             </a>
                         </td>
                         <td class="p-3 text-sm text-center border-r">
-                            @if (!is_null($journal->date))
-                                {{ Str::ucfirst(\Carbon\Carbon::parse($journal->date)->isoFormat('dddd')) }}
+                            @forelse($journal->lessons->sortByDesc('date')->pluck('date')->take(1) as $last_lesson)
+                                {{ Str::ucfirst($last_lesson->isoFormat('dddd')) }}
                                 <p class="text-gray-900 font-bold">
-                                    {{ \Carbon\Carbon::parse($journal->date)->translatedFormat('d F Y') }}
+                                    {{ $last_lesson->translatedFormat('d F Y') }}
                                 </p>
-                            @endif
+                            @empty
+                                {{ Str::upper($journal->day_type) }}
+                            @endforelse
 
-                                {{ $journal->day_type }}
-                            <div class="text-xs text-gray-500">
+
+                            <div class="text-gray-500">
                                 {{ $journal->getWeekTypeRus() }}
                             </div>
                         </td>
@@ -109,14 +111,12 @@
                         </td>
                         <td class="p-3 text-sm text-center border-r">
                             <p class="text-gray-900 whitespace-no-wrap">
-                                {{ $journal->discipline->short_name }}
+                                {{ $journal->discipline->short_name ?? '-' }}
                             </p>
                         </td>
 
-                        <td class="p-3 text-sm text-center border-r">
-                            <div class="text-xs text-gray-500">
+                        <td class="p-3 text-lg text-gray-500 text-center border-r">
                                 {{ $journal->room }}
-                            </div>
                         </td>
                         <td class="p-3 border-r">
                             <div class="flex justify-center">

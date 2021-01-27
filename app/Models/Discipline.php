@@ -90,14 +90,19 @@ class Discipline extends Model
         return self::LAST_CLASS_TYPES[ $this->attributes['last_class_id'] ];
     }
 
-    public  function department ()
+    public  function department()
     {
         return $this->belongsTo(Department::class);
     }
 
-    public  function faculty ()
+    public  function faculty()
     {
         return $this->belongsTo(Faculty::class);
+    }
+
+    public  function topics()
+    {
+        return $this->hasMany(Topic::class);
     }
 
     public static function search ($search)

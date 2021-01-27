@@ -61,7 +61,6 @@ class Student extends Model
 
 
 
-
     public function lessons() {
         return $this->belongsToMany(Lesson::class)
             ->orderByDesc('date')

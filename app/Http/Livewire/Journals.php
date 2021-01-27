@@ -51,12 +51,13 @@ class Journals extends Component
         })
         ->where('year', $this->year)
         ->whereIn('semester', Journal::SEMESTERS[$this->semester])
-        ->with('faculty', 'discipline')
+        ->with('faculty', 'discipline', 'lessons')
         ->paginate($this->perPage);
 
         $this->disciplines = Discipline::whereDepartmentId(Auth::user()->department_id)
             ->with('faculty')
             ->get();
+
 
         return view('livewire.journals', [
             'journals' => $journals,

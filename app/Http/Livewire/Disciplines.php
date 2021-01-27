@@ -261,13 +261,7 @@ class Disciplines extends Component
         }
 
 
-
-
-
-        $this->emit('show-toast', 'Дисциплины добавлены', 'success');
-
-
-
+        $this->emit('show-toast', 'Дисциплины обновлены', 'success');
 
     }
 }

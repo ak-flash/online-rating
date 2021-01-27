@@ -29,7 +29,11 @@ class Helper
 
     public static function getRouteName(){
         $currentRouteName = Route::currentRouteName();
-        return __(Str::ucfirst($currentRouteName));
+        if(in_array($currentRouteName, ['journals', 'settings', 'lessons', 'topics', 'disciplines', 'students', 'departments', 'users', 'workers', 'profile.show']))
+        {
+            return __(Str::ucfirst($currentRouteName));
+        }
+        return 'ВолгГМУ';
     }
 
     // Get path for tailwind color

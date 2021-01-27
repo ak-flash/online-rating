@@ -6,7 +6,8 @@
     <div class="py-4 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-auto shadow-xl sm:rounded-lg">
 
-            <div class="float-left flex items-center items-center py-2">
+            <div class="sm:float-left flex items-center items-center py-2">
+
 
 
                 @if(\App\Models\Journal::isOwner($journal->user_id))
@@ -15,7 +16,7 @@
                     </x-add-button>
                 @endif
 
-                <div class="block ml-8">
+                <div class="block ml-2 sm:ml-8">
                     {{ $journal->course_number }} курс
                     <p>
                         Группа
@@ -30,7 +31,8 @@
                     <p class="text-{{ $journal->faculty->color }}-500 text-sm">
                         ({{ $journal->faculty->name }})
                     </p>
-                    {{ $journal->discipline->name }}
+                    {{ $journal->discipline->name ?? '-' }}
+                    {{ $journal->discipline->trashed() ? '(в архиве)' : '' }}
                 </div>
 
 
@@ -38,31 +40,41 @@
 
             </div>
 
-            <div class="float-right flex m-4 items-center">
+            <div class="sm:float-right flex m-4 items-center justify-between">
 
-                <x-back-button />
+                <x-back-button class="" />
 
-                <div class="text-md mr-4">
-                    <x-secondary-button class="mr-1" wire:click="$toggle('showOneLesson')" >
-                        Показать {{ $showOneLesson ? 'все' : 'последнее' }}
-                    </x-secondary-button>
+
+                <div class="bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex mr-2" x-data>
+                    <button class="inline-flex items-center focus:outline-none hover:text-green-400 focus:text-green-600 rounded-l-full px-4 py-2 {{ $showOneLesson ? '' : 'active' }}" wire:click="$set('showOneLesson', false)">
+                        <i class="fas fa-border-all mr-2"></i>
+                        <span class="hidden sm:block">Все</span>
+                    </button>
+                    <button class="inline-flex items-center focus:outline-none hover:text-green-400 focus:text-green-600 rounded-r-full px-4 py-2 {{ $showOneLesson ? 'active' : '' }}" wire:click="$set('showOneLesson', true)">
+                        <i class="fas fa-list mr-2"></i>
+                        <span class="hidden sm:block">Последнее</span>
+                    </button>
+
+                    <style>
+                        /*@apply bg-white text-blue-400 rounded-full;*/
+                        .active {background: white; border-radius: 9999px; color: green;}
+                    </style>
                 </div>
 
-                <x-button>Excel</x-button>
 
 
                 <x-secondary-button class="ml-3" onclick="openFullscreen('journal_table')">
-                    <i class="fa fa-expand-arrows-alt"></i>
+                    <i class="fa fa-expand-arrows-alt text-lg text-green-700"></i>
                 </x-secondary-button>
             </div>
         </div>
     </div>
 
     <div class="flex flex-col h-screen mx-auto sm:px-2 lg:px-4 mb-10" id="journal_table">
-        <div class="flex-grow overflow-auto bg-white scrollbar scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+        <div class="flex-grow overflow-auto bg-white md:scrollbar md:scrollbar-thumb-gray-400 md:scrollbar-track-gray-200">
             <table class="relative w-full">
                 <thead>
-                <tr>
+                <tr class="z-5 pin-t">
                     <th class="sticky top-0 p-3 w-10 border-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
                         №
                     </th>
@@ -71,53 +83,74 @@
                     </th>
 
 
-                        @if($showOneLesson)
+                        @if($showOneLesson && $lastLesson)
                             <th class="sticky top-0 px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs text-gray-600">
 
-                                <a href="#" title="{{ $lessonsDates[$oneViewIndex]->type }}" wire:click.prevent="update({{ $lessonsDates[$oneViewIndex]->id }})" class="flex items-center justify-center">
+                                <a href="#" title="{{ $lastLesson->type }}" wire:click.prevent="update({{ $lastLesson->id }})" class="flex items-center justify-center hover:underline">
 
                                     {!! $showOneLesson ? '<i class="fas fa-edit text-xl mr-2"></i>' : '' !!}
-                                    <div class="flex flex-col">
-                                        <div class="text-left text-sm text-center">
-                                            {{ $lessonsDates[$oneViewIndex]->date->format('d/m/y') }}
-                                        </div>
-                                        <div class="font-normal">
-                                            {{ $lessonsDates[$oneViewIndex]->date->translatedFormat('l') }}
-                                        </div>
-                                        @if($lessonsDates[$oneViewIndex]->type_id>=4)
-                                            <p class="text-red-700">
-                                                {{ $lessonsDates[$oneViewIndex]->type }}
-                                            </p>
-                                        @endif
+
+                                    <div class="text-left text-sm text-center">
+                                        {{ $lastLesson->date->format('d/m/y') }}
                                     </div>
                                 </a>
+                                <div class="font-normal">
+                                    {{ $lastLesson->date->translatedFormat('l') }}
+                                </div>
+                                <a href="#" title="{{ $lastLesson->topic->title }}" wire:click.prevent="showTopic({{ $lastLesson->topic->id }})" class="flex items-center justify-center hover:underline">
+                                    @if($lastLesson->type_id>=4)
+                                        <p class="text-red-700 text-lg">
+                                            №{{ $lastLesson->topic->t_number }} - {{ $lastLesson->type }}
+                                        </p>
+                                    @else
+                                        <div class="flex items-center text-lg" justify-center">
+                                            №
+                                            <div class="text-base text-xl">
+                                                {{ $lastLesson->topic->t_number }}
+                                            </div>
+                                        </div>
+                                     @endif
+
+                                </a>
+
                             </th>
 
 
                         @else
-                        @foreach($lessonsDates->reverse() as $lesson)
-                            <th class="sticky top-0 px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs text-gray-600">
+                            @foreach($lessonsDates->reverse() as $lesson)
+                                <th class="sticky top-0 px-5 py-1 border-2 border-gray-200 bg-gray-100 text-xs text-gray-600">
 
-                                <a href="#" title="{{ $lesson->type }}" wire:click.prevent="update({{ $lesson->id }})" class="flex items-center justify-center">
+                                    <a href="#" title="{{ $lesson->type }}" wire:click.prevent="update({{ $lesson->id }})" class="justify-center">
 
-                                    {!! $showOneLesson ? '<i class="fas fa-edit text-xl mr-2"></i>' : '' !!}
-                                    <div class="flex flex-col">
-                                        <div class="text-left text-sm text-center">
-                                            {{ $lesson->date->format('d/m/y') }}
+                                        {!! $showOneLesson ? '<i class="fas fa-edit text-xl mr-2"></i>' : '' !!}
+                                        <div class="flex flex-col whitespace-nowrap">
+                                            <div class="text-left hover:underline text-sm text-center">
+                                                {{ $lesson->date->format('d/m/y') }}
+                                            </div>
+                                    </a>
+                                            <div class="font-normal">
+                                                {{ $lesson->date->translatedFormat('l') }}
+                                            </div>
+
+
+                                    <a href="#" title="{{ $lesson->topic->title }}" wire:click.prevent="showTopic({{ $lesson->topic->id }})" class="flex items-center justify-center hover:underline">
+                                            @if($lesson->type_id>=4)
+                                                <p class="text-red-700">
+                                                  №{{ $lesson->topic->t_number }} - {{ $lesson->type }}
+                                                </p>
+                                            @else
+                                                <div class="flex items-center justify-center">
+                                                    №
+                                                    <div class="text-base">
+                                                        {{ $lesson->topic->t_number }}
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
-                                        <div class="font-normal">
-                                            {{ $lesson->date->translatedFormat('l') }}
-                                        </div>
-                                        @if($lesson->type_id>=4)
-                                            <p class="text-red-700">
-                                                {{ $lesson->type }}
-                                            </p>
-                                        @endif
-                                    </div>
-                                </a>
-                            </th>
+                                    </a>
+                                </th>
 
-                        @endforeach
+                            @endforeach
                         @endif
                     @if($lessons->isNotEmpty())
                         <th class="sticky top-0 px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
@@ -134,8 +167,8 @@
                         <td class="border-r p-2 text-center">
                           {{ $loop->iteration }}
                         </td>
-                     <td class="sticky left-0 border-r p-3 text-sm whitespace-nowrap">
-                        <div class="rounded-sm p-1 px-2 font-bold bg-gray-200 opacity-90">
+                     <td class="sticky left-0 border-r pl-2 sm:p-3 text-sm whitespace-nowrap">
+                        <div class="rounded-sm p-1 px-2 font-bold bg-gray-200 opacity-90 w-1/2">
                             {{ $student[0]->last_name }}
                         </div>
                         {{ $student[0]->name }}
@@ -219,6 +252,9 @@
 {{--                Table bottom--}}
                 <tr class="border">
                     <td colspan="2" class="border-r">
+                        <div class="flex justify-center">
+                            <x-button class="">Excel</x-button>
+                        </div>
 
                     </td>
 
@@ -235,7 +271,7 @@
 
                             <td class="p-2 border-r">
                                 <div class="flex justify-center">
-                                    <x-secondary-button class="" wire:click="editModeEnable({{ $lesson->id }});" >
+                                    <x-secondary-button class="mb-3" wire:click="editModeEnable({{ $lesson->id }});" >
                                         {{ ($editMode && $editStudyClassId == $lesson->id) ? 'Закрыть' : 'Изменить' }}
                                     </x-secondary-button>
                                 </div>

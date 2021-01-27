@@ -4,12 +4,15 @@
         <!-- Page Heading -->
         <header class="bg-white shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                <h2 class="font-bold text-xl text-gray-800">
                      Кафедра {{ auth()->user()->department->name ?? 'отсутствует' }}
 
                     @if(auth()->user()->isAdmin())
-                        <div class="float-right text-sm">
-                        Сервер: Laravel v{{ Illuminate\Foundation\Application::VERSION }}
+                        <div class="flex items-center md:float-right text-sm mt-3 md:mt-0">
+                        Сервер:
+                            <div class="text-2xl mx-2">
+                                Laravel v{{ Illuminate\Foundation\Application::VERSION }}
+                            </div>
                             (PHP v{{ PHP_VERSION }})
                         </div>
                     @endif
@@ -18,17 +21,25 @@
         </header>
         <div class="py-2">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white text-lg overflow-hidden shadow-xl sm:rounded-lg">
 
-                    <!-- component -->
-                    <div class="p-5">
-                        <div class="text-lg">
-                            Текущая неделя: {{ Helper::getTypeOfWeek(now()) }}
-                        </div>
-                        <div class="text-2xl">
+
+                        <div class="p-5 text-2xl">
                             Статистика за семестр
                         </div>
+
+
+
+                    <div class="min-w-screen flex flex-col md:flex-row text-center bg-green-100 flex px-5 py-5">
+                        <div class="md:mr-5 text-3xl">
+                            {{ now()->translatedFormat('d F Y') }}
+                        </div>
+                        Текущая неделя:
+                        <div class="md:ml-3 text-2xl">
+                            {{ Helper::getTypeOfWeek(now()) }}
+                        </div>
                     </div>
+
                     <style>
                         @import url(https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css);
                     </style>

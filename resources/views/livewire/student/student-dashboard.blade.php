@@ -49,14 +49,14 @@
                 </div>
 
                 <span class="text-sm pt-2 dark:text-gray-300">
-                    <span class="font-semibold text-green-600 dark:text-green-300">
+                    <span class="font-bold text-green-600 dark:text-green-300">
                         Курс
                     </span>
                     <span class="text-lg font-bold">
                         {{ $student->course_number }}
                     </span>
 
-                    <span class="ml-2 font-semibold text-green-600 dark:text-green-300">
+                    <span class="ml-2 font-bold text-green-600 dark:text-green-300">
                         Группа
                     </span>
                     <span class="text-lg font-bold">
@@ -79,11 +79,14 @@
             <div id="mobile_menu" class="md:hidden bg-green-800 h-auto">
 
                 <div class="flex">
-                    <div class="ml-5 p-3 text-base text-white w-full ">
-                        {{ $student->name }}
+                    <div class="flex ml-5 p-3 text-base text-white w-full ">
+                        {{ $student->last_name }}
+                        <div class="flex ml-2 text-sm text-gray-300">
+                            {{ $student->name }}
+                        </div>
                     </div>
 
-                    <a href="{{ route('student.logout') }}" class="bg-red-700 hover:bg-red-500 shadow m-3 float-right rounded-sm text-white">
+                    <a href="{{ route('student.logout') }}" class="px-3 bg-red-700 hover:bg-red-500 shadow m-2 float-right rounded-sm text-white pt-1 mr-3">
                         Выйти
                     </a>
                 </div>

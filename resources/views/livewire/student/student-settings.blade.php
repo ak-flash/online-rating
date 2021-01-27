@@ -18,7 +18,7 @@
                 {{ __('Password') }}
             </div>
             <div class="p-2">
-                <x-input class="h-8"></x-input>
+                <x-input class="h-8" disabled></x-input>
             </div>
         </div>
 

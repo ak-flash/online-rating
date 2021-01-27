@@ -1,3 +1,5 @@
+
+
 <x-form-modal wire:model="openModal" :maxWidth="4">
 
     <x-slot name="title">
@@ -5,6 +7,7 @@
     </x-slot>
 
     <x-slot name="content">
+
 
         <div class="grid grid-cols-3 gap-4 items-center">
 
@@ -18,12 +21,16 @@
             <x-input-error for="studyClassTypeId" class="col-span-3 text-center" />
 
             <label class="">Дата</label>
-            <x-input type="text" class="col-span-2 w-1/2" data-mask='##/##/####' wire:model.lazy="date" />
+            <x-date-picker wire:model.lazy="date" class="col-span-2 w-1/2"/>
             <x-input-error for="date" class="col-span-3 text-center" />
 
             <label class="">Время</label>
-            <x-input type="text" class="w-1/2" data-mask='##:##' wire:model.lazy="timeStart" />
-            <x-input type="text" class="w-1/2" data-mask='##:##' wire:model.lazy="timeEnd" />
+
+            <div class="col-span-2 flex items-center">
+                <x-input type="text" class="pl-3 pr-1 mr-3 w-16" data-mask='##:##' wire:model.lazy="timeStart" /> -
+                <x-input type="text" class="pl-3 pr-1 ml-3 w-16" data-mask='##:##' wire:model.lazy="timeEnd" />
+            </div>
+
             <x-input-error for="timeStart" class="col-span-3 text-center" />
             <x-input-error for="timeEnd" class="col-span-3 text-center" />
 
@@ -33,7 +40,7 @@
                 <option value="">Выберите...</option>
                 @forelse($topics as $topic)
                     <option value="{{ $topic->id }}">
-                        {{ $topic->t_number }} {{ $topic->tags }}
+                        {{ $topic->t_number }} {{ $topic->tags ?? mb_substr($topic->title, 0, 15) }}
                     </option>
                 @empty
                     <option value="">Все темы пройдены!</option>

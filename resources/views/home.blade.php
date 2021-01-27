@@ -5,8 +5,6 @@
         @if (Route::has('login'))
             <header class="w-full flex justify-between p-2 bg-green-600">
 
-
-
                     <h1 class="flex text-xl md:text-3xl text-white hover:text-gray-200 hover:bg-green-500 ml-3 p-1 rounded-lg">
                         <x-application-logo class="h-12 w-auto mr-3 bg-white rounded-lg p-1 " />
                         <a href="https://volgmed.ru" class="pt-2 md:pt-1 pr-2">ВолгГМУ</a>
@@ -36,13 +34,17 @@
                         </a>
                     @else
 
-                        <a href="{{ route('student.login') }}" class="m-2 bg-blue-600 hover:bg-blue-800 shadow-xl sm:px-5 p-2 items-center text-white rounded float-right w-30">
-                            <i class="fa fa-graduation-cap mr-1"></i>
+                        <a href="{{ route('student.login') }}" class="flex my-2 mr-1 sm:m-2 bg-blue-600 hover:bg-blue-800 shadow-xl sm:px-5 p-2 items-center text-white rounded float-right w-30">
+                            <div class="hidden sm:flex mr-3">
+                                <i class="fa fa-graduation-cap"></i>
+                            </div>
                             Студент
                         </a>
 
-                        <a href="{{ route('login') }}" class="m-2 bg-indigo-600 hover:bg-indigo-800 shadow-xl sm:px-5 p-2 items-center text-white rounded float-right">
-                            <i class="fa fa-head-side-mask mr-1"></i>
+                        <a href="{{ route('login') }}" class="flex my-2 mr-1 sm:m-2 bg-indigo-600 hover:bg-indigo-800 shadow-xl sm:px-5 p-2 items-center text-white rounded float-right">
+                            <div class="hidden sm:flex mr-3">
+                                <i class="fa fa-head-side-mask"></i>
+                            </div>
                             Сотрудник
                         </a>
                     @endisset
@@ -83,7 +85,7 @@
                     <div class="p-2 sm:p-10 text-center mx-5 sm:mx-0">
                         <div class="py-8 max-w-sm rounded overflow-hidden shadow-lg transition duration-500 bg-gray-100 hover:bg-gray-300">
                             <div class="md:space-y-5">
-                                <i class="fas fa-graduation-cap" style="font-size:48px;"></i>
+                                <i class="fa fa-graduation-cap" style="font-size:48px;"></i>
 
                                 <div class="px-6 py-3">
                                     <div class="space-y-2">
@@ -106,7 +108,7 @@
                                 <div class="px-6 py-3 md:pb-9">
                                     <div class="space-y-2">
                                         <div class="font-bold text-xl mb-2">Юридические ограничения</div>
-                                        <p class="text-base">
+                                        <p class="text-base pb-10 sm:pb-0">
                                             Не является заменой бумажного журнала!
                                         </p>
                                     </div>

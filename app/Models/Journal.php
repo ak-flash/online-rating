@@ -224,7 +224,8 @@ class Journal extends Model
     }
 
     public function discipline() {
-        return $this->belongsTo(Discipline::class);
+        return $this->belongsTo(Discipline::class)
+            ->withTrashed();
     }
 
     public function user() {
