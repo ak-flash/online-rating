@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e01d56fe-f93b-4366-97a1-5b3a000a081c" name="Default Changelist" comment="many changes...)))">
+      <change afterPath="$PROJECT_DIR$/resources/views/components/authentication-card.blade.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/components/validation-errors.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,8 +199,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\laragon\www\online-rating\resources\views\livewire\modals" />
       <recent name="C:\laragon\www\online-rating\resources\views\components" />
+      <recent name="C:\laragon\www\online-rating\resources\views\livewire\modals" />
       <recent name="C:\laragon\www\online-rating\resources\js" />
       <recent name="C:\laragon\www\online-rating\app\View\Components" />
       <recent name="C:\laragon\www\online-rating\resources\views\layouts" />
@@ -232,7 +234,7 @@
       <workItem from="1611308780310" duration="72266000" />
       <workItem from="1611506048578" duration="34200000" />
       <workItem from="1611767355577" duration="58867000" />
-      <workItem from="1611910867779" duration="23793000" />
+      <workItem from="1611910867779" duration="24286000" />
     </task>
     <task id="LOCAL-00001" summary="many changes...)))">
       <created>1610648639630</created>

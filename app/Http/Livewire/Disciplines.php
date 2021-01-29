@@ -215,7 +215,7 @@ class Disciplines extends Component
 
                     $linksNextNextFolder = Helper::getLinksArrayFromVOLGMED($linksNextFolder[0]['id']);
 
-                    collect($linksNextNextFolder)->each(function (array $row) use ($departmentId, $facultyId) {
+                    collect($linksNextNextFolder)->each(function (array $row) use ($this->departmentId, $facultyId) {
 
                         $disciplines = Discipline::updateOrCreate(
                             [
@@ -240,12 +240,12 @@ class Disciplines extends Component
                     $disciplines = Discipline::updateOrCreate(
                         [
                             'volgmed_id' => $linksNextFolder[0]['id'],
-                            'department_id' => $departmentId,
+                            'department_id' => $this->departmentId,
                             'faculty_id' => $facultyId,
                         ],
                         [
                             'name' => $disciplineName[1],
-                            'department_id' => $departmentId,
+                            'department_id' => $this->departmentId,
                             'faculty_id' => $facultyId,
                             'volgmed_id' => $linksNextFolder[0]['id'],
                         ]
