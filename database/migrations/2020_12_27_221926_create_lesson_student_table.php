@@ -21,7 +21,7 @@ class CreateLessonStudentTable extends Migration
             $table->integer('mark1')->length(3)->default(0);
             $table->integer('mark2')->length(3)->default(0);
             $table->string('notify',150)->nullable();
-            $table->boolean('attendance')->default(0);
+            $table->boolean('attendance')->default(true);
             $table->text('permission_file_path')->nullable();
             $table->auditableWithDeletes();
             $table->softDeletes();

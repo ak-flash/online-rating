@@ -8,8 +8,6 @@
 
             <div class="sm:float-left flex items-center items-center py-2">
 
-
-
                 @if(\App\Models\Journal::isOwner($journal->user_id))
                     <x-add-button wire:click="update()">
                         Занятие
@@ -70,7 +68,7 @@
         </div>
     </div>
 
-    <div class="flex flex-col h-screen mx-auto sm:px-2 lg:px-4 mb-10" id="journal_table">
+    <div class="flex flex-col h-screen mx-auto sm:px-2 lg:px-4" id="journal_table">
         <div class="flex-grow overflow-auto bg-white md:scrollbar md:scrollbar-thumb-gray-400 md:scrollbar-track-gray-200">
             <table class="relative w-full">
                 <thead>
@@ -84,7 +82,7 @@
 
 
                         @if($showOneLesson && $lastLesson)
-                            <th class="sticky top-0 px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs text-gray-600">
+                            <th class="sticky top-0 px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs text-gray-600 w-2/12">
 
                                 <a href="#" title="{{ $lastLesson->type }}" wire:click.prevent="update({{ $lastLesson->id }})" class="flex items-center justify-center hover:underline">
 
@@ -132,7 +130,7 @@
                                                 {{ $lesson->date->translatedFormat('l') }}
                                             </div>
 
-
+                                @if($lesson->topic)
                                     <a href="#" title="{{ $lesson->topic->title }}" wire:click.prevent="showTopic({{ $lesson->topic->id }})" class="flex items-center justify-center hover:underline">
                                             @if($lesson->type_id>=4)
                                                 <p class="text-red-700">
@@ -148,6 +146,11 @@
                                             @endif
                                         </div>
                                     </a>
+                                @else
+                                    <div class="text-xs text-red-700">
+                                        Тема удалена
+                                    </div>
+                                @endif
                                 </th>
 
                             @endforeach
@@ -180,13 +183,21 @@
                                         Helper::formatDate($student_lesson->date, 'Y-m-d H:i:s')
                                         ))
 
-                            <td class="border-r p-3 text-sm text-center">
+                            <td class="border-r p-3 text-sm text-center {{ $student_lesson->attendance ? '' : 'bg-red-' }}{{ ($student_lesson->mark1 || $student_lesson->mark2) ? '50' : '200' }}">
 
                                 <div class="flex justify-center text-lg">
 
 {{--                             If editor mode enabled insert livewire component--}}
                                     @if($editMode && $editStudyClassId == $student_lesson->id)
+                                        @livewire('edit-attendance',
+                                        ['attendance' => $student_lesson->attendance,
+                                        'lesson_student_id' => $student_lesson->piv_id],
+                                        key('unique-'.$student_lesson->id.'-mark1-'.$student_lesson->topic_id))
+
                                         <div class="mr-3">
+
+
+
                                             @livewire('edit-mark',
                                                 ['mark' => $student_lesson->mark1,
                                                 'lesson_student_id' => $student_lesson->piv_id,
@@ -201,6 +212,9 @@
                                         key('unique-'.$student_lesson->id.'-mark2-'.$student_lesson->topic_id))
                                         </div>
                                     @else
+
+                                        {{ (!$student_lesson->attendance && !$student_lesson->mark1 && !$student_lesson->mark2) ? 'нб' : '' }}
+
                                         <x-student-marks for="teacher"
                                             mark1="{{ $student_lesson->mark1 }}"
                                             mark2="{{ $student_lesson->mark2 }}"
@@ -253,10 +267,12 @@
                 <tr class="border">
                     <td colspan="2" class="border-r">
                         <div class="flex">
-                            <x-button class="ml-3">
+                            <x-button class="ml-3 {{ $lessonsDates->isNotEmpty() ?: 'hidden' }}">
                                 <i class="fa fa-download shadow-lg mr-2 text-white"></i>
                                 Excel
                             </x-button>
+
+
                         </div>
 
                     </td>

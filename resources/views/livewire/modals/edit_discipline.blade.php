@@ -13,17 +13,17 @@
             <x-input-error for="name" class="col-span-3 text-center" />
 
             <label class="">Короткое</label>
-            <x-input type="text" class="col-span-2 w-1/2" wire:model.lazy="short_name" />
-            <x-input-error for="short_name" class="col-span-3 text-center" />
+            <x-input type="text" class="col-span-2 w-1/2" wire:model.lazy="shortName" />
+            <x-input-error for="shortName" class="col-span-3 text-center" />
 
             <label class="font-bold">Факультет</label>
-            <x-select class="col-span-2" wire:model="faculty_id">
+            <x-select class="col-span-2" wire:model="facultyId">
                 <option value="">Выберите...</option>
                 @foreach($faculties as $faculty)
                     <option value="{{ $faculty->id }}">{{ $faculty->speciality }}</option>
                 @endforeach
             </x-select>
-            <x-input-error for="faculty_id" class="col-span-3 text-center" />
+            <x-input-error for="facultyId" class="col-span-3 text-center" />
 
 
             <label class="font-bold">Семестр</label>
@@ -36,13 +36,13 @@
             <x-input-error for="semester" class="col-span-3 text-center" />
 
             <label class="">ПА</label>
-            <x-select class="col-span-2 w-3/5" wire:model="last_class_id">
+            <x-select class="col-span-2 w-3/5" wire:model="lastClassId">
                 <option value="">Выберите...</option>
                 @foreach(\App\Models\Discipline::LAST_CLASS_TYPES as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>
                 @endforeach
             </x-select>
-            <x-input-error for="last_class_id" class="col-span-3 text-center" />
+            <x-input-error for="lastClassId" class="col-span-3 text-center" />
 
         </div>
     </x-slot>

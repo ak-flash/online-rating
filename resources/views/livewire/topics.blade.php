@@ -51,7 +51,7 @@
                             Управление
                         </th>
                     @endif
-                    <th class="w-auto">
+                    <th class="w-36">
                         Изменено
                     </th>
                 </tr>

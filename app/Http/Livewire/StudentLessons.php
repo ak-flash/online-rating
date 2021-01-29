@@ -17,11 +17,12 @@ class StudentLessons extends Component
     {
         $lessons = Student::find($this->lesson['student_id'])
             ->lesson($this->lesson['journal_id'])
-
+            ->with(['topic', 'editedBy'])
             ->orderByDesc('date')
             ->get();
 
         $allTopicsCount = Journal::find($this->lesson['journal_id'])->discipline->topics->count();
+
 
         return view('livewire.student.student-lessons',
             [

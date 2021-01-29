@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Journal;
+use App\Models\LessonStudent;
 use App\Models\Student;
 use App\Models\Lesson;
 use App\Models\Topic;
@@ -10,6 +11,7 @@ use Carbon\Carbon;
 use Helper;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+
 
 class Lessons extends Component
 {
@@ -24,6 +26,7 @@ class Lessons extends Component
     public $date, $topicId, $timeStart, $timeEnd, $room;
     public $studyClassTypeId = 1;
     public $lessonId;
+    public $attendance;
     public $page = 1;
 
     protected $rules = [
@@ -61,7 +64,6 @@ class Lessons extends Component
         if($this->showOneLesson){
             $lessonsIds = [ $lessonsDates->pluck('id')->first() ];
             $this->page = count($lessonsDates);
-            //$lessonsDates = $lessonsDates->whereIn('id', $lessonsIds);
         } else {
             $lessonsIds = $lessonsDates->pluck('id')->toArray();
             $this->page = 1;
@@ -74,8 +76,8 @@ class Lessons extends Component
                     ->whereIn('lessons.id', $lessonsIds);
             })
             ->join('students', 'students.id', '=', 'lesson_student.student_id')
-            ->select('students.id AS st_id', 'students.name', 'students.last_name','lesson_student.id AS piv_id', 'lessons.id', 'lessons.topic_id', 'lessons.date', 'lesson_student.mark1', 'lesson_student.mark2', 'lesson_student.updated_by', 'lesson_student.updated_at')
-            ->orderBy('students.last_name')
+            ->select('students.id AS st_id', 'students.name', 'students.last_name','lesson_student.id AS piv_id', 'lessons.id', 'lessons.topic_id', 'lessons.date', 'lesson_student.attendance', 'lesson_student.mark1', 'lesson_student.mark2', 'lesson_student.updated_by', 'lesson_student.updated_at')
+            ->orderBy('students.last_name')->orderBy('students.name')
             ->orderByDesc('lessons.date')
             ->whereNull('lesson_student.deleted_at')
             ->get();
@@ -89,20 +91,18 @@ class Lessons extends Component
             dd($student);
         }*/
 
-        if($lessons->isEmpty()) {
-            $this->students = Student::whereFacultyId($this->journal->faculty_id)
-                ->whereCourseNumber($this->journal->course_number)
-                ->whereGroupNumber($this->journal->group_number)
-                ->orderBy('last_name')
-                ->get();
-        }
+        $this->students = Student::select('id', 'last_name', 'name')->whereFacultyId($this->journal->faculty_id)
+            ->whereCourseNumber($this->journal->course_number)
+            ->whereGroupNumber($this->journal->group_number)
+            ->orderBy('last_name')
+            ->get();
 
         return view('livewire.lessons', [
             'lessons' => $lessons,
             'lessonsDates' => $lessonsDates,
             'students' => $this->students,
             'topics' => $allTopics,
-            'lastLesson' => $lessonsDates[(count($lessonsDates) - $this->page)],
+            'lastLesson' => $lessonsDates[(count($lessonsDates) - $this->page)] ?? 0,
             'oneViewIndex' => (count($lessonsDates) - $this->page),
         ]);
     }
@@ -200,10 +200,26 @@ class Lessons extends Component
         $this->editMode = $this->editMode == true ? false : true;
 
         $this->editStudyClassId = $study_class_id;
+
     }
 
     public function repairStudent($studentId, $journalId)
     {
         $this->emit('show-toast', 'Исправлено', 'success');
+    }
+
+
+
+
+    public function delete()
+    {
+
+        DB::transaction(function () {
+            LessonStudent::where('lesson_id', $this->studyClassId)->forceDelete();
+            Lesson::findOrFail($this->studyClassId)->forceDelete();
+        });
+
+        $this->confirmingDeletion = false;
+        $this->closeModal();
     }
 }

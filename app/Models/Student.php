@@ -64,7 +64,6 @@ class Student extends Model
     public function lessons() {
         return $this->belongsToMany(Lesson::class)
             ->orderByDesc('date')
-            ->using(LessonStudent::class)
             ->withPivot('id', 'mark1', 'mark2', 'notify', 'attendance', 'updated_at',  'updated_by',  'permission_file_path')
             ->withTimestamps();
     }

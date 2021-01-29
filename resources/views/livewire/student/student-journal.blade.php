@@ -1,7 +1,7 @@
 <div>
 
 
-    <div class="flex mt-5 p-3 bg-white overflow-auto shadow-lg items-center justify-between sm:rounded-lg">
+    <div class="flex sm:mt-5 p-3 bg-white overflow-auto shadow-lg items-center justify-between sm:rounded-lg">
 
         <!-- Header -->
         <h2 class="hidden sm:flex mx-2 text-3xl dark:text-gray-400">
@@ -92,10 +92,16 @@
                         <td class="px-5 text-center font-bold text-xs">
                             @if($journal->lessons->isNotEmpty())
                                 <div class="flex justify-center text-lg">
-                                    <x-student-marks for="student"
-                                        mark1="{{ $journal->lessons[0]->students[0]->pivot->mark1 }}"
-                                        mark2="{{ $journal->lessons[0]->students[0]->pivot->mark2 }}"
-                                    />
+
+                                    @if($journal->lessons[0]->students[0]->pivot->attandance || $journal->lessons[0]->students[0]->pivot->mark1 || $journal->lessons[0]->students[0]->pivot->mark2)
+
+                                        <x-student-marks for="student" mark1="{{ $journal->lessons[0]->students[0]->pivot->mark1 }}" mark2="{{ $journal->lessons[0]->students[0]->pivot->mark2 }}" />
+
+                                    @else
+                                       <div class="px-2 py-1 shadow-xl rounded-lg border-2 border-red-600">
+                                           нб
+                                       </div>
+                                    @endif
 
                                 </div>
                                 {{--<div class="mt-1 rounded-lg bg-green-50 text-green-900 text-xs text-center p-1">

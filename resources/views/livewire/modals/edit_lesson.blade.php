@@ -1,5 +1,3 @@
-
-
 <x-form-modal wire:model="openModal" :maxWidth="4">
 
     <x-slot name="title">
@@ -40,7 +38,7 @@
                 <option value="">Выберите...</option>
                 @forelse($topics as $topic)
                     <option value="{{ $topic->id }}">
-                        {{ $topic->t_number }} {{ $topic->tags ?? mb_substr($topic->title, 0, 15) }}
+                        {{ $topic->t_number }} {{ mb_substr($topic->title, 0, 100) }}
                     </option>
                 @empty
                     <option value="">Все темы пройдены!</option>
@@ -58,9 +56,13 @@
     </x-slot>
 
     <x-slot name="footer">
+        @if($studyClassId)
+            <x-danger-button class="float-left" wire:click="$toggle('confirmingDeletion')" wire:loading.attr="disabled">
+                Удалить
+            </x-danger-button>
+        @endif
 
-
-        <x-button class="mr-2 bg-green-500 hover:bg-green-600 shadow-xl px-5 py-2 text-white rounded" wire:click.prevent="store()" wire:loading.attr="disabled">
+        <x-button class="mr-2 bg-green-500 hover:bg-green-600 shadow-xl px-5 py-2 text-white rounded" wire:click.prevent="store" wire:loading.attr="disabled">
             Сохранить
         </x-button>
 
@@ -79,7 +81,7 @@
     <x-slot name="content">
        Вы уверены, что хотите удалить занятие?
         <div class="m-2 text-bold text-lg">
-
+            Вся информация о занятии (оценки студентов) будет удалена безвозвратно!
         </div>
     </x-slot>
 

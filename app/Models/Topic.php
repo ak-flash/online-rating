@@ -46,6 +46,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Topic withoutTrashed()
  * @property string|null $tags
  * @method static \Illuminate\Database\Eloquent\Builder|Topic whereTags($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Topic search($search)
  */
 class Topic extends Model
 {
@@ -60,4 +61,10 @@ class Topic extends Model
     ];
 
     protected $dates = ['created_at', 'updated_at'];
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('t_number', 'like', '%'.$search.'%')
+                ;
+    }
 }

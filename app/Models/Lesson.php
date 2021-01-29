@@ -69,6 +69,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read int|null $topic_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Student[] $studentLesson
  * @property-read int|null $student_lesson_count
+ * @property-read \App\Models\User|null $editedBy
  */
 class Lesson extends Model
 {
@@ -131,6 +132,11 @@ class Lesson extends Model
             ->orderBy('last_name')
             ->withPivot('id', 'mark1', 'mark2', 'notify', 'attendance',  'updated_by',  'permission_file_path')
             ->withTimestamps();
+    }
+
+    public function editedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 
 }

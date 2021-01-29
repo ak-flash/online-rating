@@ -119,7 +119,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY', 'base64:Wdgfm5+tiPiqZ7+DXz4rrNrWI/fgUwEbrTkTXilrN3w='),
+    'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 
@@ -233,7 +233,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'User' => App\Models\User::class,
         'Helper' => App\Helper\Helper::class,
 
     ],

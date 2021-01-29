@@ -14601,91 +14601,7 @@
      
 }
 
-        namespace App\Models { 
-            /**
-     * App\Models\User
-     *
-     * @property int $id
-     * @property string $name
-     * @property string $email
-     * @property string $phone
-     * @property \Illuminate\Support\Carbon|null $email_verified_at
-     * @property string $password
-     * @property string|null $remember_token
-     * @property string|null $profile_photo_path
-     * @property \Illuminate\Support\Carbon|null $created_at
-     * @property \Illuminate\Support\Carbon|null $updated_at
-     * @property string|null $two_factor_secret
-     * @property string|null $two_factor_recovery_codes
-     * @property string|null $phone_number
-     * @property string $position
-     * @property bool $active
-     * @property int|null $department_id
-     * @property string|null $date_of_birth
-     * @property-read \App\Models\Department|null $department
-     * @property-read \App\Models\Journal|null $lessons
-     * @property-read string $profile_photo_url
-     * @property string $role
-     * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
-     * @property-read int|null $notifications_count
-     * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
-     * @property-read int|null $tokens_count
-     * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
-     * @method static \Illuminate\Database\Eloquent\Builder|User query()
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereActive($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereDateOfBirth($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereDepartmentId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User wherePhoneNumber($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User wherePosition($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereProfilePhotoPath($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorRecoveryCodes($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
-     * @mixin \Eloquent
-     * @property int|null $created_by
-     * @property int|null $updated_by
-     * @property int|null $deleted_by
-     * @property \Illuminate\Support\Carbon|null $deleted_at
-     * @property bool|null $show_phone
-     * @property-read User|null $creator
-     * @property-read User|null $deleter
-     * @property-read string $created_by_name
-     * @property-read string $deleted_by_name
-     * @property-read string $updated_by_name
-     * @property-read int|null $lessons_count
-     * @property-read \App\Models\Department|null $moderator_department
-     * @property-read User|null $updater
-     * @method static \Illuminate\Database\Query\Builder|User onlyTrashed()
-     * @method static \Illuminate\Database\Eloquent\Builder|User owned()
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedBy($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedBy($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereShowPhone($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedBy($value)
-     * @method static \Illuminate\Database\Query\Builder|User withTrashed()
-     * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
-     * @property int $position_id
-     * @property int|null $role_id
-     * @method static \Illuminate\Database\Eloquent\Builder|User wherePositionId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|User whereRoleId($value)
-     */ 
-        class User {
-         
-    }
-     
-}
-
-    namespace App\Helper { 
+        namespace App\Helper { 
             /**
      * 
      *
@@ -19590,7 +19506,6 @@ namespace  {
             class URL extends \Illuminate\Support\Facades\URL {}
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
-            class User extends \App\Models\User {}
             class Helper extends \App\Helper\Helper {}
             class Debugbar extends \Barryvdh\Debugbar\Facade {}
             class Flare extends \Facade\Ignition\Facades\Flare {}

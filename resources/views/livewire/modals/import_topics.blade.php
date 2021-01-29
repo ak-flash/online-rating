@@ -1,8 +1,8 @@
 <x-form-modal wire:model="openImport" :maxWidth="4">
 
     <x-slot name="title">
-        <div class="text-xs text-justify">
-            Скопируйте столбец из таблицы из файла с тематическим планом и вставьте названия тем или попробуйте нажмите кнопку "Получить темы" и далее отформатируйте текст: удалите лишнее. Каждая тема должна начинаться с новой строки, остальные переносы (если есть) необходимо убрать!
+        <div class="text-sm text-justify">
+            Скопируйте столбец таблицы с темами (можно прямо с цифрами) из файла с тематическим планом и вставьте названия тем.
         </div>
     </x-slot>
 
@@ -12,7 +12,7 @@
             {{ $discipline->volgmed_id ? 'Дисциплина '.$discipline->name : 'Синхронизируйте дисциплины'}}
 
             <x-main-button class="ml-3 w-full" wire:click.prevent="receiveFromVolgmed()">
-                Получить темы
+                Получить файл с <b>volgmed.ru</b>
             </x-main-button>
         </div>
         <textarea class="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" cols="40" rows="10" wire:model.debounce1s="topicsTitles">

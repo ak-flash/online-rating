@@ -202,7 +202,9 @@
                                             {{ \Carbon\Carbon::parse($lesson->pivot->updated_at)->format('d/m/Y H:i') }}
 
                                             @if(isset($lesson->pivot->updated_by))
-                                                ({{ $lesson->pivot->editedBy }})
+                                                (
+                                                {{ Helper::getShortName(Arr::first($lesson->editedBy()->pluck('name'))) }}
+                                                )
                                             @endif
                                         </div>
                                     </div>

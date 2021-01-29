@@ -1,4 +1,4 @@
-<x-form-modal wire:model="openModal" :maxWidth="4">
+<x-form-modal wire:model="openModal" :maxWidth="6">
 
     <x-slot name="title">
         <p class="pt-2 text-lg font-bold">Редактировать тему занятия</p>
@@ -6,28 +6,28 @@
 
     <x-slot name="content">
 
-        <div class="grid grid-cols-3 gap-4 items-center">
+        <div class="grid grid-cols-4 gap-4 items-center">
 
             <label class="">Номер</label>
-            <x-select class="col-span-2 w-20 text-xl" wire:model.lazy="topicNumber">
+            <x-select class="col-span-3 w-20 text-xl" wire:model.lazy="topicNumber">
                 <option value="">...</option>
                 @for ($i = 1; $i <= 30; $i++)
                     <option value="{{ $i }}">{{ $i }}</option>
                 @endfor
             </x-select>
-            <x-input-error for="topicNumber" class="col-span-3 text-center" />
+            <x-input-error for="topicNumber" class="col-span-4 text-center" />
 
             <label class="font-bold">Название</label>
-            <textarea type="text" class="col-span-2 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" wire:model.lazy="title" rows="5">
+            <textarea type="text" class="col-span-3 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" wire:model.lazy="title" rows="5">
 
             </textarea>
-            <x-input-error for="title" class="col-span-3 text-center" />
+            <x-input-error for="title" class="col-span-4 text-center" />
 
             <label class="">Ключевые слова</label>
-            <textarea type="text" class="col-span-2 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" wire:model.lazy="tags" rows="3">
+            <textarea type="text" class="col-span-3 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" wire:model.lazy="tags" rows="3">
 
             </textarea>
-            <x-input-error for="tags" class="col-span-3 text-center" />
+            <x-input-error for="tags" class="col-span-4 text-center" />
 
         </div>
     </x-slot>

@@ -88,6 +88,7 @@ use Yajra\Auditable\AuditableWithDeletesTrait;
  * @property int|null $role_id
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePositionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRoleId($value)
+ * @property-read \App\Models\Department|null $moderatorInDepartment
  */
 class User extends Authenticatable
 {
@@ -132,17 +133,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
+        'name' => 'string',
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'profile_photo_url',
-    ];
+
 
     public const ROLES = [
         1 => 'admin',
@@ -254,13 +249,17 @@ class User extends Authenticatable
         return $this->role !== 'admin';
     }
 
+    function isDepartmentWorker($department_id): bool
+    {
+        return $this->department_id === $department_id;
+    }
 
     public  function department()
     {
         return $this->belongsTo(Department::class);
     }
 
-    public  function moderator_department()
+    public  function moderatorInDepartment()
     {
         return $this->hasOne(Department::class);
     }
