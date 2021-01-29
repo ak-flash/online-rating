@@ -1,10 +1,12 @@
 <div>
 
     <x-app-spinner target="search" />
+    <x-app-spinner target="receiveFromVolgmed" />
+    <x-app-spinner target="import" />
 
     <div class="py-4 max-w-7xl mx-auto sm:px-6 lg:px-12">
         <div class="bg-white overflow-auto shadow-xl sm:rounded-lg">
-            <div class="float-left">
+            <div class="float-left flex items-center ">
 
 
                 @if(auth()->user()->isModerator())
@@ -13,38 +15,43 @@
                         Добавить
                     </x-add-button>
 
+                    <x-main-button wire:click="$set('openImport', true)" class="m-2 ml-3">
+                        <i class="fa fa-upload mr-1"></i>
+                        Импортировать
+                    </x-main-button>
                 @endif
+
+                <div class="flex ml-5">
+                    Дисциплина
+                    <div class="ml-2 font-bold">
+                        «{{ $discipline->name }}»
+                    </div>
+                </div>
             </div>
             <div class="m-2 md:flex sm:flex-row flex-col float-right ">
                 <x-back-button />
 
-                <x-search />
+                <x-search class="rounded-l-md" />
 
-                <div class="flex flex-row mb-1 sm:mb-0">
-                    <select class="rounded-r block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight border-gray-300" wire:model="perPage">
-                        <option>5</option>
-                        <option>10</option>
-                        <option>20</option>
-                    </select>
-                </div>
+                <x-per-page-select class="rounded-r-md" />
             </div>
 
             <table class="min-w-full table-fixed">
                 <thead>
-                <tr>
-                    <th class="p-3 w-5 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
+                <tr class="bg-gray-200 border-gray-300 border-b-2 text-gray-600 text-center text-xs">
+                    <th class="p-3 w-5 font-bold">
                         №
                     </th>
-                    <th class="flex-grow px-5 py-3 border-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 text-center uppercase tracking-wider">
+                    <th class="flex-grow uppercase">
                         Тема занятия
                     </th>
 
                     @if(auth()->user()->isModerator())
-                        <th class="w-1/5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                        <th class="w-1/5 font-bold">
                             Управление
                         </th>
                     @endif
-                    <th class="w-auto px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 text-center tracking-wider">
+                    <th class="w-auto">
                         Изменено
                     </th>
                 </tr>
@@ -58,7 +65,7 @@
                         <td class="text-sm text-center border-r">
                             {{ $topic->t_number }}
                         </td>
-                        <td class="p-3 border-r">
+                        <td class="p-3 border-r text-base">
                                 {{ $topic->title }}
                         </td>
 
@@ -95,7 +102,7 @@
 
 
     @include('livewire.modals.edit_topic')
-
+    @include('livewire.modals.import_topics')
 
 
 </div>

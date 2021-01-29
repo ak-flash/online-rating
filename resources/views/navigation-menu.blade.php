@@ -58,14 +58,57 @@
 
             </div>
 
+
+
+
             <div class="hidden sm:flex sm:items-center sm:ml-6">
 
+                    <div x-data="{ dropdownOpen: false }" class="relative my-32">
+                        <button @click="dropdownOpen = !dropdownOpen" class="relative block rounded-md bg-white mr-6 focus:outline-none">
+                            <i class="far fa-bell text-2xl text-gray-600 hover:text-gray-900"></i>
+
+                            <span class="absolute -top-3 left-2 w-2 h-2 mt-2 ml-2 bg-green-500 rounded-full"></span>
+                        </button>
+
+                        <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10"></div>
+
+                        <div x-show="dropdownOpen" class="absolute right-0 mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20" style="width:20rem;display: none;">
+                            <div class="py-2">
+
+                                <a href="#" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+                                    <img class="h-8 w-8 rounded-full object-cover mx-1" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" alt="avatar">
+                                    <p class="text-gray-600 text-sm mx-2">
+                                        <span class="font-bold" href="#">Sara Salah</span> replied on the <span class="font-bold text-blue-500" href="#">Upload Image</span> artical . 2m
+                                    </p>
+                                </a>
+
+                                <a href="#" class="flex items-center px-4 py-3 hover:bg-gray-100 -mx-2">
+                                    <img class="h-8 w-8 rounded-full object-cover mx-1" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=398&q=80" alt="avatar">
+                                    <p class="text-gray-600 text-sm mx-2">
+                                        <span class="font-bold" href="#">Abigail Bennett</span> start following you . 3h
+                                    </p>
+                                </a>
+
+                            </div>
+                            <a href="#" class="block bg-gray-800 text-white text-center py-2">Показать все</a>
+                        </div>
+                    </div>
+
+
+
+
+                <a href="{{ route('profile.show') }}" class="mr-5">
+                    <i class="fa fa-user-cog text-xl text-gray-600 hover:text-gray-900"></i>
+
+                </a>
                 <!-- Settings Dropdown -->
-                <div class="ml-3 relative">
+                <div class="relative">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="flex p-1 text-sm border-2 border-transparent rounded-md focus:outline-none focus:border-gray-300 hover:border-green-600 hover:bg-gray-100 transition duration-150 ease-in-out">
-                                <div class="hidden lg:block text-right mr-3 pl-2 text-black">
+                            <button class="flex p-1 pr-3 text-sm hover:bg-gray-300 transition duration-150 ease-in rounded-xl bg-gray-100 ">
+                                <img class="h-10 w-10 object-cover rounded-lg" src="{{ auth()->user()->profile_photo_url }}" />
+
+                                <div class="hidden lg:block text-left pl-2 text-black">
                                     {{ auth()->user()->name }}
 
                                     <div class="text-gray-500">
@@ -76,7 +119,7 @@
                                     </div>
                                 </div>
 
-                                <img class="h-10 w-10 rounded-full object-cover mr-3" src="{{ auth()->user()->profile_photo_url }}" />
+
                             </button>
                         </x-slot>
 
@@ -135,7 +178,7 @@
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
 
-                                <x-dropdown-link href="{{ route('logout') }}"
+                                <x-dropdown-link class="hover:bg-red-200" href="{{ route('logout') }}"
                                          onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                     <i class="fa fa-sign-in-alt mr-1"></i>

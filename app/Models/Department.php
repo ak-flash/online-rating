@@ -33,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Faculty[] $faculties
  * @property-read int|null $faculties_count
  * @method static \Illuminate\Database\Eloquent\Builder|Department whereAddress($value)
+ * @property int|null $volgmed_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Department whereVolgmedId($value)
  */
 class Department extends Model
 {

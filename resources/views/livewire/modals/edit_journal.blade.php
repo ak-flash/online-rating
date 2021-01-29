@@ -25,8 +25,12 @@
             <x-input-error for="dayTypeId" class="col-span-3 text-center" />
 
             <label class="">Время</label>
-            <x-input type="text" class="w-1/2" data-mask='##:##' wire:model.lazy="timeStart" />
-            <x-input type="text" class="w-1/2" data-mask='##:##' wire:model.lazy="timeEnd" />
+
+            <div class="col-span-2 flex items-center">
+                <x-input type="text" class="pl-3 pr-1 mr-3 w-16" data-mask='##:##' wire:model.lazy="timeStart" /> -
+                <x-input type="text" class="pl-3 pr-1 ml-3 w-16" data-mask='##:##' wire:model.lazy="timeEnd" />
+            </div>
+
             <x-input-error for="timeStart" class="col-span-3 text-center" />
             <x-input-error for="timeEnd" class="col-span-3 text-center" />
 

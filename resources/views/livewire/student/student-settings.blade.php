@@ -22,6 +22,18 @@
             </div>
         </div>
 
+
+        <div class="flex w-full items-center justify-center bg-grey-500 mb-2" x-data>
+            <label class="flex flex-col items-center px-4 py-6 bg-white text-blue-800 rounded-lg shadow-lg tracking-wide border border-blue-700 cursor-pointer hover:bg-blue-600 hover:text-white" x-on:click.prevent="$refs.avatar.click()">
+                <i class="fa fa-cloud-upload-alt mr-1"></i>
+                <span class="mt-2 text-base leading-normal">Загрузить аватар</span>
+
+            </label>
+            <input type='file' class="hidden" x-ref="avatar" wire:model="avatar" />
+            <x-input-error for="avatar" class="text-center" />
+        </div>
+
+
         <x-button class="mt-3">
             {{ __('Save') }}
         </x-button>

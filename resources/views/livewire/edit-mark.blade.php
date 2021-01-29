@@ -1,7 +1,7 @@
 <div x-data=" { isEditing: false } " x-cloak>
     <div class="" x-show=!isEditing >
         <span class="cursor-pointer" x-on:click="isEditing = true; $refs.editor.classList.remove('hidden')" >
-            <div class="px-2 py-1 rounded-md border
+            <div class="px-2 py-1 rounded-lg shadow-xl border
                 {{ $studentMark==0 ? 'text-black' : 'text-white' }}
                 bg-{{ Helper::getMarkColor($studentMark) }}">
                 {{ $studentMark }}
@@ -11,10 +11,8 @@
     <div x-show=isEditing x-transition:enter="transition ease-out duration-300">
         <div class="hidden flex items-center"
               x-ref="editor">
-            <button type="button" class="px-1 mr-2 text-2xl text-red-600" title="Отмена"
-                    x-on:click="isEditing = false">x</button>
 
-            <x-select
+            <x-select class="w-20"
             wire:model.lazy="studentMark"
             @change="isEditing = false"
             x-on:keydown.enter="isEditing = false"
@@ -25,7 +23,10 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
             </x-select>
-
+            <button type="button" class="px-1 ml-2 text-2xl text-red-600" title="Отмена"
+                    x-on:click="isEditing = false">
+                <i class="fa fa-times text-lg hover:text-gray-900"></i>
+            </button>
         </div>
 
     </div>

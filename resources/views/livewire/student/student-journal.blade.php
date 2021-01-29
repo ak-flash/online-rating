@@ -1,15 +1,14 @@
 <div>
 
 
+    <div class="flex mt-5 p-3 bg-white overflow-auto shadow-lg items-center justify-between sm:rounded-lg">
 
-    <div class="pb-2 flex items-center justify-between text-gray-600
-        dark:text-gray-400 border-b dark:border-gray-600">
         <!-- Header -->
         <h2 class="hidden sm:flex mx-2 text-3xl dark:text-gray-400">
             Кафедры
         </h2>
 
-        <div class="ml-3 my-2 mr-5 md:mt-4 md:mr-0 md:flex">
+        <div class="ml-3 my-2 md:flex">
 
                 <x-select-semester />
 
@@ -25,7 +24,7 @@
 
                 <x-search />
 
-                <x-per-page-select class="rounded-r-md" />
+                <x-per-page-select class="rounded-r-md mr-5" />
 
             </div>
         </div>
@@ -43,24 +42,23 @@
 
             <table class="min-w-full table-fixed">
                 <thead>
-                <tr>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        №
-                    </th>
-                    <th class="w-1/2 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Кафедра
-                    </th>
-
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-bold text-gray-600">
-                        Прошедшее занятие
-                    </th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-bold text-gray-600">
-                        Оценки
-                    </th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
-                        Преподаватель
-                    </th>
-                </tr>
+                    <tr class="bg-gray-200 border-gray-300 border-b-2 text-gray-600 text-center text-xs">
+                        <th class="px-5 py-3 text-left uppercase tracking-wider">
+                            №
+                        </th>
+                        <th class="w-1/2 text-left uppercase tracking-wider">
+                            Кафедра
+                        </th>
+                        <th class="">
+                            Прошедшее занятие
+                        </th>
+                        <th class="">
+                            Оценки
+                        </th>
+                        <th class="">
+                            Преподаватель
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
 
@@ -87,6 +85,7 @@
 
                                     <div class="text-xs text-gray-600 font-normal">
                                         {{ $journal->lessons[0]->type }}
+                                        {{ $journal->lessons[0]->topic_id }}
                                     </div>
                             @endif
                         </td>

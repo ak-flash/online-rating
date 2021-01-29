@@ -41,10 +41,10 @@
             <table class="min-w-full table-fixed">
                 <thead>
                 <tr>
-                    <th class="p-3 border-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase text-center tracking-wider">
+                    <th class="p-3 border-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
                         №
                     </th>
-                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 tracking-wider">
+                    <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 tracking-wider">
                         Курс/Факультет/Группа
                     </th>
                     <th class="px-5 py-3 border-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
@@ -79,7 +79,7 @@
                             <a href="{{ route('lessons', $journal->id) }}" class="cursor-pointer">
                                 <div class="flex">
                                     {{ $journal->course_number }} курс
-                                    <p class="px-2 text-xl font-bold hover:underline">
+                                    <p class="px-2 text-lg font-bold hover:underline">
                                         Группа {{ $journal->group_number }}
                                     </p>
                                 </div>

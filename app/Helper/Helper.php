@@ -95,4 +95,30 @@ class Helper
         }
         return $links;
     }
+
+    public static function getLinksDisciplineFilesFromVOLGMED($linkId, $type)
+    {
+        $type_id = 1;
+
+        $links = Helper::getLinksArrayFromVOLGMED($linkId);
+
+        $documents_links = Http::get('https://www.volgmed.ru/ru/files/list/'.$links[0]['id'].'/');
+
+        $openTag = "<tr><td class='GridTableBlue' width='102px'><a href='https://www.volgmed.ru/uploads/files/";
+
+        $closeTag = ".pdf";
+
+        $pattern = "#".$openTag."(.*?)".$closeTag."#";
+
+        preg_match_all($pattern, $documents_links->body(), $match);
+
+        switch ($type){
+            case 'lectures': $type_id = 0;
+                break;
+            case 'topics': $type_id = 1;
+                break;
+        }
+
+        return $match[1][$type_id];
+    }
 }

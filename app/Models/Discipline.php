@@ -54,6 +54,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Models\Department $department
  * @property-read \App\Models\Faculty $faculty
  * @property-read string $last_class
+ * @property int|null $volgmed_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Topic[] $topics
+ * @property-read int|null $topics_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Discipline whereVolgmedId($value)
  */
 class Discipline extends Model
 {

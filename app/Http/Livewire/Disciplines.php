@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
-use PHPUnit\TextUI\Help;
 
 class Disciplines extends Component
 {
@@ -41,7 +40,7 @@ class Disciplines extends Component
             ->when($this->findByFaculty != 0, function ($q) {
                 return $q->whereFacultyId($this->findByFaculty);
             })
-            ->orderBy('semester')
+            ->orderBy('name')
             ->with('faculty:id,name,speciality,color')
             ->paginate($this->perPage);
 
@@ -191,16 +190,12 @@ class Disciplines extends Component
         $links = Helper::getLinksArrayFromVOLGMED($facultyDisciplinesLinkId);
 
 
-
         foreach ($faculties as $facultyId => $facultySpeciality) {
 
-
             $filtered = Arr::where($links, function ($value) use ($facultySpeciality) {
-
                 if(Str::contains($value['name'], $facultySpeciality)) {
                     return $value;
                 }
-
             });
 
             $filtered = array_values($filtered);

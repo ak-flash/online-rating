@@ -17,9 +17,9 @@ class CreateTopicsTable extends Migration
             $table->id();
             $table->foreignId('discipline_id')->constrained();
             $table->integer('t_number')->length(2);
-            $table->string('title');
+            $table->text('title');
             $table->string('tags');
-            $table->unique(['t_number', 'discipline_id']);
+            $table->unique(['t_number', 'discipline_id', 'deleted_at']);
             $table->auditableWithDeletes();
             $table->softDeletes();
             $table->timestamps();

@@ -252,8 +252,11 @@
 {{--                Table bottom--}}
                 <tr class="border">
                     <td colspan="2" class="border-r">
-                        <div class="flex justify-center">
-                            <x-button class="">Excel</x-button>
+                        <div class="flex">
+                            <x-button class="ml-3">
+                                <i class="fa fa-download shadow-lg mr-2 text-white"></i>
+                                Excel
+                            </x-button>
                         </div>
 
                     </td>

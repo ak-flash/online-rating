@@ -12,9 +12,10 @@
                         Добавить
                     </x-add-button>
 
-                    <x-secondary-button wire:click="$set('confirmingSync', true)" class="h-10 ml-3">
-                        Синхронизировать
-                    </x-secondary-button>
+                    <x-main-button wire:click="$set('confirmingSync', true)" class="m-2 ml-3">
+                        <i class="fa fa-cloud-upload-alt mr-1"></i>
+                        Синхронизация
+                    </x-main-button>
                 </div>
             @endif
             <div class="m-2 md:flex sm:flex-row flex-col float-right ">

@@ -234,7 +234,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'User' => App\Models\User::class,
-        'Helper' => App\Helper\Helper::class
+        'Helper' => App\Helper\Helper::class,
+
     ],
 
 ];

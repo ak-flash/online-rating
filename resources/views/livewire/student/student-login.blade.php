@@ -32,10 +32,9 @@
                                     <x-input-error for="document_id" class="rounded bg-red-200 mt-2 p-1 text-center" />
 
                                     <div class="flex flex-col mt-4">
-                                        <button type="submit" class="bg-blue-500 hover:bg-blue-700
-                                     text-white text-sm font-semibold py-2 px-4 rounded">
+                                        <x-button class="">
                                             Войти
-                                        </button>
+                                        </x-button>
 
                                     </div>
 

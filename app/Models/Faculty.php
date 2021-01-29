@@ -24,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Faculty whereTag($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Faculty whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $speciality
+ * @method static \Illuminate\Database\Eloquent\Builder|Faculty whereSpeciality($value)
  */
 class Faculty extends Model
 {
