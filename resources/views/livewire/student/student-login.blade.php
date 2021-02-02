@@ -8,13 +8,13 @@
 
         <div class="h-screen w-screen" style="background-image: url({{ asset('img/home-background.jpg') }}); background-repeat: no-repeat;background-size: 100% 100%;">
             <div class="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
-                <div class="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/2 bg-white sm:mx-0" style="height: 350px">
+                <div class="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/2 bg-white  bg-opacity-90 sm:mx-0" style="height: 350px">
                     <div class="flex flex-col w-full md:w-1/2 p-4">
                         <div class="flex flex-col flex-1 justify-center items-center mb-8">
 
-                            <x-application-logo class="w-24 mt-4" />
+                            <x-application-logo class="w-14 mt-2" />
 
-                            <h1 class="text-3xl text-center mt-2">
+                            <h1 class="text-2xl text-center mt-2">
                                 <a href="{{ route('home') }}">
                                     Онлайн журнал
                                 </a>
@@ -25,18 +25,20 @@
                                 <form class="form-horizontal w-3/4 mx-auto" wire:submit.prevent="find_profile">
                                     <div class="flex flex-col">
 
-                                        <x-input type="text" class="flex-grow h-10 px-2 border rounded border-grey-400" wire:model.lazy="document_id" id="document_id" placeholder="№ личного дела (зачётки)" autofocus/>
+                                        <x-input type="text" class="flex-grow h-10 m-1 border rounded border-grey-400" wire:model="document_id" id="document_id" placeholder="№ личного дела (зачётки)" autofocus/>
+                                        <x-input-error for="document_id" class="rounded bg-red-200 p-1 text-center" />
+                                        <x-input type="password" class="flex-grow h-10 m-1 border rounded border-grey-400" wire:model.lazy="password"/>
 
                                     </div>
 
-                                    <x-input-error for="document_id" class="rounded bg-red-200 mt-2 p-1 text-center" />
 
-                                    <div class="flex flex-col mt-4">
-                                        <x-button class="">
+
+
+                                        <x-button class="mt-2 w-full">
                                             Войти
                                         </x-button>
 
-                                    </div>
+
 
                                 </form>
                             </div>

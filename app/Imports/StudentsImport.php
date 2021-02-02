@@ -2,9 +2,8 @@
 
 namespace App\Imports;
 
+use App\Helper\Helper;
 use App\Models\Student;
-use Helper;
-use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
@@ -55,7 +54,6 @@ class StudentsImport implements ToModel, WithStartRow
                 'group_number'    => $studentGroup[0],
                 'email'    => $row[21],
                 'phone'    => Helper::clearMask($row[22]),
-                'password' => Hash::make('11111111'),
             ]);
         }
     }

@@ -1,6 +1,9 @@
 <div>
+    <x-app-spinner target="showLessonsPage" />
 
-
+    @if($showLessons)
+        <livewire:student-lessons :lesson="$lesson" />
+    @else
     <div class="flex sm:mt-5 p-3 bg-white overflow-auto shadow-lg items-center justify-between sm:rounded-lg">
 
         <!-- Header -->
@@ -8,14 +11,14 @@
             Кафедры
         </h2>
 
-        <div class="ml-3 my-2 md:flex">
+        <div class="px-3 my-2 md:flex">
 
                 <x-select-semester />
 
 
-            <div class="flex">
+            <div class="flex mt-2 sm:mt-0">
                 <div class="relative">
-                    <x-select class="rounded-l">
+                    <x-select class="rounded-l rounded-r sm:rounded-r-none">
                         <option value="0">Все</option>
                         <option value="1">Есть долги</option>
                         <option value="2">Нет долгов</option>
@@ -43,7 +46,7 @@
             <table class="min-w-full table-fixed">
                 <thead>
                     <tr class="bg-gray-200 border-gray-300 border-b-2 text-gray-600 text-center text-xs">
-                        <th class="px-5 py-3 text-left uppercase tracking-wider">
+                        <th class="px-1 md:px-5 py-3 text-left uppercase tracking-wider">
                             №
                         </th>
                         <th class="w-1/2 text-left uppercase tracking-wider">
@@ -118,7 +121,7 @@
                                  <img class="hidden sm:flex h-10 w-10 rounded-full object-cover mr-2" src="{{ $journal->user->profile_photo_path ?
                  '../storage/'.$journal->user->profile_photo_path : '../img/avatar-placeholder.png' }}" alt="{{ $journal->user->name }}"/>
                                  <div class="flex-col text-gray-900 whitespace-no-wrap text-sm mr-2">
-                                     {{ Helper::getShortName($journal->user->name) }}
+                                     {{ App\Helper\Helper::getShortName($journal->user->name) }}
                                      <div class="text-xs text-gray-500">
                                      {{ $journal->user->position }}
                                      </div>
@@ -147,5 +150,5 @@
         </div>
     </div>
 </div>
-
+    @endif
 </div>

@@ -120,8 +120,8 @@
             </div>
         </div>
 
-            <footer class="fixed bottom-0 flex w-full justify-center p-2 text-gray-200 bg-green-500">
-                Klyausov A.S. &copy {{ date('Y') }} <p class="ml-3 text-green-700 text-xs">ver 0.5.1</p>
+            <footer class="fixed bottom-0 flex w-full justify-center p-2 text-green-400 bg-green-500">
+                Klyausov A.S. &copy {{ date('Y') }} <p class="ml-3 text-green-600 text-xs">ver 0.5.1</p>
             </footer>
 
     </div>

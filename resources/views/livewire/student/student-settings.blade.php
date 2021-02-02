@@ -54,8 +54,8 @@
 
                 <x-section-border class="w-full" />
 
-                <div class="md:grid md:grid-cols-3 gap-6 items-center">
-                    <div class="">
+                <div class="md:grid md:grid-cols-3 gap-6 items-center mt-3">
+                    <div class="p-2 font-bold">
                         {{ __('Email') }}
                     </div>
                     <div class="col-span-2">
@@ -63,7 +63,7 @@
                         <x-input-error for="email" class="mt-2" />
                     </div>
 
-                    <div class="">
+                    <div class="p-2 font-bold">
                         {{ __('Password') }}
                     </div>
                     <div class="col-span-2">
@@ -75,7 +75,7 @@
                 <div class="border-t border-gray-200 mb-3 mt-7"></div>
 
                 <div class="flex items-center justify-end">
-                    <x-action-message class="mr-8 text-lg" on="saved">
+                    <x-action-message class="mr-8" on="saved">
                         {{ __('Saved') }}
                     </x-action-message>
 

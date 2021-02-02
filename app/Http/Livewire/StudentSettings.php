@@ -2,14 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Student;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class StudentSettings extends Component
 {
     use WithFileUploads;
+
 
     public $student;
     public $email;
@@ -27,13 +28,14 @@ class StudentSettings extends Component
 
     public function mount()
     {
-        $this->student = session('student');
+        $this->student = auth()->guard('student')->user();
         $this->email = $this->student->email;
     }
 
     public function render()
     {
-        return view('livewire.student.student-settings');
+        return view('livewire.student.student-settings')
+            ->layout('layouts.student', ['title' => 'Настройки профиля студента ВолгГМУ', 'student' => $this->student]);
     }
 
     public function save()
@@ -46,25 +48,23 @@ class StudentSettings extends Component
             $this->student->password = Hash::make($this->password);
         }
 
-        if (isset($this->photo)) {
+        if(isset($this->photo)) {
             $studentPhoto = $this->photo->store('public/profile-photos/students');
 
             $this->student->profile_photo_path = str_replace("public/", "", $studentPhoto);
 
-            session('student')->profile_photo_path  = $this->student->profile_photo_path;
         }
 
         $this->student->save();
 
         $this->emit('saved');
 
-        return redirect()->route('student.settings');
     }
 
     public function deleteProfilePhoto()
     {
+        Storage::delete('public/'.$this->student->profile_photo_path);
         $this->student->profile_photo_path = null;
-        session('student')->profile_photo_path  = null;
         $this->student->save();
     }
 

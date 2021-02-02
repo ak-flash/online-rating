@@ -1,5 +1,6 @@
 <div>
 
+
     <div class="pb-2 mt-2 flex items-center justify-between text-gray-600
 				dark:text-gray-400 border-b dark:border-gray-600">
         <!-- Header -->
@@ -7,7 +8,7 @@
             Журнал оценок
         </h2>
 
-        <div class="text-lg">
+        <div class="text-lg ml-3">
            Занятий:
 
             <div class="flex text-2xl font-bold items-center">
@@ -203,7 +204,7 @@
 
                                             @if(isset($lesson->pivot->updated_by))
                                                 (
-                                                {{ Helper::getShortName(Arr::first($lesson->editedBy()->pluck('name'))) }}
+                                                {{ App\Helper\Helper::getShortName(Arr::first($lesson->editedBy()->pluck('name'))) }}
                                                 )
                                             @endif
                                         </div>
@@ -213,7 +214,7 @@
 
 
                                 @empty
-                                    <div class="px-5 py-5 border-b border-gray-200 bg-white" colspan="6">
+                                    <div class="px-5 py-5 border-b border-gray-200 bg-white">
                                         <p class="text-red-700 text-md text-center">
                                             Занятия не найдены...
                                         </p>

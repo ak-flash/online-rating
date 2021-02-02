@@ -56,17 +56,17 @@ Route::prefix('dashboard')
 });
 
 Route::prefix('student')
-    ->middleware(['student'])
+    ->middleware(['auth:student'])
     ->group(function () {
 
         Route::get('/login', \App\Http\Livewire\StudentLogin::class)
             ->name('student.login')
-            ->withoutMiddleware('student');
+            ->withoutMiddleware(['auth:student']);
 
-        Route::get('/dashboard', \App\Http\Livewire\StudentDashboard::class)
+        Route::get('/dashboard', \App\Http\Livewire\StudentJournals::class)
             ->name('student.dashboard');
 
-        Route::get('/settings', \App\Http\Livewire\StudentDashboard::class)
+        Route::get('/settings', \App\Http\Livewire\StudentSettings::class)
             ->name('student.settings');
 
         Route::get('/logout', [\App\Models\Student::class, 'logout'])

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Student;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class StudentLogin extends Component
@@ -25,7 +26,7 @@ class StudentLogin extends Component
     public function render()
     {
         return view('livewire.student.student-login')
-            ->layout('layouts.student', ['title' => 'Войти в онлайн журнал']);
+            ->layout('layouts.guest');
     }
 
 
@@ -42,31 +43,18 @@ class StudentLogin extends Component
 
     public function confirm() {
 
-        //$this->student->faculty_name = $this->student->faculty->name;
+        Auth::guard('student')->loginUsingId($this->student->id);
 
-        /*        $student = [
-                    'id' => $this->student->id,
-                    'document_id' =>$this->student->document_id,
-                    'last_name' => $this->student->last_name,
-                    'first_name' => $this->student->first_name,
-                    'middle_name' => $this->student->middle_name,
-                    'faculty_name' => $this->student->faculty->name,
-                    'faculty_id' => $this->student->faculty_id,
-                    'course_number' => $this->student->course_number,
-                    'group_number' => $this->student->group_number,
-                    'email' => $this->student->email,
-                ];*/
-        session(['student' => $this->student]);
-        /*session(['document_id' => $this->student->document_id]);
-        session(['last_name' => $this->student->last_name]);
-        session(['first_name' => $this->student->first_name]);
-        session(['middle_name' => $this->student->middle_name]);
-        session(['faculty_id' => $this->student->faculty_id]);
-        session(['course_number' => $this->student->course_number]);
-        session(['group_number' => $this->student->group_number]);
-        session(['email' => $this->student->email]);*/
+        /*if (Auth::guard('student')->attempt(['document_id' => $this->document_id])) {
+            dd(Auth::user());
+        }*/
 
 
         return $this->redirect(route('student.dashboard'));
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
     }
 }

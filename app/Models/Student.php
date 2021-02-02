@@ -7,9 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Yajra\Auditable\AuditableWithDeletesTrait;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * App\Models\Student
@@ -83,11 +87,13 @@ use Yajra\Auditable\AuditableWithDeletesTrait;
  * @method static \Illuminate\Database\Query\Builder|Student withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Student withoutTrashed()
  */
-class Student extends Model
+class Student extends Authenticatable
 {
+    use Notifiable;
     use HasFactory;
     use AuditableWithDeletesTrait, SoftDeletes;
 
+    protected $guard = 'student';
     /**
      * The attributes that are mass assignable.
      *
@@ -156,9 +162,12 @@ class Student extends Model
 
     public function logout() {
 
-        session()->forget('student');
+        Auth::guard('student')->logout();
 
-        //dd(session('student_id'));
+        session()->invalidate();
+
+        session()->regenerateToken();
+
         return redirect('/');
     }
 
