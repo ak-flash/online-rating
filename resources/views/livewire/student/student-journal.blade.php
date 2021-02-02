@@ -15,11 +15,11 @@
 
             <div class="flex">
                 <div class="relative">
-                    <select class="block w-full rounded-lg sm:rounded-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm leading-tight border-gray-300 focus:border-indigo-300">
+                    <x-select class="rounded-l">
                         <option value="0">Все</option>
                         <option value="1">Есть долги</option>
                         <option value="2">Нет долгов</option>
-                    </select>
+                    </x-select>
                 </div>
 
                 <x-search />

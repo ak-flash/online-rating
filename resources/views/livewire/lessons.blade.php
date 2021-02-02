@@ -42,23 +42,23 @@
 
                 <x-back-button class="" />
 
+                @if($lastLesson)
+                    <div class="bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex mr-2" x-data>
+                        <button class="inline-flex items-center focus:outline-none hover:text-green-400 focus:text-green-600 rounded-l-full px-4 py-2 {{ $showOneLesson ? '' : 'active' }}" wire:click="$set('showOneLesson', false)">
+                            <i class="fas fa-border-all mr-2"></i>
+                            <span class="hidden sm:block">Все</span>
+                        </button>
+                        <button class="inline-flex items-center focus:outline-none hover:text-green-400 focus:text-green-600 rounded-r-full px-4 py-2 {{ $showOneLesson ? 'active' : '' }}" wire:click="$set('showOneLesson', true)">
+                            <i class="fas fa-list mr-2"></i>
+                            <span class="hidden sm:block">Последнее</span>
+                        </button>
 
-                <div class="bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex mr-2" x-data>
-                    <button class="inline-flex items-center focus:outline-none hover:text-green-400 focus:text-green-600 rounded-l-full px-4 py-2 {{ $showOneLesson ? '' : 'active' }}" wire:click="$set('showOneLesson', false)">
-                        <i class="fas fa-border-all mr-2"></i>
-                        <span class="hidden sm:block">Все</span>
-                    </button>
-                    <button class="inline-flex items-center focus:outline-none hover:text-green-400 focus:text-green-600 rounded-r-full px-4 py-2 {{ $showOneLesson ? 'active' : '' }}" wire:click="$set('showOneLesson', true)">
-                        <i class="fas fa-list mr-2"></i>
-                        <span class="hidden sm:block">Последнее</span>
-                    </button>
-
-                    <style>
-                        /*@apply bg-white text-blue-400 rounded-full;*/
-                        .active {background: white; border-radius: 9999px; color: green;}
-                    </style>
-                </div>
-
+                        <style>
+                            /*@apply bg-white text-blue-400 rounded-full;*/
+                            .active {background: white; border-radius: 9999px; color: green;}
+                        </style>
+                    </div>
+                @endif
 
 
                 <x-secondary-button class="ml-3" onclick="openFullscreen('journal_table')">
@@ -101,7 +101,7 @@
                                             №{{ $lastLesson->topic->t_number }} - {{ $lastLesson->type }}
                                         </p>
                                     @else
-                                        <div class="flex items-center text-lg" justify-center">
+                                        <div class="flex items-center text-lg justify-center">
                                             №
                                             <div class="text-base text-xl">
                                                 {{ $lastLesson->topic->t_number }}
@@ -121,7 +121,7 @@
                                     <a href="#" title="{{ $lesson->type }}" wire:click.prevent="update({{ $lesson->id }})" class="justify-center">
 
                                         {!! $showOneLesson ? '<i class="fas fa-edit text-xl mr-2"></i>' : '' !!}
-                                        <div class="flex flex-col whitespace-nowrap">
+
                                             <div class="text-left hover:underline text-sm text-center">
                                                 {{ $lesson->date->format('d/m/y') }}
                                             </div>
@@ -144,7 +144,7 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                        </div>
+
                                     </a>
                                 @else
                                     <div class="text-xs text-red-700">
@@ -171,16 +171,28 @@
                           {{ $loop->iteration }}
                         </td>
                      <td class="sticky left-0 border-r pl-2 sm:p-3 text-sm whitespace-nowrap">
-                        <div class="rounded-sm p-1 px-2 font-bold bg-gray-200 opacity-90 w-1/2">
-                            {{ $student[0]->last_name }}
-                        </div>
-                        {{ $student[0]->name }}
+                         <div class="flex" x-data="{}" >
+                             @if($student[0]->profile_photo_path)
+                                 <a @click="$dispatch('img-modal', {  imgModalSrc: '{{ \App\Models\Student::getProfilePhoto($student[0]->profile_photo_path) }}', imgModalDesc: '' })" class="cursor-pointer">
+                                     <img alt="{{ $student[0]->last_name }} {{ $student[0]->name }}" class="h-12 w-12 rounded-full object-cover mr-1 sm:float-left" src="{{ \App\Models\Student::getProfilePhoto($student[0]->profile_photo_path, true) }}">
+                                 </a>
+                             @endif
+
+                             <div class="flex flex-col flex-grow">
+                                <div class="rounded-sm p-1 px-2 font-bold bg-gray-200 opacity-90 w-full hover:underline cursor-pointer">
+                                    {{ $student[0]->last_name }}
+                                </div>
+                                 <div class="px-2 pt-1">
+                                    {{ $student[0]->name }}
+                                 </div>
+                             </div>
+                         </div>
                     </td>
 
                     @foreach($student->reverse() as $student_lesson)
 
                         @if($lessonsDates[$oneViewIndex-$loop->index]->date->eq(
-                                        Helper::formatDate($student_lesson->date, 'Y-m-d H:i:s')
+                                        App\Helper\Helper::formatDate($student_lesson->date, 'Y-m-d H:i:s')
                                         ))
 
                             <td class="border-r p-3 text-sm text-center {{ $student_lesson->attendance ? '' : 'bg-red-' }}{{ ($student_lesson->mark1 || $student_lesson->mark2) ? '50' : '200' }}">
@@ -307,5 +319,7 @@
 
 
     @include('livewire.modals.edit_lesson')
+
+    <x-image-popup />
 
 </div>

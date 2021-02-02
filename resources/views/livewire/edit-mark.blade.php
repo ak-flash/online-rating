@@ -3,7 +3,7 @@
         <span class="cursor-pointer" x-on:click="isEditing = true; $refs.editor.classList.remove('hidden')" >
             <div class="px-2 py-1 rounded-lg shadow-xl border
                 {{ $studentMark==0 ? 'text-black' : 'text-white' }}
-                bg-{{ Helper::getMarkColor($studentMark) }}">
+                bg-{{ App\Helper\Helper::getMarkColor($studentMark) }}">
                 {{ $studentMark }}
             </div>
         </span>

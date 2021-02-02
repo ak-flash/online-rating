@@ -9,13 +9,13 @@
         <div class="grid grid-cols-3 gap-4 items-center"  x-data="">
 
             <label class="">Тип занятия</label>
-            <x-select class="w-full" wire:model="weekTypeId">
+            <x-select class="w-full rounded" wire:model="weekTypeId">
                 <option value="">Выберите...</option>
                 @foreach(\App\Models\Journal::WEEKTYPESRUS as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>
                 @endforeach
             </x-select>
-            <x-select class="w-full" wire:model="dayTypeId">
+            <x-select class="w-full rounded" wire:model="dayTypeId">
                 <option value="">Выберите...</option>
                 @foreach(\App\Models\Journal::DAYTYPES as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>
@@ -36,11 +36,11 @@
 
 
             <label class="font-bold">Дисциплина</label>
-            <x-select class="col-span-2" wire:model="disciplineId" id="discipline">
+            <x-select class="col-span-2 rounded" wire:model="disciplineId" id="discipline">
                 <option value="">Выберите...</option>
                 @foreach($disciplines as $discipline)
                     <option value="{{ $discipline->id }}">{{ $discipline->name }}
-                        ({{ Helper::getCourseNumber($discipline->semester) }} {{ $discipline->faculty->tag }} {{ $discipline->semester }} семестр)
+                        ({{ App\Helper\Helper::getCourseNumber($discipline->semester) }} {{ $discipline->faculty->tag }} {{ $discipline->semester }} семестр)
                     </option>
                 @endforeach
             </x-select>
@@ -50,12 +50,12 @@
             <span class="col-span-2" x-text="getFaculty()"></span>
 
             <label class="font-bold">Группа</label>
-            <x-select class="col-span-2 w-1/3" wire:model="groupNumber" disabled>
+            <select class="col-span-2 w-1/3 rounded block border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-white text-gray-700 py-2 px-4 pr-8 leading-tight border-gray-300 shadow-sm" {{ $hasLessons ? 'disabled' : '' }} wire:model="groupNumber">
                 <option value="">...</option>
                 @for ($i = 1; $i <= 55; $i++)
                     <option value="{{ $i }}">{{ $i }}</option>
                 @endfor
-            </x-select>
+            </select>
             <x-input-error for="groupNumber" class="col-span-3 text-center" />
 
             <label class="font-bold">Учебная комната</label>

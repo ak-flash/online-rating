@@ -7,7 +7,7 @@
     <div class="py-4 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-auto shadow-xl sm:rounded-lg">
 
-            <div class="float-left">
+            <div class="float-left w-auto flex items-center mr-10">
                 <x-add-button wire:click="update()">
                     <div class="hidden sm:inline-block">
                         Журнал
@@ -16,13 +16,13 @@
                 </x-add-button>
             </div>
 
-            <div class="m-2 sm:flex text-gray-500 sm:float-right">
-
+            <div class="m-2 md:flex sm:flex-row flex-col justify-end">
 
                 <x-select-semester class=""/>
 
-                <div class="flex mb-2 sm:m-0 sm:mr-2">
-                    <x-select class="sm:rounded-none border-green-400 leading-tight" wire:model="showPersonalGroups">
+
+                <div class="flex mb-2 sm:m-0">
+                    <x-select class="rounded-l border-green-400 leading-tight" wire:model="showPersonalGroups">
                         <option value="1">Мои группы</option>
                         <option value="0">Все группы</option>
                     </x-select>

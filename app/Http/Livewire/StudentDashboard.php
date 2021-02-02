@@ -21,6 +21,7 @@ class StudentDashboard extends Component
 
     public function render()
     {
+
         return view('livewire.student.student-dashboard')
             ->layout('layouts.student', ['title' => 'Личный кабинет студента ВолгГМУ']);
     }

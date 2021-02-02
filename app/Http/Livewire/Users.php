@@ -10,7 +10,6 @@ use Livewire\WithPagination;
 
 class Users extends Component
 {
-
     use WithPagination;
 
     public $search = '';
@@ -19,14 +18,14 @@ class Users extends Component
     public $findByPosition = 0;
     public $confirmingDeletion =0;
     public $openModal = false;
-    public $user_id = 0;
-    public $name, $email, $phone, $role_id, $position_id;
+    public $userId = 0;
+    public $name, $email, $phone, $roleId, $positionId;
 
     protected $rules = [
         'name' => 'required|string|min:6|max:255',
         'email' => 'required|string|email|max:255',
-        'role_id' => 'required|integer',
-        'position_id' => 'nullable|integer',
+        'roleId' => 'required|integer',
+        'positionId' => 'nullable|integer',
         'phone' => 'nullable|digits_between:3,15|numeric',
     ];
 
@@ -64,12 +63,12 @@ class Users extends Component
     {
 
         if($user->id) {
-            $this->user_id = $user->id;
+            $this->userId = $user->id;
             $this->name = $user->name;
             $this->email = $user->email;
             $this->phone = $user->phone;
-            $this->role_id = $user->role_id;
-            $this->position_id = $user->position_id;
+            $this->roleId = $user->role_id;
+            $this->positionId = $user->position_id;
         } else {
             $this->resetInputFields();
             $this->resetValidation();
@@ -89,19 +88,19 @@ class Users extends Component
         $this->validate();
 
         // Forbid for moderator to make admin
-        if(Auth::user()->isNotAdmin()&&$this->role_id==1) {
-            $this->role_id = 3;
+        if(Auth::user()->isNotAdmin()&&$this->roleId==1) {
+            $this->roleId = 3;
         }
 
-        $user = User::updateOrCreate(['id' => $this->user_id], [
+        $user = User::updateOrCreate(['id' => $this->userId], [
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'role_id' => $this->role_id,
-            'position_id' => $this->position_id,
+            'role_id' => $this->roleId,
+            'position_id' => $this->positionId,
         ]);
 
-        if ($this->user_id !== $user->id) {
+        if ($this->userId !== $user->id) {
             $user->forceFill([
                 'password' => Hash::make('11111111'),
             ])->save();
@@ -110,28 +109,28 @@ class Users extends Component
         /*session()->flash('message',
             $this->user_id ? 'Post Updated Successfully.' : 'Post Created Successfully.');*/
 
-        $message = $this->user_id ? 'Данные обновлены' : 'Пользователь добавлен';
+        $message = $this->userId ? 'Данные обновлены' : 'Пользователь добавлен';
 
-        $this->emit('show-toast', $message, 'success');
+        $this->emit('show-toast', '',$message, 'success');
 
         $this->closeModal();
     }
 
-    public function delete(User $user)
+    public function deleteConfirmation(User $user)
     {
 
-        $this->user_id = $user->id;
+        $this->userId = $user->id;
         $this->name = $user->name;
 
         $this->confirmingDeletion = true;
 
     }
 
-    public function deleteUser()
+    public function delete()
     {
-        User::destroy($this->user_id);
+        User::destroy($this->userId);
 
-        $this->emit('show-toast', 'Пользователь удалён!', 'success');
+        $this->emit('show-toast', '', 'Пользователь удалён!', 'success');
 
         $this->confirmingDeletion = false;
 
@@ -145,12 +144,12 @@ class Users extends Component
 
     private function resetInputFields()
     {
-        $this->user_id = 0;
+        $this->userId = 0;
         $this->name = '';
         $this->email = '';
         $this->phone = '';
-        $this->position_id = 0;
-        $this->role_id = 0;
+        $this->positionId = 0;
+        $this->roleId = 0;
 
     }
 

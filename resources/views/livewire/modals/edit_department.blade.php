@@ -1,7 +1,7 @@
 <x-form-modal wire:model="openModal" :maxWidth="3">
 
     <x-slot name="title">
-        <p class="pt-2 text-lg font-semibold">Управление кафедрой</p>
+        <p class="pt-2 text-lg font-bold">Управление кафедрой</p>
     </x-slot>
 
     <x-slot name="content">

@@ -6,7 +6,7 @@
         <div class="flex items-center justify-center bg-gray-300 w-2 h-full">
         </div>
         <div class="px-6">
-            <h5 class="font-bold">Выполнено</h5>
+            <h5 class="font-bold">{{ $title }}</h5>
             <p class="text-sm">{{ $message }}</p>
         </div>
         <button class="ml-auto mr-3">

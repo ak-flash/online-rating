@@ -76,7 +76,7 @@ class Lessons extends Component
                     ->whereIn('lessons.id', $lessonsIds);
             })
             ->join('students', 'students.id', '=', 'lesson_student.student_id')
-            ->select('students.id AS st_id', 'students.name', 'students.last_name','lesson_student.id AS piv_id', 'lessons.id', 'lessons.topic_id', 'lessons.date', 'lesson_student.attendance', 'lesson_student.mark1', 'lesson_student.mark2', 'lesson_student.updated_by', 'lesson_student.updated_at')
+            ->select('students.id AS st_id', 'students.name', 'students.last_name', 'students.profile_photo_path', 'lesson_student.id AS piv_id', 'lessons.id', 'lessons.topic_id', 'lessons.date', 'lesson_student.attendance', 'lesson_student.mark1', 'lesson_student.mark2',  'lesson_student.updated_by', 'lesson_student.updated_at')
             ->orderBy('students.last_name')->orderBy('students.name')
             ->orderByDesc('lessons.date')
             ->whereNull('lesson_student.deleted_at')
@@ -190,7 +190,7 @@ class Lessons extends Component
 
         $message = $this->studyClassId ? 'Данные обновлены' : 'Занятие добавлено';
 
-        $this->emit('show-toast', $message, 'success');
+        $this->emit('show-toast', '',$message, 'success');
 
         $this->closeModal();
     }
@@ -205,7 +205,7 @@ class Lessons extends Component
 
     public function repairStudent($studentId, $journalId)
     {
-        $this->emit('show-toast', 'Исправлено', 'success');
+        $this->emit('show-toast', '','Исправлено', 'success');
     }
 
 

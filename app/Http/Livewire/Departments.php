@@ -11,12 +11,13 @@ class Departments extends Component
 {
     use WithPagination;
 
-    public $search = '';
-    public $perPage = 5;
-    public $confirmingUserDeletion =0;
-    public $openModal = false;
-    public $name, $user_id;
-    public $department_id;
+    public string $search = '';
+    public int $perPage = 5;
+    public int $confirmingUserDeletion =0;
+    public bool $openModal = false;
+    public string $name;
+    public int $user_id;
+    public int $department_id;
     public $moderators;
 
     protected $rules = [
@@ -34,7 +35,7 @@ class Departments extends Component
             ->paginate($this->perPage);
 
         $this->moderators = User::where('role_id', 2)->orWhere('role_id', 1)->get(['id', 'name']);
-        //dd($users);
+
         return view('livewire.departments', [ 'departments' => $departments ]);
     }
 
@@ -75,7 +76,7 @@ class Departments extends Component
         /*session()->flash('message',
             $this->user_id ? 'Post Updated Successfully.' : 'Post Created Successfully.');*/
 
-        $this->emit('show-toast', 'Данные обновлены!', 'success');
+        $this->emit('show-toast', '','Данные обновлены!', 'success');
 
         $this->closeModal();
 

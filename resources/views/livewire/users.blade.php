@@ -18,14 +18,14 @@
 
                         <select class="rounded-l block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight border-gray-300" wire:model="findByRole">
                             <option value="0">Все роли</option>
-                            @foreach(User::ROLES as $key => $value)
+                            @foreach(App\Models\User::ROLES as $key => $value)
                                 <option value="{{ $key }}">{{ $value }}</option>
                             @endforeach
                         </select>
 
                         <select class="block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight border-gray-300" wire:model="findByPosition">
                             <option value="0">Все должности</option>
-                            @foreach(User::POSITIONS as $key => $value)
+                            @foreach(App\Models\User::POSITIONS as $key => $value)
                                 <option value="{{ $key }}">{{ $value }}</option>
                             @endforeach
                         </select>

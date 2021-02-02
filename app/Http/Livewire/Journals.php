@@ -15,14 +15,14 @@ class Journals extends Component
 {
     use WithPagination;
 
-    public $search = '';
-    public $perPage = 20;
-    public $confirmingDeletion =0;
-    public $openModal = false;
-    public $showPersonalGroups = true;
-    public $hasLessons = false;
+    public string $search = '';
+    public int $perPage = 20;
+    public bool $confirmingDeletion = false;
+    public bool $openModal = false;
+    public bool $showPersonalGroups = true;
+    public bool $hasLessons = false;
     public $year, $semester;
-    public $journalId = 0;
+    public int $journalId = 0;
     public $disciplines, $disciplineId, $userId, $facultyId, $groupNumber,
         $timeStart, $timeEnd, $dayTypeId, $weekTypeId, $room, $journalYear;
 
@@ -99,7 +99,9 @@ class Journals extends Component
                 $this->hasLessons = true;
 
                 $message = 'Данный журнал содержит занятия';
-                $this->emit('show-toast', $message, 'danger');
+                $this->emit('show-toast', 'Внимание!', $message, 'danger');
+            } else {
+                $this->hasLessons = false;
             }
         } else {
             $this->resetInputFields();

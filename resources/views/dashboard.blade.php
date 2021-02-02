@@ -42,7 +42,7 @@
                         </div>
                         Текущая неделя:
                         <div class="md:ml-3 text-2xl">
-                            {{ Helper::getTypeOfWeek(now()) }}
+                            {{ App\Helper\Helper::getTypeOfWeek(now()) }}
                         </div>
                     </div>
 
@@ -105,13 +105,13 @@
 
                             <!-- Tile 4 -->
                             <div class="flex items-center p-4 bg-white rounded">
-                                <div class="flex-grow flex text-xl">
-                                    Сотрудников
-                                </div>
+
                                 <div class="flex flex-shrink-0 items-center justify-center text-3xl bg-red-200 h-16 w-16 rounded">
                                     {{ \App\Models\User::whereDepartmentId(auth()->user()->department_id)->count() }}
                                 </div>
-
+                                <div class="ml-3 text-xl">
+                                    Сотрудников
+                                </div>
                             </div>
                         </div>
                         <!-- Component End  -->

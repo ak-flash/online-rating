@@ -12,7 +12,11 @@
             <div class="w-full px-2">
                 <div class="flex flex-col justify-center items-center w-full mt-3 border-t border-gray-700">
                     <!-- User info -->
-                    <img class="mt-3 h-15 w-15 rounded-lg object-cover mx-auto" src="{{ $student->profile_photo_url }}" alt="student_avatar" />
+                    <a @click="$dispatch('img-modal', {  imgModalSrc: '{{ $student->profile_photo_url }}', imgModalDesc: '' })" class="cursor-pointer">
+                        <img class="mt-3 rounded-lg object-cover mx-auto" src="{{ $student->profile_photo_url }}" alt="student_avatar" style="width: 130px;height: 130px;" />
+                    </a>
+
+                    <x-image-popup />
 
                     <div class="mt-2 text-2xl dark:text-gray-300 capitalize">
                         {{ $student->last_name }}
@@ -59,7 +63,7 @@
                             {{ __('Settings') }}
                         </span>
                     </a>
-                    <a class="relative flex items-center w-full h-10 px-3 rounded hover:bg-green-800 hover:text-gray-300" href="#">
+                    <a class="relative flex items-center w-full h-10 px-3 mt-1 rounded hover:bg-green-800 hover:text-gray-300" href="#">
                         <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
                         </svg>
@@ -120,12 +124,14 @@
 
                 <x-app-spinner target="" />
 
+
+
                 @if($showLessons)
-                    <livewire:student-lessons :lesson="$lesson"/>
+                    <livewire:student-lessons :lesson="$lesson" />
                 @endif
 
                 @if($showJournal)
-                    <livewire:student-journals :student="$student"/>
+                    <livewire:student-journals />
                 @endif
 
                 @if($showSettings)

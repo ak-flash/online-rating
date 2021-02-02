@@ -9,6 +9,8 @@
 
     <x-slot name="form">
 
+
+
         <!-- Profile Photo -->
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
@@ -28,9 +30,11 @@
                 <x-label for="photo" value="{{ __('Photo') }}" />
 
                 <!-- Current Profile Photo -->
-                <div class="mt-2" x-show="! photoPreview">
-                    <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
-                </div>
+                <a @click="$dispatch('img-modal', {  imgModalSrc: '{{ $this->user->profile_photo_url }}', imgModalDesc: '' })" class="cursor-pointer" x-show="! photoPreview">
+                    <img alt="{{ $this->user->name }}" class="rounded-xl h-20 w-20 object-cover" src="{{ $this->user->profile_photo_url }}">
+                </a>
+
+
 
                 <!-- New Profile Photo Preview -->
                 <div class="mt-2" x-show="photoPreview">
@@ -91,6 +95,9 @@
             </select>
 
         </div>
+
+    <x-image-popup />
+
     </x-slot>
 
     <x-slot name="actions">

@@ -109,7 +109,7 @@ class Disciplines extends Component
 
         $message = $this->disciplineId ? 'Данные обновлены' : 'Дисциплина добавлена';
 
-        $this->emit('show-toast', $message, 'success');
+        $this->emit('show-toast', '',$message, 'success');
 
         $this->closeModal();
     }
@@ -128,7 +128,7 @@ class Disciplines extends Component
     {
         Discipline::destroy($this->disciplineId);
 
-        $this->emit('show-toast', 'Дисциплина удалена!', 'success');
+        $this->emit('show-toast', '','Дисциплина удалена!', 'success');
 
         $this->confirmingDeletion = false;
 

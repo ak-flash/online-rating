@@ -1,7 +1,7 @@
 <x-form-modal wire:model="openModal" :maxWidth="2">
 
     <x-slot name="title">
-        <p class="pt-2 text-lg font-bold">Управление пользователем</p>
+        <p class="pt-2 text-lg font-bold">{{ $userId ? 'Редактировать' : 'Добавить' }}  пользователя</p>
     </x-slot>
 
     <x-slot name="content">
@@ -21,22 +21,22 @@
             <x-input-error for="phone" class="col-span-3 text-center" />
 
             <label class="font-bold">Роль</label>
-            <x-select class="col-span-2" wire:model="role_id">
+            <x-select class="col-span-2" wire:model="roleId">
                 <option value="0">Выберите...</option>
-                @foreach(User::listRoles(auth()->user()->isAdmin()) as $key => $value)
+                @foreach(App\Models\User::listRoles(auth()->user()->isAdmin()) as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>
                 @endforeach
             </x-select>
-            <x-input-error for="role" class="col-span-3 text-center" />
+            <x-input-error for="roleId" class="col-span-3 text-center" />
 
             <label class="">Должность</label>
-            <x-select class="col-span-2" wire:model="position_id">
+            <x-select class="col-span-2" wire:model="positionId">
                 <option value="">Выберите...</option>
-                @foreach(User::POSITIONS as $key => $value)
-                <option value="{{ $key }}">{{ $value }}</option>
+                @foreach(App\Models\User::POSITIONS as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
                 @endforeach
             </x-select>
-            <x-input-error for="position" class="col-span-3 text-center" />
+            <x-input-error for="positionId" class="col-span-3 text-center" />
         </div>
     </x-slot>
 

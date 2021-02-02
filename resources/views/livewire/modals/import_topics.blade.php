@@ -1,4 +1,4 @@
-<x-form-modal wire:model="openImport" :maxWidth="4">
+<x-form-modal wire:model="openImport" :maxWidth="5">
 
     <x-slot name="title">
         <div class="text-sm text-justify">
@@ -9,7 +9,7 @@
     <x-slot name="content">
 
         <div class="flex text-base justify-end items-center mb-2">
-            {{ $discipline->volgmed_id ? 'Дисциплина '.$discipline->name : 'Синхронизируйте дисциплины'}}
+            Дисциплина  {{ $discipline->name }}
 
             <x-main-button class="ml-3 w-full" wire:click.prevent="receiveFromVolgmed()">
                 Получить файл с <b>volgmed.ru</b>

@@ -10,7 +10,7 @@
                     </a>
 
                     <div class="md:hidden text-green-900 text-2xl ml-5">
-                        {{ Helper::getRouteName() }}
+                        {{ App\Helper\Helper::getRouteName() }}
                     </div>
                 </div>
 

@@ -56,7 +56,7 @@ Route::prefix('dashboard')
 });
 
 Route::prefix('student')
-    ->middleware('student')
+    ->middleware(['student'])
     ->group(function () {
 
         Route::get('/login', \App\Http\Livewire\StudentLogin::class)

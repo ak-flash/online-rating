@@ -21,11 +21,15 @@ class CreateStudentsTable extends Migration
             $table->foreignId('faculty_id')->constrained();
             $table->integer('course_number')->nullable();
             $table->integer('group_number')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->nullable()->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('phone', 15)->nullable()->unique();
             $table->string('password')->nullable();
+            $table->rememberToken();
             $table->boolean('active')->default(true);
             $table->boolean('chief')->default(false);
             $table->text('profile_photo_path')->nullable();
+            $table->date('date_of_birth')->nullable();
             $table->auditableWithDeletes();
             $table->softDeletes();
             $table->timestamps();

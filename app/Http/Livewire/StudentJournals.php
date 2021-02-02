@@ -12,12 +12,12 @@ class StudentJournals extends Component
     use WithPagination;
 
     public $student;
-    public $search = '';
-    public $perPage = 5;
+    public string $search = '';
+    public int $perPage = 5;
     public $year, $semester;
 
     public function mount(){
-
+        $this->student = session('student');
     }
 
     public function render()

@@ -87,7 +87,7 @@
                         <td class="p-3 text-sm text-center">
 
                             <div class="inline text-2xl">
-                                {{ Helper::getCourseNumber($discipline->semester) }}
+                                {{ App\Helper\Helper::getCourseNumber($discipline->semester) }}
                             </div>
 
                                 ({{ $discipline->semester }} сем)

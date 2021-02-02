@@ -190,7 +190,7 @@ class Topics extends Component
 
         $this->openImport = false;
 
-        $this->emit('show-toast', 'Темы добавлены', 'success');
+        $this->emit('show-toast', '', 'Темы добавлены', 'success');
 
         $this->topicsTitles = '';
 
@@ -202,13 +202,15 @@ class Topics extends Component
 
         $topicsLink = Helper::getLinksDisciplineFilesFromVOLGMED($this->discipline->volgmed_id, 'topics');
 
+        $headers = ['Content-Type: application/pdf'];
+
         $getFromVolgmed = Http::get('https://www.volgmed.ru/uploads/files/'.$topicsLink.'.pdf');
 
         $fileName = explode('/', $topicsLink);
 
         Storage::disk('local')->put($localFilePath, $getFromVolgmed->body());
 
-        return response()->download(Storage::path($localFilePath), $fileName[1].'pdf')->deleteFileAfterSend(true);
+        return response()->download(Storage::path($localFilePath), $fileName[1].'pdf', $headers)->deleteFileAfterSend(true);
     }
 
 }
