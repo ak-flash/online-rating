@@ -178,15 +178,9 @@ class Student extends Authenticatable
      * @param bool $thumbnail
      * @return string
      */
-    public static function getProfilePhoto($profilePhotoPath, $thumbnail = false): string
+    public function getThumbnail(): string
     {
-        if($thumbnail) {
-
-            $img = Image::make(storage_path('app/public/profile-photos/Go8B1bv7VYPBSAaQ3r0R6ETTL4hP8frbyvIskjRx.jpg'))->resize(300, null);
-            return $img->response('jpg');
-        }
-
-        return Storage::disk()->url($profilePhotoPath);
+        return Storage::disk()->url('public/profile-photos/students/thumbnails/'.$this->profile_photo_path);
     }
 
     /**
@@ -197,7 +191,7 @@ class Student extends Authenticatable
     public function getProfilePhotoUrlAttribute(): string
     {
         return $this->profile_photo_path
-            ? Storage::disk()->url($this->profile_photo_path)
+            ? Storage::disk()->url('public/profile-photos/students/'.$this->profile_photo_path)
             : $this->defaultProfilePhotoUrl();
     }
 

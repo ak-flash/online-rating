@@ -31,10 +31,10 @@
                 </span>
                     </a>
                     <div class="w-full px-2">
-                        <div class="flex flex-col justify-center items-center w-full mt-3 border-t border-gray-700">
+                        <div class="flex flex-col justify-center items-center w-full mt-3 border-t border-gray-700" x-data>
                             <!-- User info -->
                             <a @click="$dispatch('img-modal', {  imgModalSrc: '{{ $student->profile_photo_url }}', imgModalDesc: '' })" class="cursor-pointer">
-                                <img class="mt-3 rounded-lg object-cover mx-auto" src="{{ $student->profile_photo_url }}" alt="student_avatar" style="width: 130px;height: 130px;" />
+                                <img class="mt-3 rounded-full object-cover mx-auto" src="{{ $student->getThumbnail() }}" alt="student_avatar" style="width: 100px;height: 100px;" />
                             </a>
 
                             <x-image-popup />
@@ -67,7 +67,7 @@
                         </div>
 
                         <div class="flex flex-col items-center w-full mt-2 border-t border-gray-700">
-                            <a class="flex items-center w-full h-10 px-3 my-3 rounded hover:bg-green-800 hover:text-gray-300 {{ request()->routeIs('student.dashboard') ? 'text-white bg-green-600' : '' }}" href="{{ route('student.dashboard') }}">
+                            <a class="flex items-center w-full h-10 px-3 my-3 rounded hover:bg-green-800 hover:text-white {{ request()->routeIs('student.dashboard') ? 'text-white bg-green-600 shadow-lg' : '' }}" href="{{ route('student.dashboard') }}">
                                 <i class="fa fa-book-open text-xl"></i>
                                 <span class="ml-3 text-base">
                             {{ __('Journals') }}
@@ -78,9 +78,9 @@
 
                         <div class="flex flex-col items-center w-full border-t border-gray-700">
 
-                            <a class="flex items-center w-full h-10 px-3 mt-2 rounded hover:bg-green-800 hover:text-gray-300 {{ request()->routeIs('student.settings') ? 'text-white bg-green-600' : '' }}" href="{{ route('student.settings') }}">
+                            <a class="flex items-center w-full h-10 px-3 mt-2 rounded hover:bg-green-800 hover:text-white {{ request()->routeIs('student.settings') ? 'text-white bg-green-600 shadow-lg' : '' }}" href="{{ route('student.settings') }}">
                                 <i class="fa fa-sliders-h text-xl"></i>
-                                <span class="ml-3 text-sm">
+                                <span class="ml-3 text-base">
                             {{ __('Settings') }}
                         </span>
                             </a>
@@ -94,12 +94,16 @@
                                 <span class="absolute top-0 left-0 w-2 h-2 mt-2 ml-2 bg-green-500 rounded-full"></span>
                             </a>
                         </div>
-                    </div>
 
-                    <a href="{{ route('student.logout') }}" class="fixed bottom-5 bg-red-500 hover:bg-red-600 shadow p-2 rounded-lg text-white px-10 mx-4">
-                        <i class="fa fa-sign-in-alt mr-2"></i>
-                        Выход
-                    </a>
+                        <div class="my-10 flex items-center w-full">
+                            <a href="{{ route('student.logout') }}" class="border border-red-500 hover:bg-red-600 hover:text-white text-sm flex items-center justify-center w-full h-10 px-3 my-3 rounded shadow-lg">
+                                <i class="fa fa-sign-in-alt text-lg mr-2"></i>
+                                {{ __('Logout') }}
+                            </a>
+                        </div>
+
+
+                    </div>
 
                 </nav>
 
@@ -118,7 +122,7 @@
                             </div>
 
                             <a href="{{ route('student.logout') }}" class="px-3 bg-red-700 hover:bg-red-500 shadow m-2 float-right rounded-sm text-white pt-1 mr-3">
-                                Выйти
+                                {{ __('Logout') }}
                             </a>
                         </div>
                     </div>

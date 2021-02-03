@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -275,5 +276,12 @@ class User extends Authenticatable
             : static::where('id', 'like', '%'.$search.'%')
                 ->orWhere('name', 'ilike', '%'.$search.'%')
                 ->orWhere('email', 'ilike', '%'.$search.'%');
+    }
+
+    public function getThumbnail(): string
+    {
+        $photoName = str_replace('profile-photos/', '', $this->profile_photo_path);
+
+        return Storage::disk()->url('public/profile-photos/thumbnails/'.$photoName);
     }
 }

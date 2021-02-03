@@ -13,6 +13,8 @@
 
         <!-- Profile Photo -->
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+
+
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
                 <!-- Profile Photo File Input -->
                 <input type="file" class="hidden"
@@ -30,9 +32,8 @@
                 <x-label for="photo" value="{{ __('Photo') }}" />
 
                 <!-- Current Profile Photo -->
-                <a @click="$dispatch('img-modal', {  imgModalSrc: '{{ $this->user->profile_photo_url }}', imgModalDesc: '' })" class="cursor-pointer" x-show="! photoPreview">
-                    <img alt="{{ $this->user->name }}" class="rounded-xl h-20 w-20 object-cover" src="{{ $this->user->profile_photo_url }}">
-                </a>
+                <img alt="{{ $this->user->name }}" class="rounded-xl h-20 w-20 object-cover" src="{{ $this->user->profile_photo_url }}" x-show="! photoPreview">
+
 
 
 
@@ -96,13 +97,12 @@
 
         </div>
 
-    <x-image-popup />
-
+        <x-app-spinner target="photo" />
     </x-slot>
 
     <x-slot name="actions">
         <x-action-message class="mr-3" on="saved">
-            {{ __('Saved.') }}
+            {{ __('Saved') }}
         </x-action-message>
 
         <x-button wire:loading.attr="disabled" wire:target="photo">

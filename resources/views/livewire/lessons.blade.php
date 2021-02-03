@@ -173,8 +173,8 @@
                      <td class="sticky left-0 border-r pl-2 sm:p-3 text-sm whitespace-nowrap">
                          <div class="flex" x-data="{}" >
                              @if($student[0]->profile_photo_path)
-                                 <a @click="$dispatch('img-modal', {  imgModalSrc: '{{ \App\Models\Student::getProfilePhoto($student[0]->profile_photo_path) }}', imgModalDesc: '' })" class="cursor-pointer">
-                                     <img alt="{{ $student[0]->last_name }} {{ $student[0]->name }}" class="h-12 w-12 rounded-full object-cover mr-1 sm:float-left" src="{{ \App\Models\Student::getProfilePhoto($student[0]->profile_photo_path, true) }}">
+                                 <a @click="$dispatch('img-modal', {  imgModalSrc: '/storage/profile-photos/students/{{ $student[0]->profile_photo_path }}', imgModalDesc: '' })" class="cursor-pointer mr-2">
+                                     <img alt="{{ $student[0]->last_name }} {{ $student[0]->name }}" class="h-12 w-12 rounded-full object-cover sm:float-left" src="/storage/profile-photos/students/thumbnails/{{ $student[0]->profile_photo_path }}">
                                  </a>
                              @endif
 

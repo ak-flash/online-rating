@@ -105,7 +105,7 @@
                 <div class="relative">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="flex p-1 pr-3 text-sm hover:bg-gray-300 transition duration-150 ease-in rounded-xl bg-gray-100 ">
+                            <button class="flex p-1 pr-3 text-sm hover:bg-gray-200 transition duration-150 ease-in rounded">
                                 <img class="h-10 w-10 object-cover rounded-lg" src="{{ auth()->user()->profile_photo_url }}" />
 
                                 <div class="hidden lg:block text-left pl-2 text-black">

@@ -10,13 +10,16 @@ class StudentLogin extends Component
 {
     public $document_id;
     public $student;
+    public $email;
+    public $password;
+    public $changeAuthMethod = false;
     public $student_id;
-
     public $showConfirmation = false;
 
     protected $rules = [
         'document_id' => 'required|integer',
-    ];
+        'email' => 'required|email',
+        'password' => 'required',];
 
     protected $messages = [
         'required' => 'Необходимо заполнить',
@@ -32,13 +35,35 @@ class StudentLogin extends Component
 
     public function find_profile() {
 
-        $this->validate();
+        if($this->changeAuthMethod) {
+            $this->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+                ]);
 
-        $this->student = Student::findStudent($this->document_id);
+            if (Auth::guard('student')->attempt(['email' => $this->email, 'password' => $this->password, 'active' => 1], 1)) {
+                $this->redirect(route('student.dashboard'));
+            } else {
+                $this->addError('password', __("The provided password was incorrect.").' Или вы заблокированы');
+            }
 
-        $this->showConfirmation = true;
+        } else {
 
-        return view('livewire.student.student-login');
+            $this->validate(['document_id' => 'required|integer']);
+
+            $this->student = Student::findStudent($this->document_id);
+
+            if(is_null($this->student->password)){
+                $this->showConfirmation = true;
+                return view('livewire.student.student-login');
+            }
+            else {
+                $this->addError('document_id', 'Быстрый вход не возможен! Установлен пароль');
+            }
+
+        }
+
+
     }
 
     public function confirm() {

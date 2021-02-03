@@ -6,6 +6,7 @@ use App\Helper\Helper;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Intervention\Image\Facades\Image;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
@@ -33,6 +34,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
+
+            $studentPhotoName = explode('/', $user->profile_photo_path);
+            $studentPhotoThumbnail = Image::make($input['photo'])->fit(200)->save('storage/profile-photos/thumbnails/'.$studentPhotoName[1]);
         }
 
         if ($input['email'] !== $user->email &&

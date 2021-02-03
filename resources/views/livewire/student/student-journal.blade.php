@@ -117,10 +117,15 @@
 
                         </td>
                         <td class="pl-4">
-                            <div class="flex">
-                                 <img class="hidden sm:flex h-10 w-10 rounded-full object-cover mr-2" src="{{ $journal->user->profile_photo_path ?
-                 '../storage/'.$journal->user->profile_photo_path : '../img/avatar-placeholder.png' }}" alt="{{ $journal->user->name }}"/>
-                                 <div class="flex-col text-gray-900 whitespace-no-wrap text-sm mr-2">
+                            <div class="flex" x-data>
+
+
+                                <a @click="$dispatch('img-modal', {  imgModalSrc: '{{ $journal->user->profile_photo_url }}', imgModalDesc: '{{ $journal->user->name }}' })" class="cursor-pointer">
+                                    <img class="hidden sm:flex h-10 w-10 rounded-full object-cover mr-2" src="{{ $journal->user->getThumbnail() }}" alt="{{ $journal->user->name }}"/>
+                                </a>
+
+
+                                <div class="flex-col text-gray-900 whitespace-no-wrap text-sm mr-2">
                                      {{ App\Helper\Helper::getShortName($journal->user->name) }}
                                      <div class="text-xs text-gray-500">
                                      {{ $journal->user->position }}

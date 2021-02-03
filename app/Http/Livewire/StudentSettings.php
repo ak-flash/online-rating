@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -19,12 +20,14 @@ class StudentSettings extends Component
 
     protected $rules = [
         'photo' => 'nullable|image|max:1024', // 1MB Max
-        'email' => 'required|string|email|max:255',
+        'email' => 'required|string|email|max:100',
+        'password' => 'nullable|string|max:20',
     ];
 
     protected $messages = [
         'photo.image' => 'Допустима загрузка только файлов jpg, png и т.д.',
     ];
+
 
     public function mount()
     {
@@ -51,7 +54,11 @@ class StudentSettings extends Component
         if(isset($this->photo)) {
             $studentPhoto = $this->photo->store('public/profile-photos/students');
 
-            $this->student->profile_photo_path = str_replace("public/", "", $studentPhoto);
+            $studentPhotoName = explode('/', $studentPhoto);
+
+            $studentPhotoThumbnail = Image::make($this->photo)->fit(200)->save('storage/profile-photos/students/thumbnails/'.$studentPhotoName[3]);
+
+            $this->student->profile_photo_path = $studentPhotoName[3];
 
         }
 

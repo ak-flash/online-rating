@@ -13,7 +13,7 @@
     "PhoneNumber": "Номер телефона",
     "Profile.show": "Профиль",
     "Notifications": "Уведомления",
-
+    "Create Department": "Создать кафедру",
     "A fresh verification link has been sent to your email address.": "Новая ссылка для подтверждения была отправлена на Ваш email-адрес.",
     "A new verification link has been sent to the email address you provided during registration.": "Новая ссылка для подтверждения была отправлена на Ваш email-адрес, указанный при регистрации.",
     "Add a new team member to your team, allowing them to collaborate with you.": "Добавьте нового члена в свою команду для совместной работы с ним.",
@@ -46,7 +46,6 @@
     "Create API Token": "Создать API токен",
     "Create New Team": "Создать команду",
     "Create Team": "Создать команду",
-    "Create Department": "Создать кафедру",
     "Create": "Создать",
     "Created.": "Создано.",
     "Current Password": "Текущий пароль",
