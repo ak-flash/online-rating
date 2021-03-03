@@ -10,4 +10,15 @@ class DepartmentSettings extends Component
     {
         return view('livewire.department-settings');
     }
+
+
+    public function store()
+    {
+        dd('33');
+    }
+
+    public function inviteUser()
+    {
+        dd('33');
+    }
 }

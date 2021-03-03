@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Helper\Helper;
 use App\Models\Journal;
 use App\Models\LessonStudent;
 use App\Models\Student;
 use App\Models\Lesson;
 use App\Models\Topic;
 use Carbon\Carbon;
-use Helper;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 

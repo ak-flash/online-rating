@@ -23,10 +23,10 @@
         <div class="ml-2 sm:ml-4 text-lg">
              Рейтинг:
                <div class="flex text-2xl {{ $rating>=3 ? 'text-green-700':'text-red-700' }}">
-                    3.4
+                   {{-- 3.4
                    <div class="flex-row mx-2 text-sm">
                        ( {{ \App\Models\Journal::RATING_TABLE['3.4'] }} )
-                   </div>
+                   </div>--}}
                </div>
         </div>
 

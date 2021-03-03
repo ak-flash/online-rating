@@ -64,6 +64,14 @@
                     </div>
 
                     <div class="p-2 font-bold">
+                        {{ __('Phone') }}
+                    </div>
+                    <div class="col-span-2">
+                        <x-input type="text" class="" wire:model.lazy="phone"></x-input>
+                        <x-input-error for="phone" class="mt-2" />
+                    </div>
+
+                    <div class="p-2 font-bold">
                         {{ __('Password') }}
                     </div>
                     <div class="col-span-2">

@@ -139,14 +139,6 @@
                             @endif
 
 
-                            <div class="block px-4 py-1 text-xs text-gray-400">
-                                {{ __('Управление аккаунтом') }}
-                            </div>
-
-                            <x-dropdown-link href="{{ route('profile.show') }}" class="pl-5">
-                                <i class="fa fa-head-side-mask mr-1"></i> {{ __('Профиль') }}
-                            </x-dropdown-link>
-
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-dropdown-link href="{{ route('api-tokens.index') }}">
                                     {{ __('API Tokens') }}

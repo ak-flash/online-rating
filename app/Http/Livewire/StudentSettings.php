@@ -17,15 +17,19 @@ class StudentSettings extends Component
     public $email;
     public $password;
     public $photo;
+    public $phone;
 
     protected $rules = [
         'photo' => 'nullable|image|max:1024', // 1MB Max
-        'email' => 'required|string|email|max:100',
+        'email' => 'required|string|email|max:100|unique:users',
         'password' => 'nullable|string|max:20',
+        'phone' => 'nullable|string|max:20',
     ];
 
     protected $messages = [
         'photo.image' => 'Допустима загрузка только файлов jpg, png и т.д.',
+        'email.unique' => 'Такой Email уже зарегистрирован на другого пользователя',
+        'phone.unique' => 'Такой номер телефона уже зарегистрирован на другого пользователя',
     ];
 
 
@@ -33,6 +37,7 @@ class StudentSettings extends Component
     {
         $this->student = auth()->guard('student')->user();
         $this->email = $this->student->email;
+        $this->phone = $this->student->phone;
     }
 
     public function render()
@@ -43,9 +48,15 @@ class StudentSettings extends Component
 
     public function save()
     {
-        $this->validate();
+        $this->validate([
+            'photo' => 'nullable|image|max:1024', // 1MB Max
+            'email' => 'required|string|email|max:100|unique:users|unique:students,email,'.optional($this->student)->id,
+            'password' => 'nullable|string|max:20',
+            'phone' => 'nullable|string|max:20|unique:students,phone,'.optional($this->student)->id,
+        ]);
 
         $this->student->email = $this->email;
+        $this->student->phone = $this->phone;
 
         if($this->password){
             $this->student->password = Hash::make($this->password);
