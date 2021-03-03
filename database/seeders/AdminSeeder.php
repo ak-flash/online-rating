@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
             'email' => 'ak-flash@mail.ru',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
-            'role' => 1,
+            'role_id' => 1,
             'department_id' => 18,
         ]);
     }
