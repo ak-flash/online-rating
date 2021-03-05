@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use App\Helper\Helper;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
@@ -36,7 +37,14 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->updateProfilePhoto($input['photo']);
 
             $studentPhotoName = explode('/', $user->profile_photo_path);
-            $studentPhotoThumbnail = Image::make($input['photo'])->fit(200)->save('storage/profile-photos/thumbnails/'.$studentPhotoName[1]);
+
+            $photoThumbnailPath = 'storage/profile-photos/thumbnails/';
+            if(!File::exists($photoThumbnailPath)) {
+
+                File::makeDirectory($photoThumbnailPath, 0755, true, true);
+            }
+
+            $studentPhotoThumbnail = Image::make($input['photo'])->fit(200)->save($photoThumbnailPath.$studentPhotoName[1]);
         }
 
         if ($input['email'] !== $user->email &&

@@ -10,7 +10,7 @@
         <div class="grid grid-cols-3 gap-4 items-center">
 
             <label class="">Тип занятия</label>
-            <x-select class="col-span-2 w-full" wire:model="studyClassTypeId">
+            <x-select class="col-span-2 rounded-md w-full" wire:model="studyClassTypeId">
                 <option value="">Выберите...</option>
                 @foreach(\App\Models\Lesson::TYPES as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>
@@ -34,7 +34,7 @@
 
 
             <label class="font-bold">Тема</label>
-            <x-select class="col-span-2" wire:model="topicId">
+            <x-select class="col-span-2 rounded-md" wire:model="topicId">
                 <option value="">Выберите...</option>
                 @forelse($topics as $topic)
                     <option value="{{ $topic->id }}">

@@ -21,7 +21,7 @@
             <div class="m-2 md:flex sm:flex-row flex-col float-right ">
                 <div class="flex flex-row mb-1 sm:mb-0">
 
-                    <x-select class="rounded-l rounded-r-none block w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight border-gray-300" wire:model="findByFaculty">
+                    <x-select class="rounded-l rounded-r-none" wire:model="findByFaculty">
                         <option value="0">Все специальности</option>
                         @foreach($faculties as $faculty)
                             <option value="{{ $faculty->id }}">{{ $faculty->speciality }}</option>
@@ -42,23 +42,21 @@
                     <th class="p-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 uppercase text-center tracking-wider">
                         №
                     </th>
-                    <th class="w-1/3 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 text-center uppercase tracking-wider">
+                    <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 text-center uppercase tracking-wider">
                         Название
                     </th>
                     <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
-                        Аббревиатура
+                        ПА
                     </th>
-                    <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
+                    <th class="w-1/7 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
                         Курс/Семестр
                     </th>
                     <th class="w-auto px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
                         Специальность
                     </th>
-                    <th class="w-1/5 px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
-                        ПА
-                    </th>
+
                     @if(auth()->user()->isModerator())
-                        <th class="w-1/3 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
+                        <th class="w-1/7 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-bold text-gray-600 text-center tracking-wider">
                         Управление
                         </th>
                     @endif
@@ -76,13 +74,30 @@
                         <td class="text-sm text-center">
                             {{ (($disciplines->currentPage() * $perPage) - $perPage) + $loop->iteration }}
                         </td>
-                        <td class="p-3 text-sm text-center">
-                            <a href="{{ route('topics', $discipline->id) }}" class="cursor-pointer hover:underline">
-                            {{ $discipline->name }}
-                            </a>
+                        <td class="p-3 text-sm text-center {{ $discipline->topics_count ? '' : 'bg-red-100' }}">
+                            <div class="font-bold inline">
+                                {{ $discipline->name }}
+                            </div>
+                            <div class="text-xs inline">
+                                {{ $discipline->short_name ? '('.$discipline->short_name.')' : '' }}
+                            </div>
                         </td>
-                        <td class="p-3 text-gray-900 text-xs text-center">
-                                {{ $discipline->short_name }}
+                        <td class="p-3 text-sm text-center">
+                            <div class="text-gray-900 whitespace-no-wrap">
+                                <div>
+                                    <a href="{{ route('topics', $discipline->id) }}" class="cursor-pointer hover:underline">
+                                        Лекций: <b> {{ $discipline->lectures_count }} </b>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="{{ route('topics', $discipline->id) }}" class="cursor-pointer hover:underline">
+                                        Занятий: <b> {{ $discipline->topics_count }} </b>
+                                    </a>
+                                </div>
+                                <div>
+                                    <b> {{ $discipline->last_class }} </b>
+                                </div>
+                            </div>
                         </td>
                         <td class="p-3 text-sm text-center">
 
@@ -98,16 +113,15 @@
 
                             </p>
                         </td>
-                        <td class="p-3 text-sm text-center">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                                {{ $discipline->last_class }}
-                            </p>
-                        </td>
+
                         @if(auth()->user()->isModerator())
                             <td class="p-3 border">
                                 <div class="flex justify-center">
                                     <x-update-button value="{{ $discipline->id }}" />
-                                    <x-delete-button value="{{ $discipline->id }}" />
+
+                                    @if($discipline->topics_count==0 && $discipline->lectures_count==0)
+                                        <x-delete-button value="{{ $discipline->id }}" />
+                                    @endif
                                 </div>
                             </td>
                         @endif

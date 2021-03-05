@@ -83,15 +83,15 @@
                     </div>
 
                     <div class="p-2 sm:p-10 text-center mx-5 sm:mx-0">
-                        <div class="md:py-8 py-2 max-w-sm rounded shadow-lg transition duration-500 bg-gray-300 hover:bg-green-100">
-                            <div class="md:space-y-5">
+                        <div class="md:py-5 py-2 max-w-sm rounded shadow-lg transition duration-500 bg-gray-300 hover:bg-green-100">
+                            <div class="md:space-y-3">
                                 <i class="fa fa-graduation-cap mt-5 sm:mt-0" style="font-size:48px;"></i>
 
                                 <div class="px-6 py-3">
                                     <div class="space-y-2">
                                         <div class="font-bold text-xl mb-2">Информация</div>
                                         <p class="text-gray-700 text-base">
-                                            Для студентов и сотрудников <b>Волгоградского государственного медицинского университета</b>
+                                            Для студентов и сотрудников <b>Волгоградского государственного медицинского университета</b>. Пока что только для <b>кафедры иммунологии и аллергологии</b>
                                         </p>
                                     </div>
                                 </div>

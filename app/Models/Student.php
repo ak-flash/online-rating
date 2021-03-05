@@ -203,7 +203,7 @@ class Student extends Authenticatable
     protected function defaultProfilePhotoUrl(): string
     {
         $user_name = explode(' ', $this->name);
-        return 'https://ui-avatars.com/api/?name='.urlencode($user_name[1].' '.$user_name[0]).'&color=bedebf&background=43a047';
+        return 'https://ui-avatars.com/api/?name='.urlencode($user_name[0].' '.$user_name[1]).'&color=bedebf&background=43a047';
     }
 
     /**

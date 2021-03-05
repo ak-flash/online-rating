@@ -10,10 +10,11 @@
                         </svg>
                     </button>
                 </div>
-                <div class="p-2">
-                    <img :alt="imgModalSrc" class="object-contain h-1/2-screen" :src="imgModalSrc">
-                    <p x-text="imgModalDesc" class="text-center text-white"></p>
-                </div>
+
+                    <p x-text="imgModalDesc" class="text-center text-white text-lg pb-2"></p>
+                    <img :alt="imgModalSrc" class="object-contain h-1/2" :src="imgModalSrc">
+
+
             </div>
         </div>
     </template>

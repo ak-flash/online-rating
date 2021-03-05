@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -67,7 +68,13 @@ class StudentSettings extends Component
 
             $studentPhotoName = explode('/', $studentPhoto);
 
-            $studentPhotoThumbnail = Image::make($this->photo)->fit(200)->save('storage/profile-photos/students/thumbnails/'.$studentPhotoName[3]);
+            $photoThumbnailPath = 'storage/profile-photos/students/thumbnails/';
+            if(!File::exists($photoThumbnailPath)) {
+
+                File::makeDirectory($photoThumbnailPath, 0755, true, true);
+            }
+
+            $studentPhotoThumbnail = Image::make($this->photo)->fit(200)->save($photoThumbnailPath.$studentPhotoName[3]);
 
             $this->student->profile_photo_path = $studentPhotoName[3];
 

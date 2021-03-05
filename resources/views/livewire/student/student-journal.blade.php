@@ -84,7 +84,7 @@
 
                         <td class="font-bold text-center text-sm sm:text-base">
                             @if($journal->lessons->isNotEmpty())
-                                    {{ $journal->lessons[0]->date->translatedFormat('d F y') }}
+                                    {{ $journal->lessons[0]->date->translatedFormat('d F Y') }}
 
                                     <div class="text-xs text-gray-600 font-normal">
                                         {{ $journal->lessons[0]->type }}
@@ -96,14 +96,15 @@
                             @if($journal->lessons->isNotEmpty())
                                 <div class="flex justify-center text-lg">
 
-                                    @if($journal->lessons[0]->students[0]->pivot->attandance || $journal->lessons[0]->students[0]->pivot->mark1 || $journal->lessons[0]->students[0]->pivot->mark2)
+                                    @if( ($journal->lessons[0]->students[0]->pivot->attandance || $journal->lessons[0]->students[0]->pivot->mark1 || $journal->lessons[0]->students[0]->pivot->mark2))
 
                                         <x-student-marks for="student" mark1="{{ $journal->lessons[0]->students[0]->pivot->mark1 }}" mark2="{{ $journal->lessons[0]->students[0]->pivot->mark2 }}" />
 
-                                    @else
-                                       <div class="px-2 py-1 shadow-xl rounded-lg border-2 border-red-600">
-                                           нб
-                                       </div>
+                                    @elseif($journal->lessons[0]->date->lt(Carbon\Carbon::today()))
+                                            <div class="px-2 py-1 shadow-xl rounded-lg border-2 border-red-600">
+                                               нб
+                                           </div>
+
                                     @endif
 
                                 </div>
@@ -119,11 +120,9 @@
                         <td class="pl-4">
                             <div class="flex" x-data>
 
-
                                 <a @click="$dispatch('img-modal', {  imgModalSrc: '{{ $journal->user->profile_photo_url }}', imgModalDesc: '{{ $journal->user->name }}' })" class="cursor-pointer">
                                     <img class="hidden sm:flex h-10 w-10 rounded-full object-cover mr-2" src="{{ $journal->user->getThumbnail() }}" alt="{{ $journal->user->name }}"/>
                                 </a>
-
 
                                 <div class="flex-col text-gray-900 whitespace-no-wrap text-sm mr-2">
                                      {{ App\Helper\Helper::getShortName($journal->user->name) }}

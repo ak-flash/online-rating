@@ -174,7 +174,7 @@ class Journals extends Component
 
         $message = $this->journalId ? 'Данные обновлены' : 'Журнал создан';
 
-        $this->emit('show-toast', $message, 'success');
+        $this->emit('show-toast', '', $message, 'success');
 
         $this->closeModal();
     }
@@ -187,7 +187,7 @@ class Journals extends Component
 
             $this->confirmingDeletion = true;
         } else {
-            $this->emit('show-toast', 'Нельзя удалить! В журнале есть занятия!', 'danger');
+            $this->emit('show-toast', 'Нельзя удалить!', 'В журнале есть занятия', 'danger');
         }
     }
 
@@ -195,7 +195,7 @@ class Journals extends Component
     {
         Journal::destroy($this->journalId);
 
-        $this->emit('show-toast', 'Журнал удалён!', 'success');
+        $this->emit('show-toast', '', 'Журнал удалён!', 'success');
 
         $this->confirmingDeletion = false;
 

@@ -139,6 +139,7 @@ class Lessons extends Component
     private function resetInputFields()
     {
         $this->studyClassId = 0;
+        $this->topicId = 0;
         $this->date = now()->format('d/m/Y');
         $this->studyClassTypeId = 1;
     }

@@ -16,12 +16,15 @@ class Departments extends Component
     public int $confirmingUserDeletion =0;
     public bool $openModal = false;
     public string $name;
-    public int $user_id;
-    public int $department_id;
+    public string $userId;
+    public int $departmentId;
+    public string $volgmedId;
     public $moderators;
 
     protected $rules = [
         'name' => 'required|string|min:6',
+        'userId' => 'required|numeric',
+        'volgmedId' => 'required|numeric',
     ];
 
     public function mount(){
@@ -48,8 +51,9 @@ class Departments extends Component
     public function update(Department $department) {
 
         if($department->id) {
-            $this->department_id = $department->id;
-            $this->user_id = $department->user_id;
+            $this->departmentId = $department->id;
+            $this->userId = $department->user_id ?? 0;
+            $this->volgmedId = $department->volgmed_id ?? 0;
             $this->name = $department->name;
         } else {
             $this->resetInputFields();
@@ -64,13 +68,14 @@ class Departments extends Component
     {
         $this->validate();
 
-        $department = Department::updateOrCreate(['id' => $this->department_id], [
+        $department = Department::updateOrCreate(['id' => $this->departmentId], [
             'name' => $this->name,
-            'user_id' => $this->user_id,
+            'user_id' => $this->userId,
+            'volgmed_id' => $this->volgmedId,
         ]);
 
 
-        User::findOrFail($this->user_id)->update([
+        User::findOrFail($this->userId)->update([
             'department_id' => $department->id,
         ]);
         /*session()->flash('message',
@@ -90,7 +95,14 @@ class Departments extends Component
     private function resetInputFields(){
 
         $this->name = '';
-        $this->department_id = 0;
-        $this->user_id = 0;
+        $this->departmentId = 0;
+        $this->userId = '';
+        $this->volgmedId = '';
     }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
 }

@@ -109,6 +109,11 @@ class Discipline extends Model
         return $this->hasMany(Topic::class);
     }
 
+    public  function lectures()
+    {
+        return $this->hasMany(Lecture::class);
+    }
+
     public static function search ($search)
     {
         return empty($search) ? static::query()

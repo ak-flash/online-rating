@@ -5,25 +5,31 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="flex flex-col items-center m-4">
 
-            <div class="flex items-center">
-                <x-label class="mr-3 text-lg w-1/2">Кафедра</x-label>
-                <textarea class="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" wire:model.lazy="name">
+
+            <div class="grid grid-cols-3 gap-4 items-center">
+                <x-label class="font-bold">Кафедра</x-label>
+                <textarea class="col-span-2 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" wire:model.lazy="name">
                 </textarea>
-                <x-input-error for="name" class="block mt-2" />
-            </div>
+                <x-input-error for="name" class="col-span-3 block mt-2" />
 
-            <div class="flex items-center m-4">
-                <x-label class="mr-3 text-md w-1/2">Ответственный</x-label>
-                <x-select class="" wire:model="user_id">
+
+
+                <x-label class="text-md">Ответственный</x-label>
+                <x-select class="col-span-2 rounded-md" wire:model="userId">
                     <option value="">Выберите...</option>
                     @foreach($moderators as $moderator)
                         <option value="{{ $moderator->id }}">{{ $moderator->name }}</option>
                     @endforeach
                 </x-select>
+                <x-input-error for="userId" class="col-span-3 text-center" />
+
+                <x-label class="font-bold">ID volgmed</x-label>
+                <x-input type="text" class="col-span-2 w-1/2" wire:model.lazy="volgmedId" />
+                <x-input-error for="volgmedId" class="col-span-3 text-center" />
+
             </div>
-        </div>
+
 
     </x-slot>
 

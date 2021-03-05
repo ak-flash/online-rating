@@ -8,16 +8,16 @@
 
         <div class="grid grid-cols-3 gap-4 items-center">
 
-            <label class="font-bold">Название</label>
+            <x-label class="font-bold">Название</x-label>
             <x-input type="text" class="col-span-2" wire:model.lazy="name" />
             <x-input-error for="name" class="col-span-3 text-center" />
 
-            <label class="">Короткое</label>
+            <x-label class="">Короткое</x-label>
             <x-input type="text" class="col-span-2 w-1/2" wire:model.lazy="shortName" />
             <x-input-error for="shortName" class="col-span-3 text-center" />
 
-            <label class="font-bold">Факультет</label>
-            <x-select class="col-span-2" wire:model="facultyId">
+            <x-label class="font-bold">Факультет</x-label>
+            <x-select class="col-span-2 rounded-md" wire:model="facultyId">
                 <option value="">Выберите...</option>
                 @foreach($faculties as $faculty)
                     <option value="{{ $faculty->id }}">{{ $faculty->speciality }}</option>
@@ -26,8 +26,8 @@
             <x-input-error for="facultyId" class="col-span-3 text-center" />
 
 
-            <label class="font-bold">Семестр</label>
-            <x-select class="col-span-2 w-1/3" wire:model="semester">
+            <x-label class="font-bold">Семестр</x-label>
+            <x-select class="col-span-2 rounded-md w-1/4" wire:model="semester">
                 <option value="">...</option>
                 @for ($i = 1; $i <= 12; $i++)
                     <option value="{{ $i }}">{{ $i }}</option>
@@ -35,8 +35,8 @@
             </x-select>
             <x-input-error for="semester" class="col-span-3 text-center" />
 
-            <label class="">ПА</label>
-            <x-select class="col-span-2 w-3/5" wire:model="lastClassId">
+            <x-label class="">Помежуточная аттестация</x-label>
+            <x-select class="col-span-2 rounded-md w-3/5" wire:model="lastClassId">
                 <option value="">Выберите...</option>
                 @foreach(\App\Models\Discipline::LAST_CLASS_TYPES as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>

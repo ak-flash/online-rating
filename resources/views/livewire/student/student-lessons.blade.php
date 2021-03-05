@@ -46,18 +46,14 @@
             </style>
         </div>
 
-        <a href="" class="hidden bg-green-700 hover:bg-green-500 shadow p-2 px-4 float-right rounded-lg text-white">
-           Скачать Excel
+        <a href="" class="bg-green-700 hover:bg-green-500 shadow p-2 px-4 float-right rounded-lg text-white">
+           Excel
         </a>
     </div>
 
 
 
-
     <div class="mt-2 flex justify-between text-gray-600 dark:text-gray-400">
-
-
-
 
 
     <!-- component -->
@@ -162,12 +158,12 @@
                                 <div class="mb-5 md:mt-0 md:mb-8 flex md:justify-between
                                 {{ ($loop->index)%2 ? '' : 'md:flex-row-reverse' }} items-center w-full">
                                     <div class="md:order-1 md:w-5/12"></div>
-                                    <div class="z-20 flex md:items-center md:order-1 {{ in_array($lesson->type, ['ИТОГОВАЯ', 'ЗАЧЕТНОЕ занятие', 'ЭКЗАМЕН']) ? 'bg-red-600' : 'bg-gray-600' }} shadow-xl w-8 h-8 rounded-full mr-2 sm:mr-0">
+                                    <div class="z-20 flex md:items-center md:order-1 {{ in_array($lesson->type, ['ИТОГОВАЯ', 'ЗАЧЕТНОЕ', 'ЭКЗАМЕН']) ? 'bg-red-600' : 'bg-gray-600' }} shadow-xl w-8 h-8 rounded-full mr-2 sm:mr-0">
                                         <h1 class="mx-auto text-white font-bold text-lg">
                                             {{ (count($lessons) - $loop->iteration + 1) }}
                                         </h1>
                                     </div>
-                                    <div class="md:order-1 w-full {{ ($this->isReclassed($lesson->pivot->attendance, $lesson->pivot->mark1, $lesson->pivot->mark2)||$lesson->pivot->attendance)  ? 'bg-gray-300 sm:bg-gray-100' : 'bg-red-600' }} text-black rounded-lg shadow-xl md:w-5/12 md:px-6 py-2 {{ in_array($lesson->type, ['ИТОГОВАЯ', 'ЗАЧЕТНОЕ занятие', 'ЭКЗАМЕН']) ? 'border-8' : 'border-2' }} border-green-800 ">
+                                    <div class="md:order-1 w-full {{ ($this->isReclassed($lesson->pivot->attendance, $lesson->pivot->mark1, $lesson->pivot->mark2)||$lesson->pivot->attendance)  ? 'bg-gray-300 sm:bg-gray-100' : 'bg-red-600' }} text-black rounded-lg shadow-xl md:w-5/12 md:px-6 py-2 {{ in_array($lesson->type, ['ИТОГОВАЯ', 'ЗАЧЕТНОЕ', 'ЭКЗАМЕН']) ? 'border-8' : 'border-2' }} border-green-800 ">
 
 
 

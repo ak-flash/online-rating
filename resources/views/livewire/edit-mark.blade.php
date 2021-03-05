@@ -1,7 +1,7 @@
 <div x-data=" { isEditing: false } " x-cloak>
     <div class="" x-show=!isEditing >
         <span class="cursor-pointer" x-on:click="isEditing = true; $refs.editor.classList.remove('hidden')" >
-            <div class="px-2 py-1 rounded-lg shadow-xl border
+            <div class="px-2 py-1 rounded-md shadow-xl border
                 {{ $studentMark==0 ? 'text-black' : 'text-white' }}
                 bg-{{ App\Helper\Helper::getMarkColor($studentMark) }}">
                 {{ $studentMark }}
@@ -12,7 +12,7 @@
         <div class="hidden flex items-center"
               x-ref="editor">
 
-            <x-select class="w-20"
+            <x-select class="w-20 rounded-md"
             wire:model.lazy="studentMark"
             @change="isEditing = false"
             x-on:keydown.enter="isEditing = false"

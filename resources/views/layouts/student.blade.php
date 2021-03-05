@@ -33,10 +33,14 @@
                     <div class="w-full px-2">
                         <div class="flex flex-col justify-center items-center w-full mt-3 border-t border-gray-700" x-data>
                             <!-- User info -->
-                            <a @click="$dispatch('img-modal', {  imgModalSrc: '{{ $student->profile_photo_url }}', imgModalDesc: '' })" class="cursor-pointer">
-                                <img class="mt-3 rounded-full object-cover mx-auto" src="{{ $student->getThumbnail() }}" alt="student_avatar" style="width: 100px;height: 100px;" />
-                            </a>
 
+                            @if($student->profile_photo_path)
+                                <a @click="$dispatch('img-modal', {  imgModalSrc: '{{ $student->profile_photo_url }}', imgModalDesc: '' })" class="cursor-pointer">
+                                    <img class="mt-3 rounded-full object-cover mx-auto" src="{{ $student->getThumbnail() }}" alt="student_avatar" style="width: 100px;height: 100px;" />
+                                </a>
+                            @else
+                                <img class="mt-3 rounded-full object-cover mx-auto" src="{{ $student->profile_photo_url }}" alt="student_avatar" style="width: 100px;height: 100px;" />
+                            @endif
                             <x-image-popup />
 
                             <div class="mt-2 text-2xl dark:text-gray-300 capitalize">

@@ -9,7 +9,7 @@
         <div class="grid grid-cols-4 gap-4 items-center">
 
             <label class="">Номер</label>
-            <x-select class="col-span-3 w-20 text-xl" wire:model.lazy="topicNumber">
+            <x-select class="col-span-3 w-20 text-xl rounded-md" wire:model.lazy="topicNumber">
                 <option value="">...</option>
                 @for ($i = 1; $i <= 30; $i++)
                     <option value="{{ $i }}">{{ $i }}</option>

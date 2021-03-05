@@ -46,6 +46,8 @@ class Disciplines extends Component
             })
             ->orderBy('name')
             ->with('faculty:id,name,speciality,color')
+            ->withCount('topics')
+            ->withCount('lectures')
             ->paginate($this->perPage);
 
         $faculties = Faculty::all(['id','speciality']);
@@ -176,80 +178,84 @@ class Disciplines extends Component
 
         preg_match($pattern, $response->body(), $match);
 
+        if($match) {
 
-        $downloadLinkId = explode('/', $match[1])[0];
+            $downloadLinkId = explode('/', $match[1])[0];
 
-        $response = Http::get('https://www.volgmed.ru/ru/files/list/'.$downloadLinkId.'/');
+            $response = Http::get('https://www.volgmed.ru/ru/files/list/'.$downloadLinkId.'/');
 
-        $openTag = "<tr><td class='GridTableBlue' width='18px;'><img src='https://www.volgmed.ru/templates/volgmu_pill/images/folder.gif' alt='Каталог' border='0'></td><td class='GridTableBlue'><a href='https://www.volgmed.ru/ru/files/list/";
+            $openTag = "<tr><td class='GridTableBlue' width='18px;'><img src='https://www.volgmed.ru/templates/volgmu_pill/images/folder.gif' alt='Каталог' border='0'></td><td class='GridTableBlue'><a href='https://www.volgmed.ru/ru/files/list/";
 
-        $closeTag = "03 О";
+            $closeTag = "03 О";
 
-        $pattern = "#".$openTag."(.*?)".$closeTag."#";
+            $pattern = "#".$openTag."(.*?)".$closeTag."#";
 
-        preg_match($pattern, $response->body(), $match);
+            preg_match($pattern, $response->body(), $match);
 
-        $facultyDisciplinesLinkId = explode('/', $match[1])[0];
-
-
-        $links = Helper::getLinksArrayFromVOLGMED($facultyDisciplinesLinkId);
+            $facultyDisciplinesLinkId = explode('/', $match[1])[0];
 
 
-        foreach ($faculties as $facultyId => $facultySpeciality) {
-
-            $filtered = Arr::where($links, function ($value) use ($facultySpeciality) {
-                if(Str::contains($value['name'], $facultySpeciality)) {
-                    return $value;
-                }
-            });
-
-            $filtered = array_values($filtered);
+            $links = Helper::getLinksArrayFromVOLGMED($facultyDisciplinesLinkId);
 
 
+            foreach ($faculties as $facultyId => $facultySpeciality) {
 
-            if($filtered) {
-                $linksNextFolder = Helper::getLinksArrayFromVOLGMED($filtered[0]['id']);
+                $filtered = Arr::where($links, function ($value) use ($facultySpeciality) {
+                    if(Str::contains($value['name'], $facultySpeciality)) {
+                        return $value;
+                    }
+                });
+
+                $filtered = array_values($filtered);
 
 
-                if($linksNextFolder[0]['name'] == 'Дисциплины'){
 
-                    $linksNextNextFolder = Helper::getLinksArrayFromVOLGMED($linksNextFolder[0]['id']);
+                if($filtered) {
+                    $linksNextFolder = Helper::getLinksArrayFromVOLGMED($filtered[0]['id']);
 
-                    collect($linksNextNextFolder)->each(function (array $row) use ($facultyId) {
+
+                    if($linksNextFolder[0]['name'] == 'Дисциплины'){
+
+                        $linksNextNextFolder = Helper::getLinksArrayFromVOLGMED($linksNextFolder[0]['id']);
+
+                        collect($linksNextNextFolder)->each(function (array $row) use ($facultyId) {
+
+                            $disciplines = Discipline::updateOrCreate(
+                                [
+                                    'department_id' => $this->departmentId,
+                                    'faculty_id' => $facultyId,
+                                    'volgmed_id' => $row['id'],
+                                ],
+                                [
+                                    'name' => $row['name'],
+                                    'department_id' => $this->departmentId,
+                                    'faculty_id' => $facultyId,
+                                    'volgmed_id' => $row['id'],
+                                ]
+                            );
+                        });
+
+                    }
+
+                    if(Str::contains($linksNextFolder[0]['name'], 'Дисциплина')){
+                        $disciplineName = explode('&quot;', $linksNextFolder[0]['name']);
 
                         $disciplines = Discipline::updateOrCreate(
                             [
+                                'volgmed_id' => $linksNextFolder[0]['id'],
                                 'department_id' => $this->departmentId,
                                 'faculty_id' => $facultyId,
-                                'volgmed_id' => $row['id'],
                             ],
                             [
-                                'name' => $row['name'],
+                                'name' => $disciplineName[1],
                                 'department_id' => $this->departmentId,
                                 'faculty_id' => $facultyId,
-                                'volgmed_id' => $row['id'],
+                                'volgmed_id' => $linksNextFolder[0]['id'],
                             ]
                         );
-                    });
 
-                }
 
-                if(Str::contains($linksNextFolder[0]['name'], 'Дисциплина')){
-                    $disciplineName = explode('&quot;', $linksNextFolder[0]['name']);
-
-                    $disciplines = Discipline::updateOrCreate(
-                        [
-                            'volgmed_id' => $linksNextFolder[0]['id'],
-                            'department_id' => $this->departmentId,
-                            'faculty_id' => $facultyId,
-                        ],
-                        [
-                            'name' => $disciplineName[1],
-                            'department_id' => $this->departmentId,
-                            'faculty_id' => $facultyId,
-                            'volgmed_id' => $linksNextFolder[0]['id'],
-                        ]
-                    );
+                    }
 
 
                 }
@@ -258,10 +264,12 @@ class Disciplines extends Component
             }
 
 
+            $this->emit('show-toast', '','Дисциплины обновлены', 'success');
+
+        } else {
+            $this->emit('show-toast', 'Ошибка','Возможно неверный идентификатор кафдеры', 'danger');
         }
 
-
-        $this->emit('show-toast', 'Дисциплины обновлены', 'success');
-
+        $this->confirmingSync = false;
     }
 }
