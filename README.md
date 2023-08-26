@@ -2,7 +2,8 @@
 
 Онлайн журнал с оценками студентов для преподавателей и студентов
 
-![изображение](https://github.com/ak-flash/online-rating/assets/48391443/555f2dc2-1c21-4d16-b47c-882389535761)
+<img src="https://github.com/ak-flash/online-rating/assets/48391443/555f2dc2-1c21-4d16-b47c-882389535761" width="1024"/>
+
 
 ![Screenshot 2023-08-26 at 12-49-17 Screenshot](https://github.com/ak-flash/online-rating/assets/48391443/81d565ec-e102-46c4-b05c-2fef0a0e8c35)
 ![Screenshot 2023-08-26 at 12-52-08 Screenshot](https://github.com/ak-flash/online-rating/assets/48391443/d8b5099d-ea51-4cf9-8e40-1c5cff1f56d5)
