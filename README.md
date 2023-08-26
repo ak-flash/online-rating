@@ -4,10 +4,10 @@
 
 <img src="https://github.com/ak-flash/online-rating/assets/48391443/555f2dc2-1c21-4d16-b47c-882389535761" width="1024"/>
 
-<img src="https://github.com/ak-flash/online-rating/assets/48391443/555f2dc2-1c21-4d16-b47c-882389535761" width="1024"/>
-<img src="https://github.com/ak-flash/online-rating/assets/48391443/d8b5099d-ea51-4cf9-8e40-1c5cff1f56d5" width="1024"/>
-<img src="https://github.com/ak-flash/online-rating/assets/48391443/d5bfccbf-2b50-408c-a647-98ac46222198" width="1024"/>
-<img src="https://github.com/ak-flash/online-rating/assets/48391443/fa11c14c-5340-4f80-b67a-5ea906e13d3c" width="1024"/>
+<img src="https://github.com/ak-flash/online-rating/assets/48391443/5c2bd484-8031-4557-85aa-bb5418101d04" width="1024"/>
+<img src="https://github.com/ak-flash/online-rating/assets/48391443/bb9675ee-0f99-4e69-b334-10288781b5e1" width="1024"/>
+<img src="https://github.com/ak-flash/online-rating/assets/48391443/b0ccc652-abd8-41b5-a728-7405868b700a" width="1024"/>
+<img src="https://github.com/ak-flash/online-rating/assets/48391443/9f2f0a98-12cc-41b9-97c6-ca69791daaf7" width="1024"/>
 
 ![изображение](https://github.com/ak-flash/online-rating/assets/48391443/525128ce-b84e-437b-accd-2a70819e148c)
 
